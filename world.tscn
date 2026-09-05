@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c2gwi33yhmteg" path="res://steam_vent.tscn" id="11_c45sw"]
 [ext_resource type="PackedScene" uid="uid://taskui" path="res://UI/task_ui.tscn" id="13_taskui"]
 [ext_resource type="PackedScene" uid="uid://itemcounter" path="res://UI/item_counter.tscn" id="14_itemcounter"]
+[ext_resource type="PackedScene" uid="uid://toastui" path="res://UI/toast_ui.tscn" id="15_toastui"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -1080,6 +1081,8 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="Toast_UI" parent="CanvasLayer" instance=ExtResource("15_toastui")]
 
 [node name="NPC" parent="." unique_id=111867162 instance=ExtResource("10_t7hy5")]
 position = Vector2(240, 545)

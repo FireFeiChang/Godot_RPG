@@ -875,6 +875,7 @@ radius = 8.0
 
 [node name="Player" type="CharacterBody2D" unique_id=821024857 groups=["player"]]
 collision_layer = 2
+collision_mask = 65
 script = ExtResource("1_f0yjq")
 
 [node name="inv_UI" parent="." unique_id=294157767 instance=ExtResource("12_1l7gw")]

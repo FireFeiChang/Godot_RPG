@@ -37,4 +37,3 @@ func _on_invincible_started():
 func _on_invincible_ended():
 	# monitorable = true
 	set_deferred("monitoring", true)
-
