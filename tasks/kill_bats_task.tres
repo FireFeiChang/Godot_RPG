@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Task" format=3 uid="uid://killbatstask"]
+
+[ext_resource type="Script" path="res://tasks/task.gd" id="1"]
+[ext_resource type="Resource" uid="uid://cqxvjyvdjxg4w" path="res://inventory/item/bat.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "kill_bats"
+name = "消灭蝙蝠"
+description = "消灭 5 只蝙蝠"
+status = 0
+objectives = Array[Dictionary]([{"name": "消灭蝙蝠", "progress": 0, "target": 5}])
+rewards = [ExtResource("2")]
+reward_amounts = [3]

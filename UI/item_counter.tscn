@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://itemcounter"]
+
+[ext_resource type="Script" path="res://UI/item_counter.gd" id="1"]
+
+[sub_resource type="FontFile" id="FontFile_1"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[sub_resource type="Theme" id="Theme_1"]
+default_font = SubResource("FontFile_1")
+
+[node name="ItemCounter" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = 5.0
+offset_right = 0.0
+offset_bottom = 30.0
+
+[node name="ItemLabel" type="Label" parent="."]
+layout_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+theme = SubResource("Theme_1")
+theme_override_colors/font_color = Color(1, 1, 1, 1)

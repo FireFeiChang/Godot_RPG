@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bxksh4fnkwuj"]
+
+[ext_resource type="Script" uid="uid://cbfx2i0bxjdql" path="res://Enemies/player_detection.gd" id="1_nuhqu"]
+
+[node name="PlayerDetection" type="Area2D" unique_id=1068024222]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_nuhqu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=686386146]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
