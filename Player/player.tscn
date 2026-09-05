@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://yc57mmoyb2ub"]
 
 [ext_resource type="Script" uid="uid://ce4jwldcr8fct" path="res://Player/Player.gd" id="1_f0yjq"]
-[ext_resource type="Resource" uid="uid://b5u0he8tbacjr" path="res://inventory/playerInv.tres" id="2_501lf"]
 [ext_resource type="Texture2D" uid="uid://cjx1ccjt6i8mv" path="res://Player/Player.png" id="2_ki2q3"]
 [ext_resource type="Shader" uid="uid://cmyxragmcnn1m" path="res://white_color.gdshader" id="2_q7i84"]
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="3_3ruse"]
@@ -877,7 +876,6 @@ radius = 8.0
 [node name="Player" type="CharacterBody2D" unique_id=821024857 groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_f0yjq")
-inv = ExtResource("2_501lf")
 
 [node name="inv_UI" parent="." unique_id=294157767 instance=ExtResource("12_1l7gw")]
 z_index = 1

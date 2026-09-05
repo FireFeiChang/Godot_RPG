@@ -5,8 +5,85 @@ signal task_completed(task)
 signal task_rewarded(task)
 signal objective_updated(task)
 
+## 任务 id 常量：玩法代码只引用常量，不出现裸字符串。
+const TASK_KILL_BATS := "kill_bats"
+
+## 需要玩家进入世界时确保存在的任务（id -> .tres 路径）。
+const DEFAULT_TASKS := {
+	TASK_KILL_BATS: "res://tasks/kill_bats_task.tres",
+}
+
 var tasks: Array[Task] = []
 var DropItemScene = preload("res://drop_item.tscn")
+
+## 注册所有内置默认任务（重复调用安全，已存在的任务不会重复添加）。
+## 注意：只登记，不自动 start —— 任务需由 NPC 接取后才进入进行中。
+func ensure_default_tasks():
+	for task_id in DEFAULT_TASKS:
+		if get_task(task_id) != null:
+			continue
+		var task: Task = load(DEFAULT_TASKS[task_id]) as Task
+		if task != null:
+			task.status = Task.NOT_STARTED
+			_zero_objectives(task)
+			add_task(task)
+
+## 把单个任务重置回"全新未接"状态（进度清零、status=NOT_STARTED）。
+func reset_task(task_id: String):
+	var task = get_task(task_id)
+	if task != null:
+		task.status = Task.NOT_STARTED
+		_zero_objectives(task)
+
+## 新开局：重置所有已登记任务为未接、进度清零。
+func reset_all_tasks():
+	for task_id in DEFAULT_TASKS:
+		reset_task(task_id)
+
+## 把任务的每个目标进度归零（原地修改）。
+func _zero_objectives(task: Task):
+	for obj in task.objectives:
+		obj["progress"] = 0
+
+## 玩家从 NPC 接取任务。仅当任务存在且未开始时生效；返回是否成功。
+func accept_task(task_id: String) -> bool:
+	var task = get_task(task_id)
+	if task == null or task.status != Task.NOT_STARTED:
+		return false
+	task.start()
+	task_started.emit(task)
+	return true
+
+## 玩家向 NPC 交付已完成任务，发放奖励并入背包。返回是否成功。
+func turn_in_task(task_id: String) -> bool:
+	var task = get_task(task_id)
+	if task == null or task.status != Task.COMPLETED:
+		return false
+	var rewards = claim_task_reward(task_id)
+	for item in rewards:
+		Inventory.inv.insert(item)
+	return true
+
+## 任务当前状态（-1=未登记；否则为 Task 状态枚举值）。
+func get_task_state(task_id: String) -> int:
+	var task = get_task(task_id)
+	if task == null:
+		return -1
+	return task.status
+
+## 该任务是否正等待玩家交付（COMPLETED 未领取）。
+func is_task_ready_to_turn_in(task_id: String) -> bool:
+	return get_task_state(task_id) == Task.COMPLETED
+
+## 该任务是否进行中。
+func is_task_in_progress(task_id: String) -> bool:
+	return get_task_state(task_id) == Task.IN_PROGRESS
+
+## 敌人击杀事件：玩法侧只需广播"杀了谁"，具体任务进度由本管理器路由。
+func notify_enemy_killed(enemy_id: String):
+	match enemy_id:
+		TASK_KILL_BATS:
+			add_objective_progress(TASK_KILL_BATS, 0, 1)
 
 func add_task(task: Task):
 	tasks.append(task)

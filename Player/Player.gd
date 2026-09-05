@@ -6,7 +6,6 @@ const FRICTION = 500
 const MAX_SPEED = 100
 const ROLL_SPEED = 125
 const INVINCIBLIITY_DURATION = 0.6
-const AUTO_SAVE_INTERVAL = 60
 
 enum {
 	MOVE,
@@ -18,7 +17,6 @@ var moving_state = MOVE
 var roll_vector = Vector2.DOWN
 var state = PlayerStates
 var dialog = Dialog
-var save_timer = 0
 
 @onready var animationPlayer = $AnimationPlayer
 @onready var animationTree = $AnimationTree
@@ -26,19 +24,33 @@ var save_timer = 0
 # @onready var swordHitBox = $HitBoxPivot/SwordHitBox
 @onready var hurtBox = $HurtBox
 @onready var blinkAnimationPlayer = $BlinkAnimationPlayer
-@export var inv: Inv
 
 func _ready():
 	randomize()
 	state.connect("no_health", queue_free)
 	animationTree.active = true
-	if TaskManager.get_task("kill_bats") == null:
-		var kill_bats_task = load("res://tasks/kill_bats_task.tres")
-		if kill_bats_task != null:
-			kill_bats_task.start()
-			TaskManager.add_task(kill_bats_task)
+	TaskManager.ensure_default_tasks()
+	# 每次进入世界都是一次全新开局：重置血/背包/任务，不继承上一局
+	_reset_new_game()
+
+## 新开局重置（覆盖标题开始与编辑器直接运行两种路径）。
+func _reset_new_game():
+	state.health = state.max_health
+	for slot in Inventory.inv.slots:
+		slot.item = null
+		slot.amount = 0
+	Inventory.inv.update.emit()
+	TaskManager.reset_all_tasks()
 
 func _physics_process(delta):
+	# 对话中（Dialog.freeze_player）：停住角色、不再响应移动/攻击/翻滚输入
+	if dialog.freeze_player == true:
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		move_and_slide()
+		if moving_state == MOVE:
+			animationState.travel("Idle")
+		return
+
 	match moving_state:
 		MOVE:
 			move_state(delta)
@@ -46,14 +58,9 @@ func _physics_process(delta):
 			roll_state(delta)
 		ATTACK:
 			attack_state(delta)
-	
+
 	if dialog.del_player == true:
 		queue_free()
-	
-	save_timer += delta
-	if save_timer >= AUTO_SAVE_INTERVAL:
-		save_timer = 0
-		SaveManager.save_game(1)
 
 func move_state(delta):
 	var input_vector = Vector2.ZERO
@@ -119,4 +126,4 @@ func player():
 	pass
 	
 func collect(item):
-	inv.insert(item)
+	Inventory.inv.insert(item)

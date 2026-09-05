@@ -1,4 +1,6 @@
-extends CharacterBody2D
+extends KinematicActor
+## 蝙蝠敌人：在 KinematicActor 基础上实现 IDLE/WANDER/CHASE 行为状态机。
+## 加速度/摩擦/最高速度等移动参数继承自基类，可在场景根节点上覆盖（见 bat.tscn FRICTION）。
 
 const EnemyDeathEffect = preload("res://Effects/enemy_death_effect.tscn")
 const DropItemScene = preload("res://drop_item.tscn")
@@ -6,9 +8,6 @@ const KNOCK_BACK = 80
 const WANDER_TIMER_DURATION = 3
 const INVINCIBLIITY_DURATION = 0.4
 
-@export var ACCELERATION = 400
-@export var FRICTION = 200
-@export var MAX_SPEED = 100
 @export var WANDER_TARGET_RANGE = 5
 @export var item: InvItem
 @export var drop_chance: float = 0.5
@@ -37,7 +36,7 @@ func _ready():
 func _physics_process(delta):
 	match moving_state:
 		IDLE:
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+			apply_friction(delta)
 			seek_player()
 			if wanderController.get_time_left() == 0:
 				update_wander()
@@ -62,10 +61,9 @@ func _physics_process(delta):
 		velocity += softCollision.get_push_vector() * delta * KNOCK_BACK
 	move_and_slide()
 	
-func accelerate_towards_point(point, delta):
-	# var direction = (player.global_position - global_position).normalized()
-	var direction = global_position.direction_to(point)
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+func accelerate_towards_point(point: Vector2, delta: float) -> void:
+	# 基类处理实际移动，蝙蝠额外按移动方向翻转精灵
+	super(point, delta)
 	animatedSprite.flip_h = velocity.x < 0
 	
 func update_wander():
@@ -99,7 +97,7 @@ func _on_states_no_health():
 	create_enemy_death_effect()
 	if item != null and randf() < drop_chance:
 		TaskManager.call_deferred("spawn_drop_item", global_position, item)
-	TaskManager.add_objective_progress("kill_bats", 0, 1)
+	TaskManager.notify_enemy_killed(TaskManager.TASK_KILL_BATS)
 	queue_free()
 
 func _on_hurt_box_invincible_started():

@@ -8,6 +8,7 @@ enum {
 	KEY
 }
 
+@export var id: String = ""
 @export var name: String = ""
 @export var texture: Texture2D
 @export var item_type: int = MATERIAL

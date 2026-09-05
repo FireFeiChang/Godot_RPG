@@ -1,7 +1,7 @@
 extends Control
 
 @onready var item_label = $ItemLabel
-@onready var inv: Inv = preload("res://inventory/playerInv.tres")
+@onready var inv: Inv = Inventory.inv
 
 func _ready():
 	inv.update.connect(update_count)

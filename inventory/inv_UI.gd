@@ -1,6 +1,6 @@
 extends Control
 
-@onready var inv: Inv = preload("res://inventory/playerInv.tres")
+@onready var inv: Inv = Inventory.inv
 @onready var hBox: Array = $ScrollContainer/VBoxContainer.get_children()
 
 var slots: Array = []

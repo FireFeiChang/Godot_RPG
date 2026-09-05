@@ -1,8 +1,202 @@
-Initial project sourced from [Heartbeast](https://www.youtube.com/@uheartbeast/videos), we made godot 4.x adaptation and added some new features:
-- [x] Dialog
-- [x] Gathering and Backpacking
-- [ ] Camera restrictions and map restrictions
-- [ ] Player image switching
-- [ ] Scene change
-- [ ] Archive
-- [ ] Map transfer
+# Test-ARPG
+
+> **v1.0** ｜ 2D 像素风动作角色扮演游戏（ARPG）｜ Godot 4.7（Forward Plus 渲染）
+
+一款以 **Heartbeast 的 "Action RPG"** 教程为基础、用 Godot 4.x 重制并大幅扩展的竖版视角 2D 像素 ARPG。玩家在田园村庄与树林间冒险：采集草药、挥剑击退蝙蝠、与村长对话接取并交付任务、管理背包。
+
+---
+
+## 目录
+
+- [游戏简介](#游戏简介)
+- [操作方式](#操作方式)
+- [功能特性](#功能特性)
+- [核心玩法循环](#核心玩法循环)
+- [系统架构](#系统架构)
+- [场景与入口](#场景与入口)
+- [目录结构](#目录结构)
+- [运行方式](#运行方式)
+- [技术要点](#技术要点)
+- [致谢](#致谢)
+
+---
+
+## 游戏简介
+
+村庄外的树林里蝙蝠泛滥，扰得村民无法下地劳作。玩家从村口出发，探索一张**重制过的田园大地图**：砍伐/采集途中收集**草丛**止血、消灭**蝙蝠**获取材料，并向村口的**村长**接取"消灭蝙蝠"的任务——完成后再回到村长处交付，换取奖励。
+
+- **玩法类型**：俯视角 2D 动作角色扮演
+- **画面风格**：像素风，320×180 逻辑分辨率放大至 1280×720
+- **版本定位**：v1.0 —— 首个功能闭环、可完整通关一轮的里程碑版本
+
+---
+
+## 操作方式
+
+| 操作 | 按键 |
+| --- | --- |
+| 移动 | `W` `A` `S` `D`（或方向键） |
+| 攻击 | `J`（或 `X`） |
+| 翻滚闪避 | `空格`（或 `K`） |
+| 打开 / 关闭背包 | `B` |
+| 打开 / 关闭任务列表 | `Q` |
+| 使用物品 | 鼠标左键点击背包中的物品（或 `E`） |
+| 与 NPC 对话 / 确认 | `回车`（靠近 NPC 时屏幕上方会显示提示） |
+
+---
+
+## 功能特性
+
+### 战斗与角色
+- **三态动作状态机**：移动（MOVE）/ 翻滚闪避（ROLL，带无敌帧）/ 攻击（ATTACK，硬直）。
+- **模块化碰撞盒系统**：攻击判定 `HitBox` 与受伤判定 `HurtBox` 分离；受击后触发**无敌帧 + 闪烁动画**（白色闪白 shader）。
+- **击退反馈**：攻击命中与受击均带击退方向，手感清晰。
+- **生命值系统**：心形 HUD 实时显示血量；可被草丛（治疗）恢复。
+
+### 敌人与 AI
+- **蝙蝠敌人**：`待机 / 漫游 / 追击` 三态 AI，自动索敌、软碰撞防堆叠。
+- 死亡生成特效，并有概率掉落**蝙蝠材料**。
+
+### 世界与探索
+- **全新重制的田园大地图**（约 800×600）：草地 + 泥路村道 + 灌木/树/草丛 + 峭壁山岩围合边界，无虚空、无贴图发虚。
+- 左下方**安全出生村口**；相机平滑跟随，可完整探索全图。
+- **可采集草丛**：攻击草丛掉落可治疗物品。
+- 蒸汽通风口等环境装饰点缀地图。
+
+### NPC 与对话（Dialogue Manager 插件）
+- 靠近 NPC 显示交互提示，按 `回车` 触发多分支对话。
+- **可扩展 NPC 架构**：普通闲聊 NPC 与**任务 NPC**（村长）共用一套基类，新增 NPC 复制即用。
+
+### 任务系统
+- **任务由 NPC 发布与交付**：村长按玩家当前进度给出三套不同对话——*未接（可接取）→ 进行中（提示进度）→ 已完成（交付领奖）*。
+- **按 `Q` 弹出任务列表**，实时查看进行中目标与可交付任务。
+- 默认任务：**消灭蝙蝠 ×5**，奖励 3 个蝙蝠材料。
+- 任务在**接取后才会计数**，击杀计数不会凭空提前完成。
+
+### 背包与物品
+- 12 格背包，支持**采集 / 击杀掉落 / 任务奖励**入包。
+- 物品类型：`HEAL 治疗` / `MATERIAL 材料` / `KEY 钥匙`。
+- 治疗类物品（草丛）可恢复生命，生命满时不可浪费。
+
+### 开局的干净体验
+- **每次开始都是一局全新的游戏**：点"开始"即清档进入，血量、背包、任务全部重置，不继承上一局；自动存档已停用。适合快速反复试玩与开发调试。
+
+### 界面与音频
+- 生命值 HUD、物品计数器、任务列表弹层。
+- 标题界面（开始 / 设置 / 退出）+ 音量调节；击中/受伤/翻滚/死亡等音效。
+
+---
+
+## 核心玩法循环
+
+```
+前往村长接取任务（消灭蝙蝠）
+        │
+        ▼
+   探索地图 → 攻击草丛采集（补血）＋ 消灭蝙蝠（计数）
+        │
+        ▼
+   达成目标（5/5）→ 任务完成
+        │
+        ▼
+   回村长处对话交付 → 领取奖励（蝙蝠材料×3）入包
+```
+
+---
+
+## 系统架构
+
+### 全局自动加载（Autoload）
+
+| 名称 | 来源 | 职责 |
+| --- | --- | --- |
+| `PlayerStates` | `Player/player_states.tscn` | 全局玩家生命值（`health`/`max_health` + 信号） |
+| `Dialog` | `Player/dialog.gd` | 对话/任务握手的全局标志位（对话冻结、任务接/交请求） |
+| `TaskManager` | `tasks/task_manager.tscn` | 任务注册、进度路由、接取/交付、掉落物生成 |
+| `SaveManager` | `save/save_manager.tscn` | 存档读写（当前 v1.0 每次开局清档，存档框架保留待用） |
+| `Inventory` | `inventory/inventory_manager.gd` | 全局背包唯一数据源 + 物品注册表 |
+| `DialogueManager` | Dialogue Manager 插件 | 第三方对话引擎 |
+
+### 关键设计约定
+
+- **伤害路由按脚本文件名匹配**（脚本路径含 `hit_box` 才会造成伤害），新增伤害盒必须遵守。
+- **动作硬直态**由 `AnimationPlayer` 方法轨道回调（`attack_animation_finished()` / `roll_animation_finished()`）在动画末尾触发复位。
+- **NPC 任务对话分派**：NPC 脚本按 `TaskManager` 中任务状态选择对话标题（`<任务id>_offer/_in_progress/_turnin/_rewarded`），`.dialogue` 内仅用 `set` 突变向 `Dialog` 写入"请求接/交"标记，由 NPC 每帧消费后真正操作任务——对话文件与玩法逻辑解耦，无需在脚本里写解析依赖。
+
+### 物理层划分
+
+| 层 | 名称 | 层 | 名称 |
+| --- | --- | --- | --- |
+| 1 | World | 5 | Enemy |
+| 2 | Player | 6 | SoftCollison |
+| 3 | PlayerHurtBox | 7 | NPC |
+| 4 | EnemyHurtBox | | |
+
+---
+
+## 场景与入口
+
+| 场景 | 说明 |
+| --- | --- |
+| `title_screen.tscn` | 主场景。开始（清档新开）/ 设置（音量）/ 退出 |
+| `world.tscn` | 主玩法地图：地形、玩家、蝙蝠、村长 NPC、草丛/灌木/树、HUD |
+| `Player/player.tscn` | 玩家（含动画树、背包 UI） |
+| `Enemies/bat.tscn` | 蝙蝠敌人 |
+| `NPC/npc.tscn` | 可对话 NPC（村长实例挂载 `kill_bats` 任务） |
+
+**当前世界内容**：`43` 处草丛、`18` 处灌木、`25` 棵树、`13` 只蝙蝠、`2` 处蒸汽口、`1` 位村长。
+
+---
+
+## 目录结构
+
+```
+Test-ARPG/
+├── Player/        玩家（角色、状态、对话 autoload、背包 UI）
+├── Enemies/       敌人（蝙蝠 + 玩家探测 / 漫游控制器）
+├── NPC/           可对话 NPC + 对话脚本（.dialogue）
+├── actors/        共享移动基类（KinematicActor）
+├── Boxes/         模块化碰撞盒（HitBox / HurtBox / SoftCollision / SpeakBox）
+├── Effects/       特效（击中 / 死亡 / 采集）
+├── inventory/     背包系统（物品定义 .tres、全局管理器、UI）
+├── tasks/         任务系统（Task 资源、TaskManager、任务定义）
+├── save/          存档管理器
+├── UI/            生命值 / 任务列表 / 物品计数器 HUD
+├── World/         地图对象（草丛 / 灌木 / 树 / 草地贴图 / 瓦片集）
+├── addons/        第三方插件（dialogue_manager 等）
+├── world.tscn     主玩法地图
+├── title_screen.tscn / .gd   标题界面
+└── project.godot  项目配置
+```
+
+---
+
+## 运行方式
+
+1. 安装 **Godot Engine 4.7**（需支持 Forward Plus / Vulkan）。
+2. 在 Godot 项目管理器中**导入**本目录，或直接用 Godot 打开 `project.godot`。
+3. 运行主场景 `title_screen.tscn`（默认主场景）。
+4. 点击"开始"即可进入 `world.tscn` 开始全新一局。
+
+> 直接运行 `world.tscn` 也可（会跳过标题、同样触发开局重置）。
+
+---
+
+## 技术要点
+
+- **纯编辑器驱动工程**：无测试套件 / linter / CLI 构建，以 `.tscn` 场景 + `.gd` 脚本为主。
+- **资源即数据**：物品、任务均以 `Resource`（`.tres`）定义，便于在编辑器中配置与扩展。
+- **UID 引用**：场景/脚本间大量以 `uid://…` 相互引用，重命名或移动文件时需保留 `.uid` 伴随文件。
+- **ui_accept / attack 等输入**可在 `project.godot` 的 `[input]` 中按需增改。
+
+---
+
+## 致谢
+
+- 原创教程与素材：**[Heartbeast](https://www.youtube.com/@uheartbeast/videos)** 的 "Action RPG" 系列。
+- 对话功能：**[Dialogue Manager](https://github.com/nathanhoad/godot_dialogue_manager)** 插件。
+- 项目界面 / 文案 / 系统扩展：Test-ARPG 团队。
+
+---
+
+© 2026 Test-ARPG ｜ 学习与练习项目

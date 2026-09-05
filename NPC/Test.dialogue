@@ -1,16 +1,38 @@
 ~ hello
 
-Nathan: [[Hi|Hello|Howdy]], this is some dialogue.
-player: 你好！[wait=1][speed=0.2]此处测试中文。
-Nathan: [wave amp=25 freq=5]Here are some choices.[/wave]
-- 删除当前玩家
-	Nathan: 测试对话与游戏进程交互。
-	set Dialog.del_player = true
-- 点这个不会删除玩家
-	Nathan: 设置中。
-	set Dialog.del_player = false
-- Start again => hello
-- End the conversation => END
-Nathan: For more information see the online documentation.
+村长: 小兄弟，近来村外的蝙蝠愈发猖狂，连白天都敢在田埂上乱窜了。
+村长: 你要是在林子里见到它们，替村里多除掉几只也好。
+=> END
 
+
+~ kill_bats_offer
+
+村长: 你来得正好。我正愁没人替村里跑一趟。
+村长: 村东和西北的树林里蝙蝠成群，闹得大家不敢下地。你若肯去，替我消灭 5 只蝙蝠，我便把这阵子晒的蝙蝠干送你当谢礼。
+- 好，我接了
+	村长: 爽快！当心些，别被围住了。草丛里采的止血草能应急。
+	set Dialog.task_accept_request = "kill_bats"
+	=> END
+- 先不了，我再想想
+	村长: 行，想好了随时来找我。
+	=> END
+
+
+~ kill_bats_in_progress
+
+村长: 还差些火候，林子里那窝蝙蝠可不好惹。
+=> END
+
+
+~ kill_bats_turnin
+
+村长: 我听说林子里的蝙蝠少了许多，可是你干的？
+村长: 干得漂亮！来，这是答应你的谢礼。
+set Dialog.task_turnin_request = "kill_bats"
+=> END
+
+
+~ kill_bats_rewarded
+
+村长: 蝙蝠干拿去晾好，路上能顶一阵。往后有事再来找我。
 => END

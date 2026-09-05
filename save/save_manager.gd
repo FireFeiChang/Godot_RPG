@@ -2,8 +2,6 @@ extends Node
 
 const SAVE_DIR = "user://saves/"
 const SAVE_FILE = "save_data.json"
-# 背包唯一数据源：与玩家场景 export、inv_UI/item_counter 的 preload 为同一资源实例
-const PLAYER_INV: Inv = preload("res://inventory/playerInv.tres")
 
 signal save_completed()
 signal load_completed()
@@ -27,9 +25,11 @@ func save_game(slot: int = 1):
 		save_data["player_position"]["x"] = player.global_position.x
 		save_data["player_position"]["y"] = player.global_position.y
 	
-	for slot_obj in PLAYER_INV.slots:
+	for slot_obj in Inventory.inv.slots:
 		if slot_obj.item != null:
 			save_data["inventory"].append({
+				# 优先用 id 存档（便于读档反查）；旧存档/兼容保留 name
+				"item_id": slot_obj.item.id,
 				"item_name": slot_obj.item.name,
 				"amount": slot_obj.amount
 			})
@@ -73,10 +73,15 @@ func load_game(slot: int = 1):
 	
 	if save_data.has("inventory"):
 		for item_data in save_data["inventory"]:
-			var item = find_item_by_name(item_data["item_name"])
+			# 优先用注册表按 id 反查；兼容旧存档按 name 回退到注册表
+			var item: InvItem = null
+			if item_data.has("item_id"):
+				item = Inventory.get_item(item_data["item_id"])
+			if item == null and item_data.has("item_name"):
+				item = Inventory.get_item_by_name(item_data["item_name"])
 			if item != null:
 				for i in range(item_data["amount"]):
-					PLAYER_INV.insert(item)
+					Inventory.inv.insert(item)
 	
 	if save_data.has("tasks"):
 		for task_data in save_data["tasks"]:
@@ -94,14 +99,3 @@ func has_save(slot: int = 1) -> bool:
 func delete_save(slot: int = 1):
 	if FileAccess.file_exists(SAVE_DIR + str(slot) + "_" + SAVE_FILE):
 		DirAccess.remove_absolute(SAVE_DIR + str(slot) + "_" + SAVE_FILE)
-
-func find_item_by_name(name: String) -> InvItem:
-	var item_paths = [
-		"res://inventory/item/grass.tres",
-		"res://inventory/item/bat.tres"
-	]
-	for path in item_paths:
-		var item = load(path)
-		if item != null and item.name == name:
-			return item
-	return null
