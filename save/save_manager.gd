@@ -16,6 +16,7 @@ func save_game(slot: int = 1):
 			"x": 0,
 			"y": 0
 		},
+		"gold": Wallet.gold,
 		"inventory": [],
 		"tasks": []
 	}
@@ -70,6 +71,10 @@ func load_game(slot: int = 1):
 				save_data["player_position"].get("x", 344),
 				save_data["player_position"].get("y", 196)
 			)
+
+	if save_data.has("gold"):
+		Wallet.gold = save_data["gold"]
+		Wallet.gold_changed.emit(Wallet.gold)
 	
 	if save_data.has("inventory"):
 		for item_data in save_data["inventory"]:

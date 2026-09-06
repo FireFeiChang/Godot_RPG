@@ -3,3 +3,6 @@
 
 # Claude Code local session config (MCP servers, permissions)
 .claude/
+
+# 素材/新增 = 第三方原始素材（用到的已复制进项目，源目录不入库）
+素材/新增/

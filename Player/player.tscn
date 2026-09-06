@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://yc57mmoyb2ub"]
 
-[ext_resource type="Script" uid="uid://ce4jwldcr8fct" path="res://Player/Player.gd" id="1_f0yjq"]
+[ext_resource type="Script" uid="uid://ce4jwldcr8fct" path="res://Player/player.gd" id="1_f0yjq"]
 [ext_resource type="Texture2D" uid="uid://cjx1ccjt6i8mv" path="res://Player/Player.png" id="2_ki2q3"]
 [ext_resource type="Shader" uid="uid://cmyxragmcnn1m" path="res://white_color.gdshader" id="2_q7i84"]
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="3_3ruse"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="5_ldt70"]
 [ext_resource type="Texture2D" uid="uid://cbewthn26u4jg" path="res://Shadows/MediumShadow.png" id="6_wuscp"]
 [ext_resource type="PackedScene" uid="uid://cgcr1jsjgina0" path="res://Boxes/speak_box.tscn" id="10_f1xhq"]
-[ext_resource type="PackedScene" uid="uid://b6m766qqelvlw" path="res://inventory/inv_ui.tscn" id="12_1l7gw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4o33w"]
 shader = ExtResource("2_q7i84")
@@ -61,25 +60,13 @@ tracks/2/keys = {
 "update": 0,
 "values": [1.5708]
 }
-tracks/3/type = "value"
+tracks/3/type = "audio"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HitBoxPivot/SwordHitBox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("AudioStreamPlayer")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/4/type = "audio"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AudioStreamPlayer")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -87,7 +74,7 @@ tracks/4/keys = {
 }],
 "times": PackedFloat32Array(0.1)
 }
-tracks/4/use_blend = true
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_gmwbo"]
 resource_name = "AttackLeft"
@@ -130,25 +117,13 @@ tracks/2/keys = {
 "update": 0,
 "values": [3.14159]
 }
-tracks/3/type = "value"
+tracks/3/type = "audio"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HitBoxPivot/SwordHitBox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("AudioStreamPlayer")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/4/type = "audio"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AudioStreamPlayer")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -160,7 +135,7 @@ tracks/4/keys = {
 }],
 "times": PackedFloat32Array(0.1, 0.1001)
 }
-tracks/4/use_blend = true
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_ntl8x"]
 resource_name = "AttackRight"
@@ -203,25 +178,13 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0]
 }
-tracks/3/type = "value"
+tracks/3/type = "audio"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HitBoxPivot/SwordHitBox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("AudioStreamPlayer")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/4/type = "audio"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AudioStreamPlayer")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -229,7 +192,7 @@ tracks/4/keys = {
 }],
 "times": PackedFloat32Array(0.1)
 }
-tracks/4/use_blend = true
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_uc4co"]
 resource_name = "AttackUp"
@@ -272,25 +235,13 @@ tracks/2/keys = {
 "update": 0,
 "values": [-1.5708]
 }
-tracks/3/type = "value"
+tracks/3/type = "audio"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HitBoxPivot/SwordHitBox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("AudioStreamPlayer")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/4/type = "audio"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("AudioStreamPlayer")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
@@ -298,7 +249,7 @@ tracks/4/keys = {
 }],
 "times": PackedFloat32Array(0.1)
 }
-tracks/4/use_blend = true
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_sef3i"]
 resource_name = "IdleDown"
@@ -878,14 +829,8 @@ collision_layer = 2
 collision_mask = 65
 script = ExtResource("1_f0yjq")
 
-[node name="inv_UI" parent="." unique_id=294157767 instance=ExtResource("12_1l7gw")]
-z_index = 1
-offset_left = -77.0
-offset_top = 8.0
-offset_right = -11.0
-offset_bottom = 105.0
-
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1736286599]
+z_index = 1
 material = SubResource("ShaderMaterial_4o33w")
 position = Vector2(0, -7.982)
 rotation = 0.000558689
@@ -919,6 +864,7 @@ script = ExtResource("4_btwms")
 
 [node name="CollisionShape2D" parent="HitBoxPivot/SwordHitBox" index="0"]
 shape = SubResource("CapsuleShape2D_l8hgp")
+disabled = true
 debug_color = Color(0.231373, 0.607843, 0.537255, 0.419608)
 
 [node name="HurtBox" parent="." unique_id=359825586 instance=ExtResource("5_ldt70")]
@@ -930,7 +876,7 @@ shape = SubResource("CapsuleShape2D_sx3p1")
 debug_color = Color(0.764706, 0.203922, 0.964706, 0.419608)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=944746908]
-position = Vector2(0, 2)
+position = Vector2(0, 3)
 texture = ExtResource("6_wuscp")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1273136505]

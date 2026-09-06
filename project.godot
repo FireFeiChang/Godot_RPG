@@ -26,6 +26,7 @@ Dialog="*res://Player/dialog.gd"
 TaskManager="*res://tasks/task_manager.tscn"
 SaveManager="*res://save/save_manager.tscn"
 Inventory="*res://inventory/inventory_manager.gd"
+Wallet="*res://coins/wallet.gd"
 DialogueManager="*uid://c3rodes2l3gxb"
 
 [display]
@@ -113,3 +114,7 @@ locale/translations_pot_files=PackedStringArray("res://NPC/Test.dialogue")
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="SoftCollison"
 2d_physics/layer_7="NPC"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

@@ -3,42 +3,96 @@
 [ext_resource type="Script" uid="uid://bmtqdfqxd5y71" path="res://Inv_slot.gd" id="1_vqao6"]
 [ext_resource type="Script" uid="uid://crfmgoamak3rv" path="res://inventory.gd" id="2_pboox"]
 
-[sub_resource type="Resource" id="Resource_xxmpi"]
+[sub_resource type="Resource" id="Resource_slot0"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_ixjkc"]
+[sub_resource type="Resource" id="Resource_slot1"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_s1h5o"]
+[sub_resource type="Resource" id="Resource_slot2"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_masgo"]
+[sub_resource type="Resource" id="Resource_slot3"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_6jwl4"]
+[sub_resource type="Resource" id="Resource_slot4"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_2hkux"]
+[sub_resource type="Resource" id="Resource_slot5"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_cqnle"]
+[sub_resource type="Resource" id="Resource_slot6"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_i15ur"]
+[sub_resource type="Resource" id="Resource_slot7"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_nvmeh"]
+[sub_resource type="Resource" id="Resource_slot8"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_ai48e"]
+[sub_resource type="Resource" id="Resource_slot9"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_u1drt"]
+[sub_resource type="Resource" id="Resource_slot10"]
 script = ExtResource("1_vqao6")
 
-[sub_resource type="Resource" id="Resource_fqxhh"]
+[sub_resource type="Resource" id="Resource_slot11"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot12"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot13"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot14"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot15"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot16"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot17"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot18"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot19"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot20"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot21"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot22"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot23"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot24"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot25"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot26"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot27"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot28"]
+script = ExtResource("1_vqao6")
+
+[sub_resource type="Resource" id="Resource_slot29"]
 script = ExtResource("1_vqao6")
 
 [resource]
 script = ExtResource("2_pboox")
-slots = Array[ExtResource("1_vqao6")]([SubResource("Resource_xxmpi"), SubResource("Resource_ixjkc"), SubResource("Resource_s1h5o"), SubResource("Resource_masgo"), SubResource("Resource_6jwl4"), SubResource("Resource_2hkux"), SubResource("Resource_cqnle"), SubResource("Resource_i15ur"), SubResource("Resource_nvmeh"), SubResource("Resource_ai48e"), SubResource("Resource_u1drt"), SubResource("Resource_fqxhh")])
+slots = Array[ExtResource("1_vqao6")]([SubResource("Resource_slot0"), SubResource("Resource_slot1"), SubResource("Resource_slot2"), SubResource("Resource_slot3"), SubResource("Resource_slot4"), SubResource("Resource_slot5"), SubResource("Resource_slot6"), SubResource("Resource_slot7"), SubResource("Resource_slot8"), SubResource("Resource_slot9"), SubResource("Resource_slot10"), SubResource("Resource_slot11"), SubResource("Resource_slot12"), SubResource("Resource_slot13"), SubResource("Resource_slot14"), SubResource("Resource_slot15"), SubResource("Resource_slot16"), SubResource("Resource_slot17"), SubResource("Resource_slot18"), SubResource("Resource_slot19"), SubResource("Resource_slot20"), SubResource("Resource_slot21"), SubResource("Resource_slot22"), SubResource("Resource_slot23"), SubResource("Resource_slot24"), SubResource("Resource_slot25"), SubResource("Resource_slot26"), SubResource("Resource_slot27"), SubResource("Resource_slot28"), SubResource("Resource_slot29")])

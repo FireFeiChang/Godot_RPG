@@ -14,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://taskui" path="res://UI/task_ui.tscn" id="13_taskui"]
 [ext_resource type="PackedScene" uid="uid://itemcounter" path="res://UI/item_counter.tscn" id="14_itemcounter"]
 [ext_resource type="PackedScene" uid="uid://toastui" path="res://UI/toast_ui.tscn" id="15_toastui"]
+[ext_resource type="PackedScene" uid="uid://b6m766qqelvlw" path="res://inventory/inv_ui.tscn" id="16_invui"]
+[ext_resource type="PackedScene" uid="uid://cornback" path="res://Enemies/acornback.tscn" id="17_acorn"]
+[ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -1082,7 +1085,11 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Toast_UI" parent="CanvasLayer" instance=ExtResource("15_toastui")]
+[node name="Toast_UI" parent="CanvasLayer" unique_id=2126522776 instance=ExtResource("15_toastui")]
+
+[node name="inv_UI" parent="CanvasLayer" unique_id=449078232 instance=ExtResource("16_invui")]
+
+[node name="GoldCounter" parent="CanvasLayer" unique_id=2100011302 instance=ExtResource("18_gold")]
 
 [node name="NPC" parent="." unique_id=111867162 instance=ExtResource("10_t7hy5")]
 position = Vector2(240, 545)
@@ -1134,3 +1141,12 @@ position = Vector2(300, 240)
 
 [node name="Bat18" parent="." unique_id=146468635 instance=ExtResource("7_sxwx7")]
 position = Vector2(240, 90)
+
+[node name="Acornback1" parent="." unique_id=777770001 instance=ExtResource("17_acorn")]
+position = Vector2(620, 410)
+
+[node name="Acornback2" parent="." unique_id=777770002 instance=ExtResource("17_acorn")]
+position = Vector2(700, 500)
+
+[node name="Acornback3" parent="." unique_id=777770003 instance=ExtResource("17_acorn")]
+position = Vector2(340, 430)

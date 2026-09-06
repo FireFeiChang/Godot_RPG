@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="7_wt1b0"]
 [ext_resource type="PackedScene" uid="uid://oa4waysdaxr5" path="res://Boxes/soft_collison.tscn" id="8_y78ct"]
 [ext_resource type="PackedScene" uid="uid://cil5a2a6nvc6g" path="res://Enemies/wander_controller.tscn" id="9_l2yix"]
-[ext_resource type="Texture2D" uid="uid://b0d64n73qyish" path="res://素材/white.png" id="11_8j2ef"]
+[ext_resource type="Texture2D" uid="uid://b0d64n73qyish" path="res://素材/原版/white.png" id="11_8j2ef"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u0ryp"]
 resource_local_to_scene = true
@@ -142,10 +142,12 @@ color_ramp = SubResource("GradientTexture1D_w8s78")
 collision_layer = 16
 script = ExtResource("1_eou2k")
 FRICTION = 100
+MAX_SPEED = 70
 item = ExtResource("2_mjwco")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_u0ryp")
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_2n6ir")
 animation = &"Bat"
 autoplay = "Bat"

@@ -10,6 +10,23 @@ var inv: Inv = preload("res://inventory/playerInv.tres")
 const ITEM_REGISTRY: Dictionary = {
 	"grass": "res://inventory/item/grass.tres",
 	"bat": "res://inventory/item/bat.tres",
+	# 16 件 RPG 道具（Adventurer's Kit 图标）
+	"backpack": "res://inventory/item/backpack.tres",
+	"bedroll": "res://inventory/item/bedroll.tres",
+	"tent": "res://inventory/item/tent.tres",
+	"campfire": "res://inventory/item/campfire.tres",
+	"cooking_pot": "res://inventory/item/cooking_pot.tres",
+	"key_iron": "res://inventory/item/key_iron.tres",
+	"chest_closed": "res://inventory/item/chest_closed.tres",
+	"coin_pouch": "res://inventory/item/coin_pouch.tres",
+	"gemstone": "res://inventory/item/gemstone.tres",
+	"map_rolled": "res://inventory/item/map_rolled.tres",
+	"compass": "res://inventory/item/compass.tres",
+	"torch": "res://inventory/item/torch.tres",
+	"bucket": "res://inventory/item/bucket.tres",
+	"signpost": "res://inventory/item/signpost.tres",
+	"grappling_hook": "res://inventory/item/grappling_hook.tres",
+	"spyglass": "res://inventory/item/spyglass.tres",
 }
 
 ## 按 id 返回物品资源；未登记返回 null。

@@ -1,7 +1,7 @@
 extends Control
 
 @onready var inv: Inv = Inventory.inv
-@onready var hBox: Array = $ScrollContainer/VBoxContainer.get_children()
+@onready var hBox: Array = $Frame/ScrollContainer/VBoxContainer.get_children()
 
 var slots: Array = []
 var is_open = false

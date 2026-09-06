@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const PlayerHurtSoundScene = preload("res://Player/player_hurt_sound.tscn")
+const SwingEffectScene = preload("res://Effects/swing_effect.tscn")
 const ACCELERATION = 500
 const FRICTION = 500
 const MAX_SPEED = 100
@@ -15,13 +16,14 @@ enum {
 
 var moving_state = MOVE
 var roll_vector = Vector2.DOWN
+var _sword_armed := false
 var state = PlayerStates
 var dialog = Dialog
 
 @onready var animationPlayer = $AnimationPlayer
 @onready var animationTree = $AnimationTree
 @onready var animationState = animationTree.get("parameters/playback")
-# @onready var swordHitBox = $HitBoxPivot/SwordHitBox
+@onready var swordHitBox = $HitBoxPivot/SwordHitBox
 @onready var hurtBox = $HurtBox
 @onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
@@ -40,6 +42,7 @@ func _reset_new_game():
 		slot.item = null
 		slot.amount = 0
 	Inventory.inv.update.emit()
+	Wallet.reset()
 	TaskManager.reset_all_tasks()
 
 func _physics_process(delta):
@@ -96,15 +99,48 @@ func roll_state(delta):
 
 func attack_state(delta):
 	velocity = Vector2.ZERO
+	# 只有真正进入一次挥刀时才启用剑判定盒 + 挥砍刀光
+	if not _sword_armed:
+		_sword_armed = true
+		_spawn_swing_effect()
+		var tw := get_tree().create_timer(0.1)
+		tw.timeout.connect(_enable_sword)
 	animationState.travel("Attack")
-	
-	
+
+
 func roll_animation_finished():
 	velocity = Vector2.ZERO
 	moving_state = MOVE
 
 func attack_animation_finished():
+	_sword_armed = false
+	_sword_shape().disabled = true  # 收招：关闭剑判定盒，避免平时误伤
 	moving_state = MOVE
+
+## 挥刀中：短暂开启剑判定盒，命中由 HurtBox 检测。
+func _enable_sword():
+	if moving_state == ATTACK and is_instance_valid(swordHitBox):
+		_sword_shape().disabled = false
+
+func _sword_shape() -> CollisionShape2D:
+	return swordHitBox.get_node("CollisionShape2D")
+
+## 播放挥砍刀光：以玩家为中心、朝攻击朝向偏移少许并旋转，播完自动销毁。
+func _spawn_swing_effect():
+	var fx: AnimatedSprite2D = SwingEffectScene.instantiate()
+	get_tree().current_scene.add_child(fx)
+	# 刀光随攻击朝向（roll_vector 记录最近一次移动/默认朝下）定位与旋转
+	var dir := roll_vector.normalized()
+	if dir == Vector2.ZERO:
+		dir = Vector2.DOWN
+	fx.global_position = global_position + dir * 10.0
+	# 朝左（纯左右，y 很小）时：旋转 180° 会把“从上往下挥”的刀光
+	# 颠倒成“从下往上”，所以改用水平镜像（只左右对调、上下不变）。
+	# 斜向仍走 angle 旋转（用户未报斜向问题，避免误伤）。
+	if dir.x < -0.9 and absf(dir.y) < 0.45:
+		fx.flip_h = true
+	else:
+		fx.rotation = dir.angle()
 
 func _on_hurt_box_area_entered(area):
 	if area.get_script().resource_path.find("hit_box") == -1:

@@ -1,94 +1,219 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6m766qqelvlw"]
+[gd_scene format=3 uid="uid://b6m766qqelvlw"]
 
-[ext_resource type="Script" path="res://inventory/inv_UI.gd" id="1_7f7h5"]
+[ext_resource type="Script" uid="uid://dtplopkhgondo" path="res://inventory/inv_UI.gd" id="1_7f7h5"]
 [ext_resource type="PackedScene" uid="uid://dgcjwh8c8we7f" path="res://inventory/inv_ui_slot.tscn" id="3_ml11j"]
+[ext_resource type="Texture2D" uid="uid://dglnwta8i5tn0" path="res://素材/原版/BagGui.png" id="4_bag"]
 
-[node name="inv_UI" type="Control"]
+[node name="inv_UI" type="Control" unique_id=2124641665]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_7f7h5")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="Dim" type="ColorRect" parent="." unique_id=1768316402]
 layout_mode = 0
-offset_right = 65.0
-offset_bottom = 59.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.6)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="Frame" type="Control" parent="." unique_id=1772436070]
+anchors_preset = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -88.0
+offset_right = 76.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bg" type="TextureRect" parent="Frame" unique_id=63192151]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -3.0
+offset_right = 4.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_bag")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Frame" unique_id=1914447366]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 29.0
+offset_right = 5.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Frame/ScrollContainer" unique_id=82289779]
 layout_mode = 2
+theme_override_constants/separation = 6
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Row1" type="HBoxContainer" parent="Frame/ScrollContainer/VBoxContainer" unique_id=917411499]
 layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
 
-[node name="inv_UI_slot" parent="ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot" parent="Frame/ScrollContainer/VBoxContainer/Row1" unique_id=712436099 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot2" parent="ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot2" parent="Frame/ScrollContainer/VBoxContainer/Row1" unique_id=1325201736 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot3" parent="ScrollContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot3" parent="Frame/ScrollContainer/VBoxContainer/Row1" unique_id=686423065 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="inv_UI_slot" parent="ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot4" parent="Frame/ScrollContainer/VBoxContainer/Row1" unique_id=818298219 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot2" parent="ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot5" parent="Frame/ScrollContainer/VBoxContainer/Row1" unique_id=1685439024 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot3" parent="ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("3_ml11j")]
+[node name="Row2" type="HBoxContainer" parent="Frame/ScrollContainer/VBoxContainer" unique_id=121269692]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="inv_UI_slot" parent="Frame/ScrollContainer/VBoxContainer/Row2" unique_id=1432264682 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="inv_UI_slot" parent="ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot2" parent="Frame/ScrollContainer/VBoxContainer/Row2" unique_id=1109888818 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot2" parent="ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot3" parent="Frame/ScrollContainer/VBoxContainer/Row2" unique_id=144191426 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot3" parent="ScrollContainer/VBoxContainer/HBoxContainer3" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot4" parent="Frame/ScrollContainer/VBoxContainer/Row2" unique_id=1129796303 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="inv_UI_slot" parent="ScrollContainer/VBoxContainer/HBoxContainer4" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot5" parent="Frame/ScrollContainer/VBoxContainer/Row2" unique_id=385008426 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot2" parent="ScrollContainer/VBoxContainer/HBoxContainer4" instance=ExtResource("3_ml11j")]
+[node name="Row3" type="HBoxContainer" parent="Frame/ScrollContainer/VBoxContainer" unique_id=1839803238]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="inv_UI_slot" parent="Frame/ScrollContainer/VBoxContainer/Row3" unique_id=1170245646 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot3" parent="ScrollContainer/VBoxContainer/HBoxContainer4" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot2" parent="Frame/ScrollContainer/VBoxContainer/Row3" unique_id=1570632058 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="inv_UI_slot" parent="ScrollContainer/VBoxContainer/HBoxContainer5" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot3" parent="Frame/ScrollContainer/VBoxContainer/Row3" unique_id=2078084055 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot2" parent="ScrollContainer/VBoxContainer/HBoxContainer5" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot4" parent="Frame/ScrollContainer/VBoxContainer/Row3" unique_id=759806590 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 
-[node name="inv_UI_slot3" parent="ScrollContainer/VBoxContainer/HBoxContainer5" instance=ExtResource("3_ml11j")]
+[node name="inv_UI_slot5" parent="Frame/ScrollContainer/VBoxContainer/Row3" unique_id=1691486338 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="Row4" type="HBoxContainer" parent="Frame/ScrollContainer/VBoxContainer" unique_id=1327919169]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="inv_UI_slot" parent="Frame/ScrollContainer/VBoxContainer/Row4" unique_id=695030277 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot2" parent="Frame/ScrollContainer/VBoxContainer/Row4" unique_id=350851392 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot3" parent="Frame/ScrollContainer/VBoxContainer/Row4" unique_id=1027759522 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot4" parent="Frame/ScrollContainer/VBoxContainer/Row4" unique_id=1578348183 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot5" parent="Frame/ScrollContainer/VBoxContainer/Row4" unique_id=872596429 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="Row5" type="HBoxContainer" parent="Frame/ScrollContainer/VBoxContainer" unique_id=1921837663]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="inv_UI_slot" parent="Frame/ScrollContainer/VBoxContainer/Row5" unique_id=2063011970 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot2" parent="Frame/ScrollContainer/VBoxContainer/Row5" unique_id=1910995773 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot3" parent="Frame/ScrollContainer/VBoxContainer/Row5" unique_id=843332045 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot4" parent="Frame/ScrollContainer/VBoxContainer/Row5" unique_id=485859557 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot5" parent="Frame/ScrollContainer/VBoxContainer/Row5" unique_id=956809276 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="Row6" type="HBoxContainer" parent="Frame/ScrollContainer/VBoxContainer" unique_id=303949457]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+
+[node name="inv_UI_slot" parent="Frame/ScrollContainer/VBoxContainer/Row6" unique_id=1626470244 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot2" parent="Frame/ScrollContainer/VBoxContainer/Row6" unique_id=1740900342 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot3" parent="Frame/ScrollContainer/VBoxContainer/Row6" unique_id=935080329 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot4" parent="Frame/ScrollContainer/VBoxContainer/Row6" unique_id=444709927 instance=ExtResource("3_ml11j")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+
+[node name="inv_UI_slot5" parent="Frame/ScrollContainer/VBoxContainer/Row6" unique_id=2023867126 instance=ExtResource("3_ml11j")]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2

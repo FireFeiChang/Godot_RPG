@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://itmbedroll"]
+
+[ext_resource type="Script" uid="uid://4yqkfmal3qpv" path="res://inventory/inventory_item.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://inventory/icons/bedroll.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_script")
+id = "bedroll"
+name = "睡垫"
+texture = ExtResource("2_tex")
+item_type = 1

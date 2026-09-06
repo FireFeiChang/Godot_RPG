@@ -13,9 +13,9 @@ func _ready():
 func update_ecg(health):
 	var health_ratio = health / state.max_health
 	if health <= 0:
-		ecg_display.texture = load("res://素材/心电图死亡.png")
+		ecg_display.texture = load("res://素材/原版/心电图死亡.png")
 	elif health_ratio < 0.3:
-		ecg_display.texture = load("res://素材/心电图死亡.png")
+		ecg_display.texture = load("res://素材/原版/心电图死亡.png")
 	else:
-		ecg_display.texture = load("res://素材/心电图存活.png")
+		ecg_display.texture = load("res://素材/原版/心电图存活.png")
 	health_label.text = str(health) + "/" + str(state.max_health)

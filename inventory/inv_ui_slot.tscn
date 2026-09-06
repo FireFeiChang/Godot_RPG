@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dgcjwh8c8we7f"]
 
 [ext_resource type="Script" path="res://inventory/inv_ui_slot.gd" id="1_fkog8"]
-[ext_resource type="Texture2D" uid="uid://gifql3wcv03i" path="res://素材/GUI.png" id="2_nysl7"]
+[ext_resource type="Texture2D" uid="uid://d0rsokiq4d7i5" path="res://素材/原版/ItemGui.png" id="2_nysl7"]
 
 [sub_resource type="FontFile" id="FontFile_jar0o"]
 subpixel_positioning = 0
