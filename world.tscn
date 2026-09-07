@@ -18,9 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://cornback" path="res://Enemies/acornback.tscn" id="17_acorn"]
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
 [ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
+[ext_resource type="Script" uid="uid://b4vottl4kjamm" path="res://Enemies/mob.gd" id="22_wukud"]
 [ext_resource type="PackedScene" uid="uid://u4t4vjribflt" path="res://Enemies/goblin.tscn" id="32_nx736"]
-[ext_resource type="PackedScene" uid="uid://dy6xowoffi0o7" path="res://Enemies/mimic.tscn" id="34_f3o6s"]
-[ext_resource type="PackedScene" uid="uid://dvq05ongos420" path="res://Enemies/slime.tscn" id="35_w4lh7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -1175,34 +1174,8 @@ position = Vector2(640, 430)
 variant = 3
 body_scale = 0.9
 
-[node name="Goblin" parent="." unique_id=768036981 instance=ExtResource("32_nx736")]
-position = Vector2(180, 120)
-MAX_SPEED = 100.0
-
-[node name="@CharacterBody2D@21808" parent="." unique_id=1546237882 instance=ExtResource("32_nx736")]
-position = Vector2(600, 140)
-MAX_SPEED = 100.0
-
-[node name="@CharacterBody2D@21809" parent="." unique_id=1737216164 instance=ExtResource("32_nx736")]
-position = Vector2(420, 280)
-MAX_SPEED = 100.0
-
-[node name="Mimic" parent="." unique_id=376659563 instance=ExtResource("34_f3o6s")]
+[node name="@CharacterBody2D@22408" type="CharacterBody2D" parent="." unique_id=376173218 instance=ExtResource("32_nx736")]
 position = Vector2(300, 200)
-MAX_SPEED = 100.0
-
-[node name="@CharacterBody2D@21810" parent="." unique_id=1311051997 instance=ExtResource("34_f3o6s")]
-position = Vector2(680, 300)
-MAX_SPEED = 100.0
-
-[node name="Slime" parent="." unique_id=508090559 instance=ExtResource("35_w4lh7")]
-position = Vector2(120, 350)
-MAX_SPEED = 100.0
-
-[node name="@CharacterBody2D@21811" parent="." unique_id=109116761 instance=ExtResource("35_w4lh7")]
-position = Vector2(520, 400)
-MAX_SPEED = 100.0
-
-[node name="@CharacterBody2D@21812" parent="." unique_id=443118278 instance=ExtResource("35_w4lh7")]
-position = Vector2(700, 100)
-MAX_SPEED = 100.0
+collision_layer = 16
+script = ExtResource("22_wukud")
+MAX_SPEED = 60
