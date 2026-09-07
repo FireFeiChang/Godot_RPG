@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://cgk4txqyjmpgy" path="res://Enemies/wander_controller.gd" id="15_o4ycw"]
 [ext_resource type="Texture2D" uid="uid://dem4fpv6opvx3" path="res://Enemies/acornback/white_particle.png" id="16_ucd5e"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1fluc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_837lf"]
 resource_local_to_scene = true
 shader = ExtResource("2_shader")
 shader_parameter/active = false
@@ -106,11 +106,10 @@ MAX_SPEED = 45
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1275338241]
 z_index = 1
-material = SubResource("ShaderMaterial_1fluc")
+material = SubResource("ShaderMaterial_837lf")
 position = Vector2(0, -26)
 scale = Vector2(0.45, 0.45)
-animation = &"Idle"
-autoplay = "Idle"
+animation = &""
 offset = Vector2(0, -60)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1012294754]

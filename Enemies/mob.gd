@@ -67,7 +67,13 @@ var disguised := false
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
 func _ready():
-	animated_sprite.animation_finished.connect(_on_animation_finished)
+	# 子场景（hurt_box / player_detection）已在 .tscn 内 bake 了信号连接，避免重复连接报错
+	if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
+		animated_sprite.animation_finished.connect(_on_animation_finished)
+	# 清掉 bake 的 animation/autoplay，防止 SpriteFrames 建好前尝试播放
+	animated_sprite.animation = &""
+	animated_sprite.autoplay = &""
+	animated_sprite.stop()
 	# 按 sheet 建 SpriteFrames
 	_build_sprite_frames()
 	if disguise_sheet != null:
