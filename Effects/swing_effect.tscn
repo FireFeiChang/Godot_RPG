@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://b2qr4mo36uo4d" path="res://Effects/fx/swing_slash.png" id="1_tex"]
 [ext_resource type="Script" uid="uid://gbf4sluiec8o" path="res://Effects/effect.gd" id="2_script"]
-[ext_resource type="AudioStream" uid="uid://d0yyvtg1uefet" path="res://Music and Sounds/Swipe.wav" id="3_snd"]
 
 [sub_resource type="AtlasTexture" id="Atlas_0"]
 atlas = ExtResource("1_tex")
@@ -94,7 +93,3 @@ sprite_frames = SubResource("SpriteFrames_fx")
 animation = &"Animate"
 offset = Vector2(0, -2)
 script = ExtResource("2_script")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=281009297]
-stream = ExtResource("3_snd")
-autoplay = true

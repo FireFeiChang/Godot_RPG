@@ -22,6 +22,7 @@ enum {
 var moving_state = ROLL
 var player = null
 var roll_clock := 0.0
+var dead := false            # 死亡动画播放中，停止一切行动/受击
 
 # ROLL 状态下的滚球冲刺时长（到时自动慢下来回 WANDER，避免无限追）
 const ROLL_BURST := 2.0
@@ -30,6 +31,8 @@ const ROLL_BURST := 2.0
 @onready var state = $States
 @onready var playerDetection = $PlayerDetection
 @onready var hurtBox = $HurtBox
+@onready var hitBox = $HitBox
+@onready var bodyCollision = $CollisionShape2D
 @onready var softCollision = $SoftCollison
 @onready var wanderController = $WanderController
 @onready var animationPlayer = $AnimationPlayer
@@ -37,8 +40,12 @@ const ROLL_BURST := 2.0
 
 func _ready():
 	moving_state = pick_random_state([IDLE, WANDER])
+	# 监听死亡动画播完（Death 是唯一不循环的动画，播完即爆炸清理）
+	animatedSprite.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta):
+	if dead:
+		return
 	match moving_state:
 		IDLE:
 			_play("Idle")
@@ -61,9 +68,10 @@ func _physics_process(delta):
 			roll_clock -= delta
 			if player != null and is_instance_valid(player):
 				accelerate_towards_point(player.global_position, delta)
+				_face_toward(player.global_position, true)   # 滚球帧左右镜像，翻转极性取反 → 正面朝玩家
 			else:
 				apply_friction(delta)
-			_flip_to_velocity()
+				_flip_to_velocity()
 			if roll_clock <= 0.0:
 				moving_state = pick_random_state([IDLE, WANDER])
 
@@ -78,6 +86,13 @@ func accelerate_towards_point(point: Vector2, delta: float) -> void:
 func _flip_to_velocity() -> void:
 	if absf(velocity.x) > 5.0:
 		animatedSprite.flip_h = velocity.x < 0
+
+## 让贴图正面朝向 point。mirrored=true 表示该动画帧左右相对行走是镜像的（如滚球帧），翻转极性取反。
+func _face_toward(point: Vector2, mirrored := false) -> void:
+	if mirrored:
+		animatedSprite.flip_h = point.x > global_position.x
+	else:
+		animatedSprite.flip_h = point.x < global_position.x
 
 func _play(anim: String) -> void:
 	if animatedSprite.animation != anim:
@@ -101,6 +116,8 @@ func update_wander():
 func _on_hurt_box_area_entered(area):
 	if area.get_script().resource_path.find("hit_box") == -1:
 		return
+	if dead:
+		return
 	particles.emitting = true
 	velocity = (area.global_position - global_position).normalized() * area.knockback_strength
 	hurtBox.create_hit_effect()
@@ -108,6 +125,23 @@ func _on_hurt_box_area_entered(area):
 	state.health -= area.damage
 
 func _on_states_no_health():
+	# 进入死亡：先播 Death 动画，播完(animation_finished)才爆炸并清理
+	dead = true
+	velocity = Vector2.ZERO
+	# 关闭受击/碰撞与身体碰撞，避免死亡动画期间继续被打/推挤
+	hurtBox.set_deferred("monitoring", false)
+	hitBox.set_deferred("monitoring", false)
+	hitBox.set_deferred("monitorable", false)
+	bodyCollision.set_deferred("disabled", true)
+	animatedSprite.play("Death")
+
+## 播死亡动画期间不允许被打断成移动/待机
+func _on_animation_finished():
+	if animatedSprite.animation == "Death":
+		_die()
+
+## 真正结算：爆炸特效 + 掉落 + 销毁（仅在 Death 动画播完后调用一次）
+func _die():
 	create_enemy_death_effect()
 	if item != null and randf() < drop_chance:
 		TaskManager.call_deferred("spawn_drop_item", global_position, item)

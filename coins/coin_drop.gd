@@ -10,15 +10,18 @@ const FLOAT_SPEED := 3.5    # 浮动频率
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+## 金币视觉整体比例（场景里 AnimatedSprite2D.scale=0.75；这里只做"落地压扁/回弹"的相对形变）
+const SPRITE_SCALE := Vector2(0.75, 0.75)
+
 var _age := 0.0
 var _collected := false
 
 func _ready():
 	sprite.play("spin")
-	# 落地小弹跳反馈：先压扁再回弹
+	# 落地小弹跳反馈：先压扁再回弹（相对当前 0.75 缩放）
 	var tw := create_tween()
-	tw.tween_property(sprite, "scale", Vector2(1.2, 0.75), 0.06)
-	tw.tween_property(sprite, "scale", Vector2.ONE, 0.14)
+	tw.tween_property(sprite, "scale", Vector2(0.75 * 1.2, 0.75 * 0.6), 0.06)
+	tw.tween_property(sprite, "scale", SPRITE_SCALE, 0.14)
 
 func _process(delta):
 	_age += delta

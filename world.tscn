@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b6m766qqelvlw" path="res://inventory/inv_ui.tscn" id="16_invui"]
 [ext_resource type="PackedScene" uid="uid://cornback" path="res://Enemies/acornback.tscn" id="17_acorn"]
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
+[ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -1144,9 +1145,41 @@ position = Vector2(240, 90)
 
 [node name="Acornback1" parent="." unique_id=777770001 instance=ExtResource("17_acorn")]
 position = Vector2(620, 410)
+MAX_SPEED = 100.0
 
 [node name="Acornback2" parent="." unique_id=777770002 instance=ExtResource("17_acorn")]
 position = Vector2(700, 500)
+MAX_SPEED = 100.0
 
 [node name="Acornback3" parent="." unique_id=777770003 instance=ExtResource("17_acorn")]
 position = Vector2(340, 430)
+MAX_SPEED = 100.0
+
+[node name="Chests" type="Node2D" parent="." unique_id=52292539]
+y_sort_enabled = true
+
+[node name="Chest_village" parent="Chests" unique_id=306182049 instance=ExtResource("19_chest")]
+position = Vector2(272, 520)
+body_scale = 0.85
+
+[node name="Chest_mid" parent="Chests" unique_id=451936377 instance=ExtResource("19_chest")]
+position = Vector2(440, 300)
+variant = 0
+
+[node name="Chest_east" parent="Chests" unique_id=1200205580 instance=ExtResource("19_chest")]
+position = Vector2(700, 320)
+variant = 2
+body_scale = 0.85
+
+[node name="Chest_forest" parent="Chests" unique_id=1506396788 instance=ExtResource("19_chest")]
+position = Vector2(500, 185)
+variant = 0
+
+[node name="Chest_corner" parent="Chests" unique_id=1706582502 instance=ExtResource("19_chest")]
+position = Vector2(760, 470)
+body_scale = 0.85
+
+[node name="Chest_king" parent="Chests" unique_id=1079251845 instance=ExtResource("19_chest")]
+position = Vector2(640, 430)
+variant = 3
+body_scale = 0.9

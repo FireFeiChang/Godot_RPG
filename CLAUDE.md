@@ -16,9 +16,10 @@ Files, docs, and UI strings are primarily written in Chinese (e.g. `消灭蝙蝠
 
 ## Flow / entry points
 
-- `title_screen.tscn` (main scene) → Start button calls `SaveManager.load_game(1)` if a save exists, then swaps to `world.tscn` via `change_scene_to_file`.
-- `world.tscn` is one large `y_sort_enabled` map: TileMap ground (Dirt/Cliff), a `Camera2D` (position-smoothed, hard-coded limits), the player, grouped Grass/Bush/Tree nodes, ~12 Bat instances, NPC, SteamVent, and a `CanvasLayer` hosting the HUD (`HealthUI`, `Task_UI`, `ItemCounter`). The player node carries a `RemoteTransform2D` that drives the camera.
-- `Player` is instanced from the world scene (not autoloaded); its inventory `Inv` resource is exported on the node and also preloaded directly by UI scripts.
+- `title_screen.tscn` (main scene) → Start button **deletes any save then** swaps to `world.tscn` via `change_scene_to_file` (every run is a fresh start; `world.gd`/`Player._reset_new_game` also resets autoloads — health/gold/inventory/tasks).
+- `world.tscn` is one large `y_sort_enabled` map: TileMap ground (Dirt/Cliff), a `Camera2D` (position-smoothed, hard-coded limits), the player, plus grouped instances of Grass (43) / Bush (18) / Tree (25), 14 Bat, 3 Acornback, 6 Chest, NPC, 2 SteamVent, and a `CanvasLayer` hosting the HUD (`HealthUI`, `Task_UI`, `ItemCounter`, `gold_counter`). The player node carries a `RemoteTransform2D` that drives the camera.
+- `Player` is instanced from the world scene (not autoloaded). Its gameplay "singletons" are autoloads referenced by name in `_ready` (`var state = PlayerStates` etc.), not node children.
+- Chests/coin pickups are added to `get_tree().current_scene` by their spawners — deliberately not parented to a dying node.
 
 ## Autoloads (`project.godot`)
 
@@ -26,7 +27,9 @@ Files, docs, and UI strings are primarily written in Chinese (e.g. `消灭蝙蝠
 | --- | --- | --- |
 | `PlayerStates` | `res://Player/player_states.tscn` (an instance of `states.tscn`, `max_health = 5`) | **Global player health node.** `health`/`max_health` with setters emitting `health_changed`/`max_health_changed`/`no_health`. Referenced by name from nearly every gameplay script. |
 | `TaskManager` | `res://tasks/task_manager.tscn` | Task registry & objective tracking; emits `task_started`/`objective_updated`/`task_completed`/`task_rewarded`. Also spawns world drop-items via `spawn_drop_item`. |
-| `SaveManager` | `res://save/save_manager.tscn` | JSON save/load to `user://saves/<slot>_save_data.json`; autosave every 60 s is triggered from `Player._physics_process`. |
+| `SaveManager` | `res://save/save_manager.tscn` | JSON save/load to `user://saves/<slot>_save_data.json`. Not used for the fresh-start flow (Start deletes save) but `save_game`/`load_game` still work — read/writes gold, health, player pos, inventory, tasks. |
+| `Inventory` | `res://inventory/inventory_manager.gd` | **Global inventory + item registry**: holds `inv` (`Inv`, source of truth `playerInv.tres`, 30 slots) and `ITEM_REGISTRY` (id→path). `get_item(id)` / `get_item_by_name(name)`. |
+| `Wallet` | `res://coins/wallet.gd` | Global coin balance (`gold`, `signal gold_changed`); `spawn_coin_drop(pos, amount)` for world pickups. |
 | `DialogueManager` | Dialogue Manager addon | Third-party dialogue plugin. |
 | `Dialog` | `res://Player/dialog.gd` | Bare `Node` flag holder (`del_player` deletes the player, set by dialogue lines). |
 
@@ -34,19 +37,19 @@ Files, docs, and UI strings are primarily written in Chinese (e.g. `消灭蝙蝠
 
 - **Health**: `states.gd` (a `Node2D` with `max_health`/`health` + setter signals) is reused two ways: autoloaded globally for the player (`PlayerStates`) **and** instanced as a child node (`$States`) inside each bat scene. The HUD (`health_ui.gd`) subscribes to `PlayerStates` signals.
 - **Player `state`/`dialog` fields are set at `_ready`** (`var state = PlayerStates; var dialog = Dialog`) — they are not `@onready` node refs.
-- **Inventory resource sharing**: the single source of truth is `res://inventory/playerInv.tres` — an `Inv` Resource (script `res://inventory.gd`, `class_name Inv`) holding 12 `InvSlot`s. It is exported on the player scene and also `preload`ed directly by `inv_UI.gd` and `item_counter.gd`. Note `save_manager.gd` and `task_ui.gd` read it as `PlayerStates.inv`, but `states.gd` does **not** declare an `inv` property — this path is inconsistent with the direct-preload pattern and will fail at runtime.
-- Items are data Resources (`class_name InvItem`, types `HEAL`/`MATERIAL`/`KEY`) defined as `.tres` files (`inventory/item/grass.tres`, `bat.tres`). Save/load re-finds items by name against a hard-coded path list in `SaveManager.find_item_by_name`.
+- **Inventory sharing (single source of truth)**: `res://inventory/playerInv.tres` (an `Inv`, 30 `InvSlot`s) is loaded by the **`Inventory` autoload** (`inventory_manager.gd: var inv = preload(...)`). All scripts go through that autoload — e.g. `Inventory.inv.insert(...)`, `Inventory.get_item(id)`, `Wallet.spawn_coin_drop(...)`. Don't add a separate `inv` property to `states.gd`/`PlayerStates`.
+- Items are data Resources (`class_name InvItem`, script `inventory/inventory_item.gd`, types `HEAL`/`MATERIAL`/`KEY`; fields `id`/`name`/`texture`) defined as `.tres` files (`inventory/item/`, e.g. `grass.tres`, plus 16 RPG items like `torch.tres`). Save writes `item_id`; load re-finds via `Inventory.get_item` against `ITEM_REGISTRY` (fallback by name).
 
 ## Combat & collision design
 
-Physics layers (`project.godot` `[layer_names]`): 1 World, 2 Player, 3 PlayerHurtBox, 4 EnemyHurtBox, 5 Enemy, 6 SoftCollison, 7 NPC.
+Physics layers (`project.godot` `[layer_names]`): 1 World, 2 Player, 3 PlayerHurtBox, 4 EnemyHurtBox, 5 Enemy, 6 SoftCollison, 7 NPC. The player's sword `SwordHitBox` sits on **layer 8** (unnamed); grass/chest HurtBoxes use `collision_mask = 8` to receive it.
 
 The `Boxes/` folder is a modular collision system, each box a small `Area2D` scene + script:
-- `hit_box.gd` — data only: `@export damage` and `@export knockback_strength`. It is the attacker's active hitbox (e.g. player's `SwordHitBox`).
+- `hit_box.gd` — data only: `@export damage` and `@export knockback_strength`. It is the attacker's active hitbox (e.g. player's `SwordHitBox`, acornback's body-contact `HitBox`).
 - `hurt_box.gd` — the receiver. Handles i-frames (`invincible` via a `Timer`), toggles `monitoring` with `set_deferred`, spawns `hit_effect`, and emits `invincible_started`/`invincible_ended` for blink animation. `collision_mask` selects what hurts it.
 - `soft_collison.gd` — overlap-based push-apart used to stop enemies from stacking.
 
-**Damage routing is by script-name string match, not layers/groups.** Every `_on_hurt_box_area_entered(area)` in `Player.gd`, `bat.gd`, and `grass.gd` begins with:
+**Damage routing is by script-name string match, not layers/groups.** Every `_on_hurt_box_area_entered(area)` in `Player.gd`, `bat.gd`, `acornback.gd`, `grass.gd`, and `chest.gd` begins with:
 
 ```gdscript
 if area.get_script().resource_path.find("hit_box") == -1:
@@ -63,14 +66,16 @@ Other conventions worth keeping:
 ## AI / entity structure
 
 - `bat.gd` (`CharacterBody2D`): a `MOVE`-style enum state machine (`IDLE`/`WANDER`/`CHASE`) driven in `_physics_process`. Children: `States` (health), `PlayerDetection` (Area2D tracking the nearest body as `player`), `SoftCollison`, `WanderController`, HurtBox, and a `GPUParticles2D`.
-- On death it creates the death effect, may drop its exported `item` (`TaskManager.spawn_drop_item`), and **hard-codes** `TaskManager.add_objective_progress("kill_bats", 0, 1)` — task id is coupled by string here and in `Player._ready` (which loads and starts `kill_bats_task.tres` if absent).
+- `acornback.gd` (extends `KinematicActor`): ground enemy with `IDLE`/`WANDER`/`ROLL`; on seeing the player it curls into a ball (`Roll_Attack`) and charges. The `Roll_Attack` sheet is **mirrored** vs Walk/Idle, so ROLL uses inverted-facing (`_face_toward(player, mirrored=true)`) to show its front. On death it sets `dead`, disables hurt/hit/collision, plays the non-looping `Death` anim, and only on `animation_finished` spawns the explosion + drops (`Wallet.spawn_coin_drop`, item) then `queue_free()`.
+- `Enemies/chest/chest.gd` (`@tool`, `StaticBody2D`): a world treasure. Its sprite frames are assembled at runtime from the strip `chest_silver.png` (8 × 62×56 frames → `Open` anim; adjust timing via `FRAME_DURATION`/`FRAME_FPS`). `@tool` + building in `_ready` makes it visible in the editor too. On sword hit (hurt_box, `collision_mask=8`) it plays `Open`, then `_spawn_loot()` spawns `drop_item` world pickups into `current_scene` from the tier's `LOOT_POOLS` and `queue_free()`s itself.
+- On death a bat/acornback creates the death effect, may drop its exported `item` (`TaskManager.spawn_drop_item`). Bat **hard-codes** `TaskManager.add_objective_progress("kill_bats", 0, 1)` — task id is coupled by string here and in `Player._ready` (which loads and starts `kill_bats_task.tres` if absent).
 - `World/grass.gd` is the collectible pattern: it has its own HurtBox (masked to player attacks) plus a separate player-proximity `Area2D`. On hit it spawns `grass_effect`, then `player.collect(item)` → `Inv.insert()`.
 
 ## Tasks, rewards, save
 
 - `tasks/task.gd` (`class_name Task`): status enum `NOT_STARTED`→`IN_PROGRESS`→`COMPLETED`→`REWARDED`; `objectives: Array[Dictionary]`, each dict having `name`/`progress`/`target`; `rewards: Array[InvItem]` + parallel `reward_amounts`. `get_current_objective()` returns the first non-complete objective.
-- `task_ui.gd` rebuilds its whole list from `TaskManager` signals; completed tasks render a **"领取奖励" (claim)** button that inserts reward items into the inventory and shows a 3 s completion toast.
-- `save_manager.gd` writes `player_states`, `player_position`, `inventory` (by item name + amount), and `tasks` (id, status, objectives) as JSON to `user://saves/1_save_data.json`.
+- `task_ui.gd` (弹层 UI, `UI/task_ui.gd`) rebuilds its whole list from `TaskManager` signals; completed tasks show a "回村长处交付" hint (rewards are granted by the chief NPC's dialogue, **not** claimed in the UI). It never touches inventory directly.
+- `save_manager.gd` writes `player_states`, `player_position`, `gold`, `inventory` (by `item_id` + amount), and `tasks` (id, status, objectives) as JSON to `user://saves/1_save_data.json`.
 
 ## Gotchas
 
