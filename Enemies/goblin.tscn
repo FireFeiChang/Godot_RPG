@@ -285,7 +285,6 @@ color_ramp = SubResource("GradTex")
 [node name="Goblin" type="CharacterBody2D" unique_id=768036981]
 collision_layer = 16
 script = ExtResource("1_script")
-MAX_SPEED = 60
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1275338241]
 z_index = 1

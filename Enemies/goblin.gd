@@ -8,6 +8,8 @@ const KNOCK_BACK = 120
 const WANDER_TIMER_DURATION = 3
 const INVINCIBLIITY_DURATION = 0.35
 const ATTACK_RANGE = 20.0
+const ATTACK_DURATION = 0.6
+const ATTACK_COOLDOWN = 0.8
 
 @export var item: InvItem
 @export var drop_chance: float = 0.5
@@ -23,6 +25,8 @@ enum {
 var moving_state = CHASE
 var player = null
 var dead := false
+var attack_timer := 0.0
+var cooldown_timer := 0.0
 
 @onready var animatedSprite = $AnimatedSprite
 @onready var state = $States
@@ -63,20 +67,27 @@ func _physics_process(delta):
 			_play("Walk")
 			if player != null and is_instance_valid(player):
 				var dist = global_position.distance_to(player.global_position)
-				if dist <= ATTACK_RANGE:
+				if dist <= ATTACK_RANGE and cooldown_timer <= 0.0:
 					moving_state = ATTACK
+					attack_timer = 0.0
 				else:
 					accelerate_towards_point(player.global_position, delta)
 					_flip_to_velocity()
+					cooldown_timer = maxf(0.0, cooldown_timer - delta)
 			else:
 				apply_friction(delta)
 				_flip_to_velocity()
+				cooldown_timer = maxf(0.0, cooldown_timer - delta)
 		ATTACK:
 			_play("Attack")
 			apply_friction(delta)
-			_flip_to_velocity()
 			if player != null and is_instance_valid(player):
 				_face_toward(player.global_position)
+			attack_timer += delta
+			if attack_timer >= ATTACK_DURATION:
+				attack_timer = 0.0
+				cooldown_timer = 0.0
+				moving_state = CHASE
 			move_and_slide()
 			return
 	if softCollision.is_colliding():
@@ -129,8 +140,6 @@ func _on_states_no_health():
 func _on_animation_finished():
 	if animatedSprite.animation == "Death":
 		_die()
-	elif animatedSprite.animation == "Attack":
-		moving_state = CHASE
 
 func _die():
 	create_enemy_death_effect()
