@@ -31,54 +31,14 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_g18g5"]
 radius = 12.0
 
-[sub_resource type="Animation" id="Animation_guu5j"]
-resource_name = "start"
-length = 0.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_khann"]
-resource_name = "stop"
-length = 0.1
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite:material:shader_parameter/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_3fp1q"]
-_data = {
-&"start": SubResource("Animation_guu5j"),
-&"stop": SubResource("Animation_khann")
-}
-
-[sub_resource type="Gradient" id="Gradient_1rexq"]
+[sub_resource type="Gradient" id="Gradient_guu5j"]
 offsets = PackedFloat32Array(0.00515464, 0.994845, 1)
 colors = PackedColorArray(0.55, 0.7, 0.2, 1, 0.8, 0.9, 0.4, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_rhr2u"]
-gradient = SubResource("Gradient_1rexq")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khann"]
+gradient = SubResource("Gradient_guu5j")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j3ksv"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3fp1q"]
 particle_flag_disable_z = true
 spread = 37.815
 initial_velocity_min = 328.0
@@ -86,77 +46,74 @@ initial_velocity_max = 456.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.01
 scale_max = 0.12
-color_ramp = SubResource("GradientTexture1D_rhr2u")
+color_ramp = SubResource("GradientTexture1D_khann")
 
-[node name="Goblin" type="CharacterBody2D" unique_id=376173218]
+[node name="Goblin" type="CharacterBody2D" unique_id=863564316]
 collision_layer = 16
 script = ExtResource("1_script")
 MAX_SPEED = 60
 
-[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=633317345]
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=223518371]
 z_index = 1
 material = SubResource("ShaderMaterial_omxdv")
 position = Vector2(0, -30)
 
-[node name="Shadow" type="Sprite2D" parent="." unique_id=7743864]
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1662912213]
 position = Vector2(0, -2)
 scale = Vector2(1.2, 0.6)
 texture = ExtResource("3_shadow")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1130221051]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1170507498]
 position = Vector2(0, -18)
 shape = SubResource("CircleShape2D_e6avi")
 
-[node name="States" type="Node2D" parent="." unique_id=586085863]
+[node name="States" type="Node2D" parent="." unique_id=438947085]
 script = ExtResource("7_khann")
 max_health = 4
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=1782521807]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1166741253]
 collision_mask = 8
 script = ExtResource("5_guu5j")
 
-[node name="@CollisionShape2D@22212" type="CollisionShape2D" parent="HurtBox" unique_id=1569610243]
+[node name="@CollisionShape2D@35002" type="CollisionShape2D" parent="HurtBox" unique_id=1233489500]
 position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_dgesl")
 
-[node name="Timer" type="Timer" parent="HurtBox" unique_id=623064554]
+[node name="Timer" type="Timer" parent="HurtBox" unique_id=116925295]
 
-[node name="PlayerDetection" type="Area2D" parent="." unique_id=83626980]
+[node name="PlayerDetection" type="Area2D" parent="." unique_id=413729632]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("9_3fp1q")
 
-[node name="@CollisionShape2D@22213" type="CollisionShape2D" parent="PlayerDetection" unique_id=1578400123]
+[node name="@CollisionShape2D@35003" type="CollisionShape2D" parent="PlayerDetection" unique_id=2015142158]
 shape = SubResource("CircleShape2D_wtebx")
 
-[node name="HitBox" type="Area2D" parent="." unique_id=267615374]
+[node name="HitBox" type="Area2D" parent="." unique_id=1817634792]
 collision_layer = 4
 script = ExtResource("11_1rexq")
 
-[node name="@CollisionShape2D@22214" type="CollisionShape2D" parent="HitBox" unique_id=1972356385]
+[node name="@CollisionShape2D@35004" type="CollisionShape2D" parent="HitBox" unique_id=386913046]
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_hvpfr")
 
-[node name="SoftCollison" type="Area2D" parent="." unique_id=2126112228]
+[node name="SoftCollison" type="Area2D" parent="." unique_id=560430400]
 script = ExtResource("13_rhr2u")
 
-[node name="@CollisionShape2D@22215" type="CollisionShape2D" parent="SoftCollison" unique_id=203790415]
+[node name="@CollisionShape2D@35005" type="CollisionShape2D" parent="SoftCollison" unique_id=1043512224]
 position = Vector2(0, -18)
 shape = SubResource("CircleShape2D_g18g5")
 
-[node name="WanderController" type="Node2D" parent="." unique_id=1370529718]
+[node name="WanderController" type="Node2D" parent="." unique_id=3278281]
 script = ExtResource("15_j3ksv")
 
-[node name="Timer" type="Timer" parent="WanderController" unique_id=1778009086]
+[node name="Timer" type="Timer" parent="WanderController" unique_id=1059292246]
 
-[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="." unique_id=481013376]
-libraries/ = SubResource("AnimationLibrary_3fp1q")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=386355112]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=856024463]
 position = Vector2(0, -20)
 emitting = false
 amount = 200
 texture = ExtResource("10_white")
 lifetime = 0.5
 one_shot = true
-process_material = SubResource("ParticleProcessMaterial_j3ksv")
+process_material = SubResource("ParticleProcessMaterial_3fp1q")

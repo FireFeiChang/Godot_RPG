@@ -55,9 +55,7 @@ var player = null
 var dead := false
 var disguised := false
 
-@export var blink_on_hit := false   # 新敌人默认关闭受击闪白（blink 循环太刺眼）
-
-var current_anim := ""   # 追踪当前动画名，防 StringName 比较导致每帧重置
+var current_anim := ""   # 追踪当前动画名，防每帧重置
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
 @onready var states = $States
@@ -67,20 +65,13 @@ var current_anim := ""   # 追踪当前动画名，防 StringName 比较导致�
 @onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var soft_collision = $SoftCollison
 @onready var wander_controller = $WanderController
-@onready var blink_player: AnimationPlayer = $BlinkAnimationPlayer
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
 func _ready():
-	# 连信号（节点为手动创建，无预连）
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	hurt_box.area_entered.connect(_on_hurt_box_area_entered)
-	if blink_on_hit:
-		hurt_box.invincible_started.connect(_on_hurt_box_invincible_started)
-		hurt_box.invincible_ended.connect(_on_hurt_box_invincible_ended)
 	states.no_health.connect(_on_states_no_health)
-	# hurt_box 内部 Timer 的 timeout（原在 hurt_box.tscn 内连）
 	hurt_box.get_node("Timer").timeout.connect(hurt_box._on_timer_timeout)
-	# player_detection 的 body_entered/exited（原在 player_detection.tscn 内连）
 	player_detection.body_entered.connect(player_detection._on_body_entered)
 	player_detection.body_exited.connect(player_detection._on_body_exited)
 	# 按 sheet 建 SpriteFrames
@@ -249,12 +240,6 @@ func create_enemy_death_effect():
 	var fx = EnemyDeathEffect.instantiate()
 	get_tree().current_scene.add_child(fx)
 	fx.global_position = global_position
-
-func _on_hurt_box_invincible_started():
-	blink_player.play("start")
-
-func _on_hurt_box_invincible_ended():
-	blink_player.play("stop")
 
 func pick_random_state(state_list):
 	return state_list.pick_random()
