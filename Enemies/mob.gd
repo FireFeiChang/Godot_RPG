@@ -95,27 +95,28 @@ func _build_sprite_frames():
 ## 按场景名在 Enemies/mobs/<name>/ 下按命名约定自动加载 sheet
 func _auto_locate_sheets():
 	var base := "res://Enemies/mobs/" + scene_file_path.get_file().get_basename().to_lower() + "/"
-	var try_load := func(fname: String) -> Texture2D:
-		var path: String = base + fname
-		if ResourceLoader.exists(path):
-			return load(path) as Texture2D
-		return null
 	var lower: String = scene_file_path.get_file().get_basename().to_lower()
-	sheet_idle = try_load("idle.png")
+	sheet_idle = _try_load(base, "idle.png")
 	if sheet_idle == null:
-		sheet_idle = try_load(lower + " idle.png")
-	sheet_walk = try_load("walk.png")
+		sheet_idle = _try_load(base, lower + " idle.png")
+	sheet_walk = _try_load(base, "walk.png")
 	if sheet_walk == null:
-		sheet_walk = try_load(lower + " walking.png")
-	sheet_attack = try_load("atak.png")
+		sheet_walk = _try_load(base, lower + " walking.png")
+	sheet_attack = _try_load(base, "atak.png")
 	if sheet_attack == null:
-		sheet_attack = try_load("attack.png")
-	sheet_death = try_load("death.png")
+		sheet_attack = _try_load(base, "attack.png")
+	sheet_death = _try_load(base, "death.png")
 	if sheet_death == null:
-		sheet_death = try_load(lower + " death.png")
-	sheet_hurt = try_load("hit.png")
+		sheet_death = _try_load(base, lower + " death.png")
+	sheet_hurt = _try_load(base, "hit.png")
 	# mimic 伪装
-	disguise_sheet = try_load(lower + " disguise.png")
+	disguise_sheet = _try_load(base, lower + " disguise.png")
+
+func _try_load(base: String, fname: String) -> Texture2D:
+	var path: String = base + fname
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	return null
 
 func _add_strip(frames: SpriteFrames, name: String, strip: Texture2D, count: int, fps: int, loop: bool):
 	if strip == null or count <= 0:
