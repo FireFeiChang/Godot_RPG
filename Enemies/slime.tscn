@@ -89,69 +89,71 @@ scale_min = 0.01
 scale_max = 0.12
 color_ramp = SubResource("GradientTexture1D_jiijo")
 
-[node name="Slime" type="CharacterBody2D" unique_id=741244360]
+[node name="Slime" type="CharacterBody2D" unique_id=1794030369]
 collision_layer = 16
 script = ExtResource("1_script")
 MAX_SPEED = 45
 
-[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=774150008]
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=2074520772]
 z_index = 1
 material = SubResource("ShaderMaterial_v0fv8")
 position = Vector2(0, -26)
 
-[node name="Shadow" type="Sprite2D" parent="." unique_id=1304109946]
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1123255342]
 position = Vector2(0, -2)
 scale = Vector2(1.2, 0.6)
 texture = ExtResource("3_shadow")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=705289003]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1254642228]
 position = Vector2(0, -18)
 shape = SubResource("CircleShape2D_mky3p")
 
-[node name="States" type="Node2D" parent="." unique_id=1615915155]
+[node name="States" type="Node2D" parent="." unique_id=1210407129]
 script = ExtResource("7_w61c4")
 max_health = 3
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=763538889]
+[node name="HurtBox" type="Area2D" parent="." unique_id=452734026]
 collision_mask = 8
 script = ExtResource("5_837lf")
 
-[node name="@CollisionShape2D@23982" type="CollisionShape2D" parent="HurtBox" unique_id=1655233536]
+[node name="@CollisionShape2D@22220" type="CollisionShape2D" parent="HurtBox" unique_id=88299230]
 position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_kqei6")
 
-[node name="Timer" type="Timer" parent="HurtBox" unique_id=948007869]
+[node name="Timer" type="Timer" parent="HurtBox" unique_id=790959816]
 
-[node name="PlayerDetection" type="Area2D" parent="." unique_id=249373595]
+[node name="PlayerDetection" type="Area2D" parent="." unique_id=11875761]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("9_3t86m")
 
-[node name="@CollisionShape2D@23983" type="CollisionShape2D" parent="PlayerDetection" unique_id=1069727043]
+[node name="@CollisionShape2D@22221" type="CollisionShape2D" parent="PlayerDetection" unique_id=82861585]
 shape = SubResource("CircleShape2D_aq8il")
 
-[node name="HitBox" type="Area2D" parent="." unique_id=1511764395]
+[node name="HitBox" type="Area2D" parent="." unique_id=15428043]
 collision_layer = 4
 script = ExtResource("11_wgl02")
 
-[node name="@CollisionShape2D@23984" type="CollisionShape2D" parent="HitBox" unique_id=328344609]
+[node name="@CollisionShape2D@22222" type="CollisionShape2D" parent="HitBox" unique_id=823316200]
 position = Vector2(0, -20)
 shape = SubResource("CircleShape2D_l26av")
 
-[node name="SoftCollison" type="Area2D" parent="." unique_id=817505533]
+[node name="SoftCollison" type="Area2D" parent="." unique_id=2103438946]
 script = ExtResource("13_jiijo")
 
-[node name="@CollisionShape2D@23985" type="CollisionShape2D" parent="SoftCollison" unique_id=1095650381]
+[node name="@CollisionShape2D@22223" type="CollisionShape2D" parent="SoftCollison" unique_id=1141503095]
 position = Vector2(0, -18)
 shape = SubResource("CircleShape2D_tm1u2")
 
-[node name="WanderController" type="Node2D" parent="." unique_id=1346510702]
+[node name="WanderController" type="Node2D" parent="." unique_id=471954719]
 script = ExtResource("15_o4ycw")
 
-[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="." unique_id=84106597]
+[node name="Timer" type="Timer" parent="WanderController" unique_id=1214197438]
+
+[node name="BlinkAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1161373282]
 libraries/ = SubResource("AnimationLibrary_3t86m")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=650101292]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1898378779]
 position = Vector2(0, -20)
 emitting = false
 amount = 200
