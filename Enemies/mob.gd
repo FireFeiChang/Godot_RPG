@@ -67,13 +67,17 @@ var disguised := false
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
 func _ready():
-	# 子场景（hurt_box / player_detection）已在 .tscn 内 bake 了信号连接，避免重复连接报错
-	if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
-		animated_sprite.animation_finished.connect(_on_animation_finished)
-	# 清掉 bake 的 animation/autoplay，防止 SpriteFrames 建好前尝试播放
-	animated_sprite.animation = &""
-	animated_sprite.autoplay = &""
-	animated_sprite.stop()
+	# 连信号（节点为手动创建，无预连）
+	animated_sprite.animation_finished.connect(_on_animation_finished)
+	hurt_box.area_entered.connect(_on_hurt_box_area_entered)
+	hurt_box.invincible_started.connect(_on_hurt_box_invincible_started)
+	hurt_box.invincible_ended.connect(_on_hurt_box_invincible_ended)
+	states.no_health.connect(_on_states_no_health)
+	# hurt_box 内部 Timer 的 timeout（原在 hurt_box.tscn 内连）
+	hurt_box.get_node("Timer").timeout.connect(hurt_box._on_timer_timeout)
+	# player_detection 的 body_entered/exited（原在 player_detection.tscn 内连）
+	player_detection.body_entered.connect(player_detection._on_body_entered)
+	player_detection.body_exited.connect(player_detection._on_body_exited)
 	# 按 sheet 建 SpriteFrames
 	_build_sprite_frames()
 	if disguise_sheet != null:
