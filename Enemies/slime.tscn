@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://goblin"]
+[gd_scene format=3 uid="uid://slime"]
 
-[ext_resource type="Script" uid="uid://dwwi3vpf3478s" path="res://Enemies/goblin.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://slimescript" path="res://Enemies/slime.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://cmyxragmcnn1m" path="res://white_color.gdshader" id="2_shader"]
 [ext_resource type="Texture2D" uid="uid://b5sy5rfyd8yy8" path="res://Shadows/LargeShadow.png" id="3_shadow"]
 [ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="4_hurtbox"]
@@ -9,17 +9,72 @@
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="7_hitbox"]
 [ext_resource type="PackedScene" uid="uid://oa4waysdaxr5" path="res://Boxes/soft_collison.tscn" id="8_soft"]
 [ext_resource type="PackedScene" uid="uid://cil5a2a6nvc6g" path="res://Enemies/wander_controller.tscn" id="9_wander"]
-[ext_resource type="Texture2D" uid="uid://csfku5y2og1h6" path="res://Effects/white.png" id="10_white"]
-[ext_resource type="Texture2D" uid="uid://b1i4c06rb3een" path="res://Enemies/mobs/goblin/atak.png" id="sheet_Attack"]
-[ext_resource type="Texture2D" uid="uid://tjtnj57nahc8" path="res://Enemies/mobs/goblin/death.png" id="sheet_Death"]
-[ext_resource type="Texture2D" uid="uid://cooli7tv45wrj" path="res://Enemies/mobs/goblin/hit.png" id="sheet_Hurt"]
-[ext_resource type="Texture2D" uid="uid://bfvd4hnhgik5x" path="res://Enemies/mobs/goblin/idle.png" id="sheet_Idle"]
-[ext_resource type="Texture2D" uid="uid://gucfpbqhu2wr" path="res://Enemies/mobs/goblin/walk.png" id="sheet_Walk"]
+[ext_resource type="Texture2D" uid="uid://slime_white" path="res://Effects/white.png" id="10_white"]
+[ext_resource type="Texture2D" uid="uid://slime_idle" path="res://Enemies/mobs/slime/idle.png" id="sheet_Idle"]
+[ext_resource type="Texture2D" uid="uid://slime_walk" path="res://Enemies/mobs/slime/walk.png" id="sheet_Walk"]
+[ext_resource type="Texture2D" uid="uid://slime_atak" path="res://Enemies/mobs/slime/atak.png" id="sheet_Attack"]
+[ext_resource type="Texture2D" uid="uid://slime_death" path="res://Enemies/mobs/slime/death.png" id="sheet_Death"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shader"]
 resource_local_to_scene = true
 shader = ExtResource("2_shader")
 shader_parameter/active = false
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_0"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_1"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_2"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_3"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_4"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_5"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_6"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_7"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_0"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_1"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_2"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_3"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_4"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_5"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="Atlas_Attack_0"]
 atlas = ExtResource("sheet_Attack")
@@ -32,6 +87,34 @@ region = Rect2(64, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="Atlas_Attack_2"]
 atlas = ExtResource("sheet_Attack")
 region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_3"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_4"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_5"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_6"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_7"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_8"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_9"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(576, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="Atlas_Death_0"]
 atlas = ExtResource("sheet_Death")
@@ -61,60 +144,60 @@ region = Rect2(320, 0, 64, 64)
 atlas = ExtResource("sheet_Death")
 region = Rect2(384, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="Atlas_Death_7"]
-atlas = ExtResource("sheet_Death")
-region = Rect2(448, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Hurt_0"]
-atlas = ExtResource("sheet_Hurt")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Hurt_1"]
-atlas = ExtResource("sheet_Hurt")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Hurt_2"]
-atlas = ExtResource("sheet_Hurt")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Idle_0"]
-atlas = ExtResource("sheet_Idle")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Idle_1"]
-atlas = ExtResource("sheet_Idle")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Idle_2"]
-atlas = ExtResource("sheet_Idle")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Idle_3"]
-atlas = ExtResource("sheet_Idle")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Walk_0"]
-atlas = ExtResource("sheet_Walk")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Walk_1"]
-atlas = ExtResource("sheet_Walk")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Walk_2"]
-atlas = ExtResource("sheet_Walk")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Walk_3"]
-atlas = ExtResource("sheet_Walk")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Walk_4"]
-atlas = ExtResource("sheet_Walk")
-region = Rect2(256, 0, 64, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_main"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_7")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_5")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("Atlas_Attack_0")
@@ -124,10 +207,31 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("Atlas_Attack_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_9")
 }],
 "loop": 1,
 "name": &"Attack",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -150,80 +254,27 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("Atlas_Death_6")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Death_7")
 }],
 "loop": 0,
 "name": &"Death",
 "speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("Atlas_Hurt_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Hurt_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Hurt_2")
-}],
-"loop": 1,
-"name": &"Hurt",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("Atlas_Idle_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Idle_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Idle_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Idle_3")
-}],
-"loop": 1,
-"name": &"Idle",
-"speed": 4.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("Atlas_Walk_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Walk_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Walk_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Walk_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Walk_4")
-}],
-"loop": 1,
-"name": &"Walk",
-"speed": 8.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="Capsule_body"]
-radius = 14.0
+[sub_resource type="CircleShape2D" id="Circle_body"]
+radius = 13.0
 
 [sub_resource type="CapsuleShape2D" id="Capsule_hurt"]
-radius = 15.0
+radius = 14.0
+height = 28.0
 
 [sub_resource type="CircleShape2D" id="Circle_pd"]
-radius = 50.0
+radius = 44.0
 
 [sub_resource type="CircleShape2D" id="Circle_hit"]
-radius = 16.0
+radius = 15.0
 
 [sub_resource type="CircleShape2D" id="Circle_soft"]
-radius = 12.0
+radius = 11.0
 
 [sub_resource type="Animation" id="Anim_start"]
 resource_name = "start"
@@ -267,7 +318,7 @@ _data = {
 
 [sub_resource type="Gradient" id="Grad"]
 offsets = PackedFloat32Array(0.00515464, 0.994845, 1)
-colors = PackedColorArray(0.55, 0.7, 0.2, 1, 0.8, 0.9, 0.4, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.3, 0.6, 0.8, 1, 0.6, 0.85, 0.95, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradTex"]
 gradient = SubResource("Grad")
@@ -282,28 +333,28 @@ scale_min = 0.01
 scale_max = 0.12
 color_ramp = SubResource("GradTex")
 
-[node name="Goblin" type="CharacterBody2D" unique_id=768036981]
+[node name="Slime" type="CharacterBody2D" unique_id=768036981]
 collision_layer = 16
 script = ExtResource("1_script")
+MAX_SPEED = 45
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1275338241]
-z_index = 1
 material = SubResource("ShaderMaterial_shader")
-position = Vector2(2.3841858e-07, 1)
-scale = Vector2(0.53749996, 0.53749996)
+z_index = 1
+scale = Vector2(0.45, 0.45)
 sprite_frames = SubResource("SpriteFrames_main")
 animation = &"Idle"
 autoplay = "Idle"
-offset = Vector2(0, -30)
+offset = Vector2(0, -26)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1012294754]
-position = Vector2(0, -5)
-scale = Vector2(0.69375, 0.45000002)
+position = Vector2(0, -2)
+scale = Vector2(1.2, 0.6)
 texture = ExtResource("3_shadow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1564133533]
 position = Vector2(0, -18)
-shape = SubResource("Capsule_body")
+shape = SubResource("Circle_body")
 
 [node name="HurtBox" parent="." unique_id=1113376364 instance=ExtResource("4_hurtbox")]
 collision_mask = 8
@@ -313,7 +364,7 @@ position = Vector2(0, -20)
 shape = SubResource("Capsule_hurt")
 
 [node name="States" parent="." unique_id=31799553 instance=ExtResource("5_states")]
-max_health = 4
+max_health = 3
 
 [node name="PlayerDetection" parent="." unique_id=1166606150 instance=ExtResource("6_pd")]
 
@@ -336,7 +387,9 @@ shape = SubResource("Circle_soft")
 [node name="WanderController" parent="." unique_id=129285480 instance=ExtResource("9_wander")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2139389363]
-libraries/ = SubResource("AnimLib")
+libraries = {
+"": SubResource("AnimLib")
+}
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1956836344]
 position = Vector2(0, -20)
