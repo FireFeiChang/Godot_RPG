@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cornback" path="res://Enemies/acornback.tscn" id="17_acorn"]
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
 [ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
+[ext_resource type="Script" uid="uid://dwwi3vpf3478s" path="res://Enemies/goblin.gd" id="20_26xuy"]
 [ext_resource type="PackedScene" uid="uid://goblin" path="res://Enemies/goblin.tscn" id="32_nx736"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
@@ -1173,3 +1174,8 @@ position = Vector2(640, 430)
 variant = 3
 body_scale = 0.9
 
+[node name="Goblin" type="CharacterBody2D" parent="." unique_id=768036981 instance=ExtResource("32_nx736")]
+position = Vector2(300, 200)
+collision_layer = 16
+script = ExtResource("20_26xuy")
+MAX_SPEED = 60
