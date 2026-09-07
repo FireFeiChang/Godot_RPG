@@ -19,7 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
 [ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
 [ext_resource type="PackedScene" uid="uid://slime" path="res://Enemies/slime.tscn" id="20_bc84e"]
-[ext_resource type="Script" uid="uid://bsw2jytt1t5i3" path="res://Enemies/slime.gd" id="21_wukud"]
+[ext_resource type="PackedScene" uid="uid://mimic" path="res://Enemies/mimic.tscn" id="21_wukud"]
+[ext_resource type="Script" uid="uid://cwi5ildc3nq1b" path="res://Enemies/mimic.gd" id="22_il2jm"]
 [ext_resource type="PackedScene" uid="uid://goblin" path="res://Enemies/goblin.tscn" id="32_nx736"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
@@ -1176,10 +1177,13 @@ variant = 3
 body_scale = 0.9
 
 [node name="Goblin" parent="." unique_id=768036981 instance=ExtResource("32_nx736")]
-position = Vector2(264, 308)
+position = Vector2(383, 184)
 
-[node name="Slime" type="CharacterBody2D" parent="." unique_id=1794189184 instance=ExtResource("20_bc84e")]
-position = Vector2(400, 300)
+[node name="Slime" parent="." unique_id=1794189184 instance=ExtResource("20_bc84e")]
+position = Vector2(355, 269)
+
+[node name="Mimic" type="CharacterBody2D" parent="." unique_id=1209520624 instance=ExtResource("21_wukud")]
+position = Vector2(500, 250)
 collision_layer = 16
-script = ExtResource("21_wukud")
-MAX_SPEED = 45
+script = ExtResource("22_il2jm")
+MAX_SPEED = 70
