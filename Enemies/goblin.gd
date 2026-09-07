@@ -7,6 +7,7 @@ const EnemyDeathEffect = preload("res://Effects/enemy_death_effect.tscn")
 const KNOCK_BACK = 120
 const WANDER_TIMER_DURATION = 3
 const INVINCIBLIITY_DURATION = 0.35
+const ATTACK_RANGE = 20.0
 
 @export var item: InvItem
 @export var drop_chance: float = 0.5
@@ -16,6 +17,7 @@ enum {
 	IDLE,
 	WANDER,
 	CHASE,
+	ATTACK,
 }
 
 var moving_state = CHASE
@@ -60,11 +62,23 @@ func _physics_process(delta):
 		CHASE:
 			_play("Walk")
 			if player != null and is_instance_valid(player):
-				accelerate_towards_point(player.global_position, delta)
-				_flip_to_velocity()
+				var dist = global_position.distance_to(player.global_position)
+				if dist <= ATTACK_RANGE:
+					moving_state = ATTACK
+				else:
+					accelerate_towards_point(player.global_position, delta)
+					_flip_to_velocity()
 			else:
 				apply_friction(delta)
 				_flip_to_velocity()
+		ATTACK:
+			_play("Attack")
+			apply_friction(delta)
+			_flip_to_velocity()
+			if player != null and is_instance_valid(player):
+				_face_toward(player.global_position)
+			move_and_slide()
+			return
 	if softCollision.is_colliding():
 		velocity += softCollision.get_push_vector() * delta * KNOCK_BACK
 	move_and_slide()
@@ -75,6 +89,9 @@ func accelerate_towards_point(point: Vector2, delta: float) -> void:
 func _flip_to_velocity() -> void:
 	if absf(velocity.x) > 5.0:
 		animatedSprite.flip_h = velocity.x < 0
+
+func _face_toward(point: Vector2) -> void:
+	animatedSprite.flip_h = point.x < global_position.x
 
 func _play(anim: String) -> void:
 	if animatedSprite.animation != anim:
@@ -112,6 +129,8 @@ func _on_states_no_health():
 func _on_animation_finished():
 	if animatedSprite.animation == "Death":
 		_die()
+	elif animatedSprite.animation == "Attack":
+		moving_state = CHASE
 
 func _die():
 	create_enemy_death_effect()
