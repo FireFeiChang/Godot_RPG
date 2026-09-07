@@ -1173,6 +1173,3 @@ position = Vector2(640, 430)
 variant = 3
 body_scale = 0.9
 
-[node name="@CharacterBody2D@22408" parent="." unique_id=376173218 instance=ExtResource("32_nx736")]
-position = Vector2(235, 304)
-MAX_SPEED = 100.0
