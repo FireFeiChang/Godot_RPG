@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c2gwi33yhmteg"]
 
-[ext_resource type="Texture2D" uid="uid://dkop5g7g4t4oy" path="res://素材/原版/ventilation_hole.png" id="1_5j6gl"]
-[ext_resource type="Texture2D" uid="uid://b0d64n73qyish" path="res://素材/原版/white.png" id="2_umbwy"]
+[ext_resource type="Texture2D"  path="res://World/ventilation_hole.png" id="1_5j6gl"]
+[ext_resource type="Texture2D"  path="res://Effects/white.png" id="2_umbwy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5lyi2"]
 radius = 87.2812

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://tjhcu6yds8lc"]
 
-[ext_resource type="Texture2D" uid="uid://q814wnidw51p" path="res://World/GrassBackground.png" id="1_1vnpn"]
-[ext_resource type="Texture2D" uid="uid://b21smdd4rst3s" path="res://World/DirtTileset.png" id="2_py3f0"]
-[ext_resource type="Texture2D" uid="uid://dakuigvsugaco" path="res://World/CliffTileset.png" id="3_hn7kp"]
+[ext_resource type="Texture2D" uid="uid://bpc3kniitljx6" path="res://World/GrassBackground.png" id="1_1vnpn"]
+[ext_resource type="Texture2D" uid="uid://bv8e23j471w4i" path="res://World/DirtTileset.png" id="2_py3f0"]
+[ext_resource type="Texture2D" uid="uid://uako2vgp22nh" path="res://World/CliffTileset.png" id="3_hn7kp"]
 [ext_resource type="PackedScene" uid="uid://yc57mmoyb2ub" path="res://Player/player.tscn" id="4_8ity0"]
 [ext_resource type="PackedScene" uid="uid://d3gwhw8q5fovl" path="res://World/bush.tscn" id="5_5mte6"]
 [ext_resource type="PackedScene" uid="uid://dlaytl7kncqbx" path="res://World/grass.tscn" id="6_4oani"]
@@ -18,6 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://cornback" path="res://Enemies/acornback.tscn" id="17_acorn"]
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
 [ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
+[ext_resource type="PackedScene" uid="uid://u4t4vjribflt" path="res://Enemies/goblin.tscn" id="32_nx736"]
+[ext_resource type="PackedScene" uid="uid://dy6xowoffi0o7" path="res://Enemies/mimic.tscn" id="34_f3o6s"]
+[ext_resource type="PackedScene" uid="uid://dvq05ongos420" path="res://Enemies/slime.tscn" id="35_w4lh7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -1059,15 +1062,12 @@ position = Vector2(700, 540)
 
 [node name="Bat" parent="." unique_id=135257842 instance=ExtResource("7_sxwx7")]
 position = Vector2(560, 150)
-FRICTION = 200.0
 
 [node name="Bat2" parent="." unique_id=1211628904 instance=ExtResource("7_sxwx7")]
 position = Vector2(700, 90)
-FRICTION = 200.0
 
 [node name="Bat3" parent="." unique_id=2066323782 instance=ExtResource("7_sxwx7")]
 position = Vector2(740, 180)
-FRICTION = 200.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1629957900]
 
@@ -1094,7 +1094,6 @@ grow_vertical = 0
 
 [node name="NPC" parent="." unique_id=111867162 instance=ExtResource("10_t7hy5")]
 position = Vector2(240, 545)
-collision_mask = 1
 task_id = "kill_bats"
 
 [node name="SteamVent" parent="." unique_id=281223200 instance=ExtResource("11_c45sw")]
@@ -1103,23 +1102,18 @@ position = Vector2(150, 320)
 
 [node name="Bat4" parent="." unique_id=1111111132 instance=ExtResource("7_sxwx7")]
 position = Vector2(600, 240)
-FRICTION = 200.0
 
 [node name="Bat5" parent="." unique_id=1111111133 instance=ExtResource("7_sxwx7")]
 position = Vector2(700, 250)
-FRICTION = 200.0
 
 [node name="Bat6" parent="." unique_id=1111111134 instance=ExtResource("7_sxwx7")]
 position = Vector2(100, 170)
-FRICTION = 200.0
 
 [node name="Bat11" parent="." unique_id=1111111139 instance=ExtResource("7_sxwx7")]
 position = Vector2(220, 150)
-FRICTION = 200.0
 
 [node name="Bat12" parent="." unique_id=1111111140 instance=ExtResource("7_sxwx7")]
 position = Vector2(270, 200)
-FRICTION = 200.0
 
 [node name="SteamVent2" parent="." unique_id=1111111144 instance=ExtResource("11_c45sw")]
 y_sort_enabled = true
@@ -1145,15 +1139,12 @@ position = Vector2(240, 90)
 
 [node name="Acornback1" parent="." unique_id=777770001 instance=ExtResource("17_acorn")]
 position = Vector2(620, 410)
-MAX_SPEED = 100.0
 
 [node name="Acornback2" parent="." unique_id=777770002 instance=ExtResource("17_acorn")]
 position = Vector2(700, 500)
-MAX_SPEED = 100.0
 
 [node name="Acornback3" parent="." unique_id=777770003 instance=ExtResource("17_acorn")]
 position = Vector2(340, 430)
-MAX_SPEED = 100.0
 
 [node name="Chests" type="Node2D" parent="." unique_id=52292539]
 y_sort_enabled = true
@@ -1183,3 +1174,27 @@ body_scale = 0.85
 position = Vector2(640, 430)
 variant = 3
 body_scale = 0.9
+
+[node name="Goblin" parent="." unique_id=768036981 instance=ExtResource("32_nx736")]
+position = Vector2(180, 120)
+
+[node name="@CharacterBody2D@21808" parent="." unique_id=1546237882 instance=ExtResource("32_nx736")]
+position = Vector2(600, 140)
+
+[node name="@CharacterBody2D@21809" parent="." unique_id=1737216164 instance=ExtResource("32_nx736")]
+position = Vector2(420, 280)
+
+[node name="Mimic" parent="." unique_id=376659563 instance=ExtResource("34_f3o6s")]
+position = Vector2(300, 200)
+
+[node name="@CharacterBody2D@21810" parent="." unique_id=1311051997 instance=ExtResource("34_f3o6s")]
+position = Vector2(680, 300)
+
+[node name="Slime" parent="." unique_id=508090559 instance=ExtResource("35_w4lh7")]
+position = Vector2(120, 350)
+
+[node name="@CharacterBody2D@21811" parent="." unique_id=109116761 instance=ExtResource("35_w4lh7")]
+position = Vector2(520, 400)
+
+[node name="@CharacterBody2D@21812" parent="." unique_id=443118278 instance=ExtResource("35_w4lh7")]
+position = Vector2(700, 100)

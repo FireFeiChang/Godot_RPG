@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="7_wt1b0"]
 [ext_resource type="PackedScene" uid="uid://oa4waysdaxr5" path="res://Boxes/soft_collison.tscn" id="8_y78ct"]
 [ext_resource type="PackedScene" uid="uid://cil5a2a6nvc6g" path="res://Enemies/wander_controller.tscn" id="9_l2yix"]
-[ext_resource type="Texture2D" uid="uid://b0d64n73qyish" path="res://素材/原版/white.png" id="11_8j2ef"]
+[ext_resource type="Texture2D"  path="res://Effects/white.png" id="11_8j2ef"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u0ryp"]
 resource_local_to_scene = true

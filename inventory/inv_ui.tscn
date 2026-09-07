@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtplopkhgondo" path="res://inventory/inv_UI.gd" id="1_7f7h5"]
 [ext_resource type="PackedScene" uid="uid://dgcjwh8c8we7f" path="res://inventory/inv_ui_slot.tscn" id="3_ml11j"]
-[ext_resource type="Texture2D" uid="uid://dglnwta8i5tn0" path="res://素材/原版/BagGui.png" id="4_bag"]
+[ext_resource type="Texture2D"  path="res://inventory/BagGui.png" id="4_bag"]
 
 [node name="inv_UI" type="Control" unique_id=2124641665]
 layout_mode = 3

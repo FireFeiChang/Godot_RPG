@@ -12,9 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://dem4fpv6opvx3" path="res://Enemies/acornback/white_particle.png" id="10_white"]
 [ext_resource type="Texture2D" uid="uid://c5mlst6uap5f0" path="res://Enemies/acornback/Acornback_Rollbeast_Death.png" id="sheet_Death"]
 [ext_resource type="Texture2D" uid="uid://bmls3xk1v0r2v" path="res://Enemies/acornback/Acornback_Rollbeast_Hurt.png" id="sheet_Hurt"]
-[ext_resource type="Texture2D" uid="uid://c6d1bc74uiss1" path="res://Enemies/acornback/Acornback_Rollbeast_Idle.png" id="sheet_Idle"]
-[ext_resource type="Texture2D" uid="uid://cgqqcsvi1pofp" path="res://Enemies/acornback/Acornback_Rollbeast_Roll_Attack.png" id="sheet_Roll_Attack"]
-[ext_resource type="Texture2D" uid="uid://lrl8wv2lvgk2" path="res://Enemies/acornback/Acornback_Rollbeast_Walk.png" id="sheet_Walk"]
+[ext_resource type="Texture2D"  path="res://Enemies/acornback/Acornback_Rollbeast_Idle.png" uid="uid://c6d1bc74uiss1" id="sheet_Idle"]
+[ext_resource type="Texture2D"  path="res://Enemies/acornback/Acornback_Rollbeast_Roll_Attack.png" uid="uid://cgqqcsvi1pofp" id="sheet_Roll_Attack"]
+[ext_resource type="Texture2D"  path="res://Enemies/acornback/Acornback_Rollbeast_Walk.png" uid="uid://lrl8wv2lvgk2" id="sheet_Walk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shader"]
 resource_local_to_scene = true
