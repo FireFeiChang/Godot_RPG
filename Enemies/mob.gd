@@ -55,6 +55,10 @@ var player = null
 var dead := false
 var disguised := false
 
+@export var blink_on_hit := false   # 新敌人默认关闭受击闪白（blink 循环太刺眼）
+
+var current_anim := ""   # 追踪当前动画名，防 StringName 比较导致每帧重置
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
 @onready var states = $States
 @onready var player_detection: Area2D = $PlayerDetection
@@ -70,8 +74,9 @@ func _ready():
 	# 连信号（节点为手动创建，无预连）
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	hurt_box.area_entered.connect(_on_hurt_box_area_entered)
-	hurt_box.invincible_started.connect(_on_hurt_box_invincible_started)
-	hurt_box.invincible_ended.connect(_on_hurt_box_invincible_ended)
+	if blink_on_hit:
+		hurt_box.invincible_started.connect(_on_hurt_box_invincible_started)
+		hurt_box.invincible_ended.connect(_on_hurt_box_invincible_ended)
 	states.no_health.connect(_on_states_no_health)
 	# hurt_box 内部 Timer 的 timeout（原在 hurt_box.tscn 内连）
 	hurt_box.get_node("Timer").timeout.connect(hurt_box._on_timer_timeout)
@@ -186,7 +191,8 @@ func _flip_to_velocity() -> void:
 		animated_sprite.flip_h = velocity.x < 0
 
 func _play(anim: String) -> void:
-	if animated_sprite.animation != anim:
+	if current_anim != anim:
+		current_anim = anim
 		animated_sprite.play(anim)
 
 func _anim_name() -> String:
