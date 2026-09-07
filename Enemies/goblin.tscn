@@ -1,44 +1,280 @@
-[gd_scene format=3 uid="uid://u4t4vjribflt"]
+[gd_scene load_steps=12 format=3 uid="uid://goblin"]
 
-[ext_resource type="Script" uid="uid://b4vottl4kjamm" path="res://Enemies/mob.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dwwi3vpf3478s" path="res://Enemies/goblin.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://cmyxragmcnn1m" path="res://white_color.gdshader" id="2_shader"]
 [ext_resource type="Texture2D" uid="uid://b5sy5rfyd8yy8" path="res://Shadows/LargeShadow.png" id="3_shadow"]
-[ext_resource type="Script" uid="uid://bgwd1a1ifcle1" path="res://Boxes/hurt_box.gd" id="5_guu5j"]
-[ext_resource type="Script" uid="uid://cxdc22jjymk5e" path="res://states.gd" id="7_khann"]
-[ext_resource type="Script" uid="uid://cbfx2i0bxjdql" path="res://Enemies/player_detection.gd" id="9_3fp1q"]
-[ext_resource type="Texture2D" uid="uid://csfku5y2og1h6" path="res://Effects/white.png" id="10_white"]
-[ext_resource type="Script" uid="uid://c0h02nvljwda3" path="res://Boxes/hit_box.gd" id="11_1rexq"]
-[ext_resource type="Script" uid="uid://deqq1pdorvfj0" path="res://Boxes/soft_collison.gd" id="13_rhr2u"]
-[ext_resource type="Script" uid="uid://cgk4txqyjmpgy" path="res://Enemies/wander_controller.gd" id="15_j3ksv"]
+[ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="4_hurtbox"]
+[ext_resource type="PackedScene" uid="uid://nvt04yktcp6l" path="res://states.tscn" id="5_states"]
+[ext_resource type="PackedScene" uid="uid://bxksh4fnkwuj" path="res://Enemies/player_detection.tscn" id="6_pd"]
+[ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="7_hitbox"]
+[ext_resource type="PackedScene" uid="uid://oa4waysdaxr5" path="res://Boxes/soft_collison.tscn" id="8_soft"]
+[ext_resource type="PackedScene" uid="uid://cil5a2a6nvc6g" path="res://Enemies/wander_controller.tscn" id="9_wander"]
+[ext_resource type="Texture2D" path="res://Effects/white.png" id="10_white"]
+[ext_resource type="Texture2D" path="res://Enemies/mobs/goblin/idle.png" id="sheet_Idle"]
+[ext_resource type="Texture2D" path="res://Enemies/mobs/goblin/walk.png" id="sheet_Walk"]
+[ext_resource type="Texture2D" path="res://Enemies/mobs/goblin/atak.png" id="sheet_Attack"]
+[ext_resource type="Texture2D" path="res://Enemies/mobs/goblin/death.png" id="sheet_Death"]
+[ext_resource type="Texture2D" path="res://Enemies/mobs/goblin/hit.png" id="sheet_Hurt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_omxdv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shader"]
 resource_local_to_scene = true
 shader = ExtResource("2_shader")
 shader_parameter/active = false
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_e6avi"]
+[sub_resource type="AtlasTexture" id="Atlas_Idle_0"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_1"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_2"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Idle_3"]
+atlas = ExtResource("sheet_Idle")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_0"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_1"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_2"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_3"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Walk_4"]
+atlas = ExtResource("sheet_Walk")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_0"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_1"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_2"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_0"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_1"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_2"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_3"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_4"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_5"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_6"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_7"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Hurt_0"]
+atlas = ExtResource("sheet_Hurt")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Hurt_1"]
+atlas = ExtResource("sheet_Hurt")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Hurt_2"]
+atlas = ExtResource("sheet_Hurt")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_main"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Idle_3")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Walk_4")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_2")
+}],
+"loop": 1,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_7")
+}],
+"loop": 0,
+"name": &"Death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Hurt_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Hurt_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Hurt_2")
+}],
+"loop": 1,
+"name": &"Hurt",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="Capsule_body"]
 radius = 14.0
+height = 30.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dgesl"]
+[sub_resource type="CapsuleShape2D" id="Capsule_hurt"]
 radius = 15.0
+height = 30.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_wtebx"]
+[sub_resource type="CircleShape2D" id="Circle_pd"]
 radius = 50.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hvpfr"]
+[sub_resource type="CircleShape2D" id="Circle_hit"]
 radius = 16.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g18g5"]
+[sub_resource type="CircleShape2D" id="Circle_soft"]
 radius = 12.0
 
-[sub_resource type="Gradient" id="Gradient_guu5j"]
+[sub_resource type="Animation" id="Anim_start"]
+resource_name = "start"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Anim_stop"]
+resource_name = "stop"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimLib"]
+_data = {
+&"start": SubResource("Anim_start"),
+&"stop": SubResource("Anim_stop")
+}
+
+[sub_resource type="Gradient" id="Grad"]
 offsets = PackedFloat32Array(0.00515464, 0.994845, 1)
 colors = PackedColorArray(0.55, 0.7, 0.2, 1, 0.8, 0.9, 0.4, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_khann"]
-gradient = SubResource("Gradient_guu5j")
+[sub_resource type="GradientTexture1D" id="GradTex"]
+gradient = SubResource("Grad")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3fp1q"]
+[sub_resource type="ParticleProcessMaterial" id="PPM"]
 particle_flag_disable_z = true
 spread = 37.815
 initial_velocity_min = 328.0
@@ -46,74 +282,81 @@ initial_velocity_max = 456.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.01
 scale_max = 0.12
-color_ramp = SubResource("GradientTexture1D_khann")
+color_ramp = SubResource("GradTex")
 
-[node name="Goblin" type="CharacterBody2D" unique_id=863564316]
+[node name="Goblin" type="CharacterBody2D" unique_id=768036981]
 collision_layer = 16
 script = ExtResource("1_script")
 MAX_SPEED = 60
 
-[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=223518371]
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1275338241]
+material = SubResource("ShaderMaterial_shader")
 z_index = 1
-material = SubResource("ShaderMaterial_omxdv")
-position = Vector2(0, -30)
+scale = Vector2(0.45, 0.45)
+sprite_frames = SubResource("SpriteFrames_main")
+animation = &"Idle"
+autoplay = "Idle"
+offset = Vector2(0, -30)
 
-[node name="Shadow" type="Sprite2D" parent="." unique_id=1662912213]
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1012294754]
 position = Vector2(0, -2)
 scale = Vector2(1.2, 0.6)
 texture = ExtResource("3_shadow")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1170507498]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1564133533]
 position = Vector2(0, -18)
-shape = SubResource("CircleShape2D_e6avi")
+shape = SubResource("Capsule_body")
 
-[node name="States" type="Node2D" parent="." unique_id=438947085]
-script = ExtResource("7_khann")
+[node name="HurtBox" parent="." unique_id=1113376364 instance=ExtResource("4_hurtbox")]
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0, -20)
+shape = SubResource("Capsule_hurt")
+
+[node name="States" parent="." unique_id=31799553 instance=ExtResource("5_states")]
 max_health = 4
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=1166741253]
-collision_mask = 8
-script = ExtResource("5_guu5j")
+[node name="PlayerDetection" parent="." unique_id=1166606150 instance=ExtResource("6_pd")]
 
-[node name="@CollisionShape2D@35002" type="CollisionShape2D" parent="HurtBox" unique_id=1233489500]
-position = Vector2(0, -20)
-shape = SubResource("CapsuleShape2D_dgesl")
+[node name="CollisionShape2D" parent="PlayerDetection" index="0" unique_id=686386146]
+shape = SubResource("Circle_pd")
 
-[node name="Timer" type="Timer" parent="HurtBox" unique_id=116925295]
-
-[node name="PlayerDetection" type="Area2D" parent="." unique_id=413729632]
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("9_3fp1q")
-
-[node name="@CollisionShape2D@35003" type="CollisionShape2D" parent="PlayerDetection" unique_id=2015142158]
-shape = SubResource("CircleShape2D_wtebx")
-
-[node name="HitBox" type="Area2D" parent="." unique_id=1817634792]
+[node name="HitBox" parent="." unique_id=1531026624 instance=ExtResource("7_hitbox")]
 collision_layer = 4
-script = ExtResource("11_1rexq")
 
-[node name="@CollisionShape2D@35004" type="CollisionShape2D" parent="HitBox" unique_id=386913046]
+[node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(0, -20)
-shape = SubResource("CircleShape2D_hvpfr")
+shape = SubResource("Circle_hit")
 
-[node name="SoftCollison" type="Area2D" parent="." unique_id=560430400]
-script = ExtResource("13_rhr2u")
+[node name="SoftCollison" parent="." unique_id=450157463 instance=ExtResource("8_soft")]
 
-[node name="@CollisionShape2D@35005" type="CollisionShape2D" parent="SoftCollison" unique_id=1043512224]
+[node name="CollisionShape2D" parent="SoftCollison" index="0"]
 position = Vector2(0, -18)
-shape = SubResource("CircleShape2D_g18g5")
+shape = SubResource("Circle_soft")
 
-[node name="WanderController" type="Node2D" parent="." unique_id=3278281]
-script = ExtResource("15_j3ksv")
+[node name="WanderController" parent="." unique_id=129285480 instance=ExtResource("9_wander")]
 
-[node name="Timer" type="Timer" parent="WanderController" unique_id=1059292246]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2139389363]
+libraries = {
+"": SubResource("AnimLib")
+}
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=856024463]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1956836344]
 position = Vector2(0, -20)
 emitting = false
 amount = 200
 texture = ExtResource("10_white")
 lifetime = 0.5
 one_shot = true
-process_material = SubResource("ParticleProcessMaterial_3fp1q")
+process_material = SubResource("PPM")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="invincible_ended" from="HurtBox" to="." method="_on_hurt_box_invincible_ended"]
+[connection signal="invincible_started" from="HurtBox" to="." method="_on_hurt_box_invincible_started"]
+[connection signal="no_health" from="States" to="." method="_on_states_no_health"]
+
+[editable path="HurtBox"]
+[editable path="PlayerDetection"]
+[editable path="HitBox"]
+[editable path="SoftCollison"]

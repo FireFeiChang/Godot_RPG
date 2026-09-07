@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cornback" path="res://Enemies/acornback.tscn" id="17_acorn"]
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
 [ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
-[ext_resource type="PackedScene" uid="uid://u4t4vjribflt" path="res://Enemies/goblin.tscn" id="32_nx736"]
+[ext_resource type="PackedScene" uid="uid://goblin" path="res://Enemies/goblin.tscn" id="32_nx736"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -1174,4 +1174,5 @@ variant = 3
 body_scale = 0.9
 
 [node name="@CharacterBody2D@22408" parent="." unique_id=376173218 instance=ExtResource("32_nx736")]
-position = Vector2(342, 265)
+position = Vector2(235, 304)
+MAX_SPEED = 100.0
