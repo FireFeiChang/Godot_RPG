@@ -5,68 +5,68 @@
 [ext_resource type="Texture2D" uid="uid://b5sy5rfyd8yy8" path="res://Shadows/LargeShadow.png" id="2_shadow"]
 [ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="3_hurtbox"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8g8cc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ctlv"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(0, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kjdv0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g8cc"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(62, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h4nr0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjdv0"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(124, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s6s1g"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4nr0"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(186, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_scswc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6s1g"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(248, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wrwow"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_scswc"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(310, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x22fo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrwow"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(372, 0, 62, 56)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_di23t"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x22fo"]
 atlas = ExtResource("2_2ctlv")
 region = Rect2(434, 0, 62, 56)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_re8gl"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_di23t"]
 animations = [{
 "frames": [{
-"duration": 2.0,
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_2ctlv")
+}, {
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_8g8cc")
 }, {
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_kjdv0")
 }, {
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_h4nr0")
 }, {
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_s6s1g")
 }, {
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_scswc")
 }, {
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_wrwow")
 }, {
-"duration": 2.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_x22fo")
-}, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_di23t")
 }],
 "loop": 0,
 "name": &"Open",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [],
 "loop": 1,
@@ -87,10 +87,8 @@ script = ExtResource("1_script")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=462768154]
 z_index = 1
 scale = Vector2(0.8, 0.8)
-sprite_frames = SubResource("SpriteFrames_re8gl")
+sprite_frames = SubResource("SpriteFrames_di23t")
 animation = &"Open"
-frame = 7
-frame_progress = 1.0
 offset = Vector2(0, -15)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=965205730]

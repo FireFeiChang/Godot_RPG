@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://chestscene" path="res://Enemies/chest/chest.tscn" id="19_chest"]
 [ext_resource type="PackedScene" uid="uid://slime" path="res://Enemies/slime.tscn" id="20_bc84e"]
 [ext_resource type="PackedScene" uid="uid://mimic" path="res://Enemies/mimic.tscn" id="21_wukud"]
-[ext_resource type="PackedScene" uid="uid://dciy6sheej086" path="res://NPC/female_adventurer.tscn" id="24_femaleadv"]
+[ext_resource type="PackedScene" uid="uid://femaleadv" path="res://素材/The Female Adventurer - Free/NPC/female_adventurer.tscn" id="22_femaleadv"]
 [ext_resource type="PackedScene" uid="uid://goblin" path="res://Enemies/goblin.tscn" id="32_nx736"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
@@ -1266,5 +1266,5 @@ position = Vector2(492, 351)
 [node name="Mimic" parent="." unique_id=1209520624 instance=ExtResource("21_wukud")]
 position = Vector2(392, 229)
 
-[node name="FemaleAdventurer" parent="." unique_id=1640147019 instance=ExtResource("24_femaleadv")]
-position = Vector2(300, 300)
+[node name="FemaleAdventurer" parent="." unique_id=900000010 instance=ExtResource("22_femaleadv")]
+position = Vector2(290, 311)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://mimic"]
 
-[ext_resource type="Script" uid="uid://mimicscript" path="res://Enemies/mimic.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cwi5ildc3nq1b" path="res://Enemies/mimic.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://cmyxragmcnn1m" path="res://white_color.gdshader" id="2_shader"]
 [ext_resource type="Texture2D" uid="uid://b5sy5rfyd8yy8" path="res://Shadows/LargeShadow.png" id="3_shadow"]
 [ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="4_hurtbox"]
@@ -9,17 +9,49 @@
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="7_hitbox"]
 [ext_resource type="PackedScene" uid="uid://oa4waysdaxr5" path="res://Boxes/soft_collison.tscn" id="8_soft"]
 [ext_resource type="PackedScene" uid="uid://cil5a2a6nvc6g" path="res://Enemies/wander_controller.tscn" id="9_wander"]
-[ext_resource type="Texture2D" uid="uid://mimic_white" path="res://Effects/white.png" id="10_white"]
-[ext_resource type="Texture2D" uid="uid://mimic_disguise" path="res://Enemies/mobs/mimic/mimic disguise.png" id="sheet_Disguise"]
-[ext_resource type="Texture2D" uid="uid://mimic_idle" path="res://Enemies/mobs/mimic/mimic idle.png" id="sheet_Idle"]
-[ext_resource type="Texture2D" uid="uid://mimic_walk" path="res://Enemies/mobs/mimic/mimic walking.png" id="sheet_Walk"]
-[ext_resource type="Texture2D" uid="uid://mimic_atak" path="res://Enemies/mobs/mimic/atak.png" id="sheet_Attack"]
-[ext_resource type="Texture2D" uid="uid://mimic_death" path="res://Enemies/mobs/mimic/mimic death.png" id="sheet_Death"]
+[ext_resource type="Texture2D" uid="uid://csfku5y2og1h6" path="res://Effects/white.png" id="10_white"]
+[ext_resource type="Texture2D" uid="uid://irjnma7831p5" path="res://Enemies/mobs/mimic/atak.png" id="sheet_Attack"]
+[ext_resource type="Texture2D" uid="uid://nopnrueblbpb" path="res://Enemies/mobs/mimic/mimic death.png" id="sheet_Death"]
+[ext_resource type="Texture2D" uid="uid://ct70ep1673agx" path="res://Enemies/mobs/mimic/mimic disguise.png" id="sheet_Disguise"]
+[ext_resource type="Texture2D" uid="uid://bsssglbd6k0r8" path="res://Enemies/mobs/mimic/mimic idle.png" id="sheet_Idle"]
+[ext_resource type="Texture2D" uid="uid://bdo468sodhfaa" path="res://Enemies/mobs/mimic/mimic walking.png" id="sheet_Walk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_shader"]
 resource_local_to_scene = true
 shader = ExtResource("2_shader")
 shader_parameter/active = false
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_0"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_1"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Attack_2"]
+atlas = ExtResource("sheet_Attack")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_0"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_1"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_2"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_3"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Death_4"]
+atlas = ExtResource("sheet_Death")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="Atlas_Disguise_0"]
 atlas = ExtResource("sheet_Disguise")
@@ -73,40 +105,42 @@ region = Rect2(256, 0, 64, 64)
 atlas = ExtResource("sheet_Walk")
 region = Rect2(320, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="Atlas_Attack_0"]
-atlas = ExtResource("sheet_Attack")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Attack_1"]
-atlas = ExtResource("sheet_Attack")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Attack_2"]
-atlas = ExtResource("sheet_Attack")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Death_0"]
-atlas = ExtResource("sheet_Death")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Death_1"]
-atlas = ExtResource("sheet_Death")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Death_2"]
-atlas = ExtResource("sheet_Death")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Death_3"]
-atlas = ExtResource("sheet_Death")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="Atlas_Death_4"]
-atlas = ExtResource("sheet_Death")
-region = Rect2(256, 0, 64, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_main"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Attack_2")
+}],
+"loop": 1,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Death_4")
+}],
+"loop": 0,
+"name": &"Death",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("Atlas_Disguise_0")
@@ -159,40 +193,6 @@ animations = [{
 }],
 "loop": 1,
 "name": &"Walk",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("Atlas_Attack_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Attack_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Attack_2")
-}],
-"loop": 1,
-"name": &"Attack",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("Atlas_Death_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Death_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Death_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Death_3")
-}, {
-"duration": 1.0,
-"texture": SubResource("Atlas_Death_4")
-}],
-"loop": 0,
-"name": &"Death",
 "speed": 8.0
 }]
 
@@ -276,8 +276,8 @@ script = ExtResource("1_script")
 MAX_SPEED = 70
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1275338241]
-material = SubResource("ShaderMaterial_shader")
 z_index = 1
+material = SubResource("ShaderMaterial_shader")
 scale = Vector2(0.45, 0.45)
 sprite_frames = SubResource("SpriteFrames_main")
 animation = &"Disguise"
@@ -285,8 +285,8 @@ autoplay = "Disguise"
 offset = Vector2(0, -28)
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1012294754]
-position = Vector2(0, -2)
-scale = Vector2(1.2, 0.6)
+position = Vector2(4.7683716e-07, -5)
+scale = Vector2(0.90000004, 0.45000002)
 texture = ExtResource("3_shadow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1564133533]
@@ -312,7 +312,7 @@ shape = SubResource("Circle_pd")
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(0, -20)
+position = Vector2(0, -14)
 shape = SubResource("Circle_hit")
 
 [node name="SoftCollison" parent="." unique_id=450157463 instance=ExtResource("8_soft")]
@@ -324,9 +324,7 @@ shape = SubResource("Circle_soft")
 [node name="WanderController" parent="." unique_id=129285480 instance=ExtResource("9_wander")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2139389363]
-libraries = {
-"": SubResource("AnimLib")
-}
+libraries/ = SubResource("AnimLib")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1956836344]
 position = Vector2(0, -20)

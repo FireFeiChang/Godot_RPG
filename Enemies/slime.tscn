@@ -271,7 +271,6 @@ height = 28.0
 radius = 44.0
 
 [sub_resource type="CircleShape2D" id="Circle_hit"]
-radius = 15.0
 
 [sub_resource type="CircleShape2D" id="Circle_soft"]
 radius = 11.0
@@ -341,7 +340,8 @@ MAX_SPEED = 45
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1275338241]
 z_index = 1
 material = SubResource("ShaderMaterial_shader")
-scale = Vector2(0.45, 0.45)
+position = Vector2(0, 1.0000005)
+scale = Vector2(0.56875, 0.56875)
 sprite_frames = SubResource("SpriteFrames_main")
 animation = &"Idle"
 autoplay = "Idle"
@@ -375,7 +375,7 @@ shape = SubResource("Circle_pd")
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(0, -20)
+position = Vector2(0, -9)
 shape = SubResource("Circle_hit")
 
 [node name="SoftCollison" parent="." unique_id=450157463 instance=ExtResource("8_soft")]
