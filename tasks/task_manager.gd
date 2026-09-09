@@ -47,11 +47,14 @@ func _zero_objectives(task: Task):
 
 ## 玩家从 NPC 接取任务。仅当任务存在且未开始时生效；返回是否成功。
 func accept_task(task_id: String) -> bool:
+	print("TaskManager: accept_task called for ", task_id)
 	var task = get_task(task_id)
 	if task == null or task.status != Task.NOT_STARTED:
+		print("TaskManager: accept_task failed for ", task_id, " task=", task, " status=", task.status if task else "null")
 		return false
 	task.start()
 	task_started.emit(task)
+	print("TaskManager: accept_task success for ", task_id, " status now=", task.status)
 	return true
 
 ## 玩家向 NPC 交付已完成任务，发放奖励并入背包。返回是否成功。

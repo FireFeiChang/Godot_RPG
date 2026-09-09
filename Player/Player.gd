@@ -92,12 +92,12 @@ func move_state(delta):
 		moving_state = ATTACK
 		
 
-func roll_state(delta):
+func roll_state(_delta):
 	velocity = roll_vector * ROLL_SPEED
 	animationState.travel("Roll")
 	move_and_slide()
 
-func attack_state(delta):
+func attack_state(_delta):
 	velocity = Vector2.ZERO
 	# 只有真正进入一次挥刀时才启用剑判定盒 + 挥砍刀光
 	if not _sword_armed:

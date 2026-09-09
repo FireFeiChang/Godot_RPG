@@ -686,7 +686,10 @@ shape = SubResource("Capsule_74")
 collision_layer = 0
 collision_mask = 2
 
+[node name="WanderTimer" type="Timer" parent="." unique_id=188901784]
+
 [node name="Prompt" type="Label" parent="." unique_id=1705028982]
+visible = false
 offset_left = -46.0
 offset_top = -34.0
 offset_right = 46.0
@@ -698,5 +701,3 @@ theme_override_font_sizes/font_size = 8
 text = "按Enter对话"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="WanderTimer" type="Timer" parent="." unique_id=188901784]

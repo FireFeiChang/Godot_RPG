@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://campfire00001"]
+
+[ext_resource type="Script" uid="uid://cx5f60sod3gp8" path="res://World/campfire/campfire.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cl3inb283nwot" path="res://World/campfire/campfire_burning.png" id="2_burning"]
+[ext_resource type="Texture2D" uid="uid://c74l18s5bkphc" path="res://World/campfire/campfire_extinguished.png" id="2_extinguished"]
+[ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="3_hurt"]
+[ext_resource type="PackedScene" uid="uid://nvt04yktcp6l" path="res://states.tscn" id="4_states"]
+[ext_resource type="PackedScene" uid="uid://bxksh4fnkwuj" path="res://Enemies/player_detection.tscn" id="5_detect"]
+[ext_resource type="Texture2D" uid="uid://b5sy5rfyd8yy8" path="res://Shadows/LargeShadow.png" id="6_shadow"]
+
+[sub_resource type="AtlasTexture" id="Atlas_Burning_0"]
+atlas = ExtResource("2_burning")
+region = Rect2(0, 0, 32, 63)
+
+[sub_resource type="AtlasTexture" id="Atlas_Burning_1"]
+atlas = ExtResource("2_burning")
+region = Rect2(32, 0, 32, 63)
+
+[sub_resource type="AtlasTexture" id="Atlas_Extinguished_0"]
+atlas = ExtResource("2_extinguished")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Extinguished_1"]
+atlas = ExtResource("2_extinguished")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_Extinguished_2"]
+atlas = ExtResource("2_extinguished")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_campfire"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Burning_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Burning_1")
+}],
+"loop": 1,
+"name": &"Burning",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_Extinguished_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Extinguished_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_Extinguished_2")
+}],
+"loop": 1,
+"name": &"Extinguished",
+"speed": 1.5
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 8.0
+height = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
+radius = 30.0
+
+[node name="Campfire" type="StaticBody2D" unique_id=592270504]
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=172692315]
+z_index = 1
+position = Vector2(0, -20)
+sprite_frames = SubResource("SpriteFrames_campfire")
+animation = &"Burning"
+autoplay = "Burning"
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=564816762]
+scale = Vector2(0.6, 0.3)
+texture = ExtResource("6_shadow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1711950234]
+position = Vector2(0, -8)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=776421286]
+position = Vector2(0, -15)
+color = Color(1, 0.7, 0.3, 1)
+energy = 0.8
+texture_scale = 2.0
+
+[node name="HurtBox" parent="." unique_id=1354241104 instance=ExtResource("3_hurt")]
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("CircleShape2D_hurt")
+
+[node name="States" parent="." unique_id=1158156613 instance=ExtResource("4_states")]
+max_health = 6
+
+[node name="PlayerDetection" parent="." unique_id=708761053 instance=ExtResource("5_detect")]
+
+[node name="CollisionShape2D" parent="PlayerDetection" index="0" unique_id=686386146]
+shape = SubResource("CircleShape2D_detect")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]
+
+[editable path="HurtBox"]
+[editable path="PlayerDetection"]

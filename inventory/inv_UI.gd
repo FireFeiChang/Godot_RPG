@@ -17,7 +17,7 @@ func update_slots():
 	for i in range(min(inv.slots.size(), slots.size())):
 		slots[i].update(inv.slots[i])
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("openInv"):
 		if is_open:
 			close()
@@ -35,5 +35,5 @@ func open():
 func sort():
 	slots.sort_custom(compare)
 	
-func compare(a, b):
+func compare(a, _b):
 	return a == null

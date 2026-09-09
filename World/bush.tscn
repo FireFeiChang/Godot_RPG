@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://d3gwhw8q5fovl"]
 
-[ext_resource type="Texture2D" uid="uid://dlw2wq5k2wfao" path="res://World/Bush.png" id="1_hyi6g"]
+[ext_resource type="Texture2D" uid="uid://gocqxk4udnrd" path="res://World/Bush.png" id="1_hyi6g"]
 [ext_resource type="Texture2D" uid="uid://b5sy5rfyd8yy8" path="res://Shadows/LargeShadow.png" id="2_r8rt0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2f48i"]

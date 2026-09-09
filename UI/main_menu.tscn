@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://oa1t7v4cfeqq"]
+
+[ext_resource type="Script" path="res://UI/main_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://tvlf4yh7ea7p" path="res://UI/title/background.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://bc2d61mjm3csi" path="res://UI/PNG/Default/panel_brown.png" id="3_panel"]
+[ext_resource type="Texture2D" uid="uid://b74cjjugjrng8" path="res://UI/PNG/Default/button_brown.png" id="4_btn"]
+[ext_resource type="Texture2D" uid="uid://cnnmyimwri6ll" path="res://UI/PNG/Default/button_brown_close.png" id="5_btn_close"]
+[ext_resource type="Texture2D" uid="uid://o1s2jmrwnc28" path="res://UI/声音设置底图.png" id="6_snd_bg"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_btn_normal"]
+texture = ExtResource("4_btn")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_panel"]
+texture = ExtResource("3_panel")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+stretch_mode = 4
+expand_mode = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -120.0
+offset_right = 60.0
+offset_bottom = -40.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+
+[node name="StartButton" type="Button" parent="ButtonContainer"]
+custom_minimum_size = Vector2(100, 28)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_btn_normal")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "开始游戏"
+
+[node name="SettingsButton" type="Button" parent="ButtonContainer"]
+custom_minimum_size = Vector2(100, 28)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_btn_normal")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "设置"
+
+[node name="QuitButton" type="Button" parent="ButtonContainer"]
+custom_minimum_size = Vector2(100, 28)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_btn_normal")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "退出游戏"
+
+[node name="SettingsPanel" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -80.0
+offset_right = 70.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="SettingsTitle" type="Label" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 8.0
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.25, 0.14, 0.06, 1)
+theme_override_font_sizes/font_size = 14
+text = "设 置"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeLabel" type="Label" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = -8.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.25, 0.14, 0.06, 1)
+theme_override_font_sizes/font_size = 10
+text = "音量"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsPanel"]
+layout_mode = 1
+offset_left = 12.0
+offset_top = 58.0
+offset_right = 128.0
+offset_bottom = 78.0
+max_value = 1.0
+value = 1.0
+
+[node name="BackButton" type="Button" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_top = 100.0
+offset_right = 30.0
+offset_bottom = 128.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBox_btn_normal")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "返回"
+
+[connection signal="pressed" from="ButtonContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="SettingsPanel/VolumeSlider" to="." method="_on_volume_slider_value_changed"]

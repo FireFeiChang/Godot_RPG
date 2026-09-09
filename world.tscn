@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://db35axla4nu4p" path="res://UI/health_ui.tscn" id="9_kwqh4"]
 [ext_resource type="PackedScene" uid="uid://cagwdwe8hxhg" path="res://NPC/npc.tscn" id="10_t7hy5"]
 [ext_resource type="PackedScene" uid="uid://c2gwi33yhmteg" path="res://steam_vent.tscn" id="11_c45sw"]
-[ext_resource type="PackedScene" uid="uid://taskui" path="res://UI/task_ui.tscn" id="13_taskui"]
+[ext_resource type="PackedScene" uid="uid://cnowweaf51lh5" path="res://UI/task_panel.tscn" id="13_taskui"]
 [ext_resource type="PackedScene" uid="uid://itemcounter" path="res://UI/item_counter.tscn" id="14_itemcounter"]
 [ext_resource type="PackedScene" uid="uid://toastui" path="res://UI/toast_ui.tscn" id="15_toastui"]
 [ext_resource type="PackedScene" uid="uid://b6m766qqelvlw" path="res://inventory/inv_ui.tscn" id="16_invui"]
@@ -22,6 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://mimic" path="res://Enemies/mimic.tscn" id="21_wukud"]
 [ext_resource type="PackedScene" uid="uid://dciy6sheej086" path="res://NPC/female_adventurer.tscn" id="24_femaleadv"]
 [ext_resource type="PackedScene" uid="uid://goblin" path="res://Enemies/goblin.tscn" id="32_nx736"]
+[ext_resource type="PackedScene" uid="uid://c6l0n70c60m77" path="res://World/windmill/windmill.tscn" id="33_windmill"]
+[ext_resource type="PackedScene" uid="uid://campfire00001" path="res://World/campfire/campfire.tscn" id="34_campfire"]
+[ext_resource type="PackedScene" uid="uid://chkt7t5s5r70o" path="res://World/shop/weapon_shop.tscn" id="35_shop"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_uhvly"]
 tile_data = PackedInt32Array(0, 2, 0, 65536, 2, 1, 131072, 2, 2, 1, 65538, 0, 65537, 65538, 1, 131073, 65538, 2, 2, 131074, 0, 65538, 131074, 1, 131074, 131074, 2)
@@ -801,7 +804,7 @@ y_sort_enabled = true
 position = Vector2(130, 450)
 
 [node name="Grass2" parent="Grass" unique_id=2054418954 instance=ExtResource("6_4oani")]
-position = Vector2(150, 470)
+position = Vector2(78, 477)
 
 [node name="Grass3" parent="Grass" unique_id=1881055716 instance=ExtResource("6_4oani")]
 position = Vector2(230, 470)
@@ -828,7 +831,7 @@ position = Vector2(698, 439)
 position = Vector2(580, 458)
 
 [node name="Grass11" parent="Grass" unique_id=1330864454 instance=ExtResource("6_4oani")]
-position = Vector2(479, 502)
+position = Vector2(579, 352)
 
 [node name="Grass12" parent="Grass" unique_id=228393137 instance=ExtResource("6_4oani")]
 position = Vector2(624, 464)
@@ -849,7 +852,7 @@ position = Vector2(498, 464)
 position = Vector2(618, 481)
 
 [node name="Grass18" parent="Grass" unique_id=2033360798 instance=ExtResource("6_4oani")]
-position = Vector2(447, 509)
+position = Vector2(488, 541)
 
 [node name="Grass19" parent="Grass" unique_id=1361036120 instance=ExtResource("6_4oani")]
 position = Vector2(537, 530)
@@ -891,7 +894,7 @@ position = Vector2(80, 300)
 position = Vector2(60, 160)
 
 [node name="Grass32" parent="Grass" unique_id=773334015 instance=ExtResource("6_4oani")]
-position = Vector2(460, 210)
+position = Vector2(611, 146)
 
 [node name="Grass33" parent="Grass" unique_id=960568570 instance=ExtResource("6_4oani")]
 position = Vector2(520, 230)
@@ -1144,12 +1147,18 @@ position = Vector2(-55, 560)
 
 [node name="Bat" parent="." unique_id=135257842 instance=ExtResource("7_sxwx7")]
 position = Vector2(560, 150)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat2" parent="." unique_id=1211628904 instance=ExtResource("7_sxwx7")]
 position = Vector2(700, 90)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat3" parent="." unique_id=2066323782 instance=ExtResource("7_sxwx7")]
 position = Vector2(740, 180)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1629957900]
 
@@ -1184,18 +1193,28 @@ position = Vector2(150, 320)
 
 [node name="Bat4" parent="." unique_id=1111111132 instance=ExtResource("7_sxwx7")]
 position = Vector2(600, 240)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat5" parent="." unique_id=1111111133 instance=ExtResource("7_sxwx7")]
 position = Vector2(700, 250)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat6" parent="." unique_id=1111111134 instance=ExtResource("7_sxwx7")]
 position = Vector2(100, 170)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat11" parent="." unique_id=1111111139 instance=ExtResource("7_sxwx7")]
 position = Vector2(220, 150)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat12" parent="." unique_id=1111111140 instance=ExtResource("7_sxwx7")]
 position = Vector2(270, 200)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="SteamVent2" parent="." unique_id=1111111144 instance=ExtResource("11_c45sw")]
 y_sort_enabled = true
@@ -1203,21 +1222,33 @@ position = Vector2(430, 455)
 
 [node name="Bat13" parent="." unique_id=572518509 instance=ExtResource("7_sxwx7")]
 position = Vector2(580, 90)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat14" parent="." unique_id=394360283 instance=ExtResource("7_sxwx7")]
 position = Vector2(760, 150)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat15" parent="." unique_id=165246469 instance=ExtResource("7_sxwx7")]
 position = Vector2(720, 260)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat16" parent="." unique_id=901882867 instance=ExtResource("7_sxwx7")]
 position = Vector2(60, 210)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat17" parent="." unique_id=1677047997 instance=ExtResource("7_sxwx7")]
 position = Vector2(300, 240)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Bat18" parent="." unique_id=146468635 instance=ExtResource("7_sxwx7")]
 position = Vector2(240, 90)
+FRICTION = 200.0
+MAX_SPEED = 100.0
 
 [node name="Acornback1" parent="." unique_id=777770001 instance=ExtResource("17_acorn")]
 position = Vector2(620, 410)
@@ -1258,7 +1289,7 @@ variant = 3
 body_scale = 0.9
 
 [node name="Goblin" parent="." unique_id=768036981 instance=ExtResource("32_nx736")]
-position = Vector2(369, 144)
+position = Vector2(376, 125)
 
 [node name="Slime" parent="." unique_id=1794189184 instance=ExtResource("20_bc84e")]
 position = Vector2(492, 351)
@@ -1267,4 +1298,14 @@ position = Vector2(492, 351)
 position = Vector2(392, 229)
 
 [node name="FemaleAdventurer" parent="." unique_id=1640147019 instance=ExtResource("24_femaleadv")]
-position = Vector2(300, 300)
+position = Vector2(329, 370)
+task_id = "kill_bats"
+
+[node name="Windmill" parent="." unique_id=400000005 instance=ExtResource("33_windmill")]
+position = Vector2(250, 150)
+
+[node name="Campfire" parent="." unique_id=400000006 instance=ExtResource("34_campfire")]
+position = Vector2(211, 312)
+
+[node name="WeaponShop" parent="." unique_id=400000007 instance=ExtResource("35_shop")]
+position = Vector2(379, 317)

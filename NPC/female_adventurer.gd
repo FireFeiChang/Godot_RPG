@@ -153,9 +153,11 @@ func _consume_task_requests():
 	if task_id == "":
 		return
 	if Dialog.task_accept_request == task_id:
+		print("NPC: accepting task ", task_id)
 		Dialog.task_accept_request = ""
 		TaskManager.accept_task(task_id)
 	if Dialog.task_turnin_request == task_id:
+		print("NPC: turning in task ", task_id)
 		Dialog.task_turnin_request = ""
 		TaskManager.turn_in_task(task_id)
 

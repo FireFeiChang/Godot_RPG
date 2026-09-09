@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://chkt7t5s5r70o"]
+
+[ext_resource type="Script" path="res://World/shop/weapon_shop.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(40.0, 20.0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 35.0
+
+[node name="WeaponShop" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_interact")
+
+[node name="Prompt" type="Label" parent="."]
+visible = false
+offset_left = -40.0
+offset_top = -60.0
+offset_right = 40.0
+offset_bottom = -40.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 8
+text = "按E打开商店"
+horizontal_alignment = 1
+vertical_alignment = 1

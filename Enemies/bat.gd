@@ -51,7 +51,7 @@ func _physics_process(delta):
 					update_wander()
 			
 		CHASE:
-			var player = playerDetection.player
+			player = playerDetection.can_see_player()
 			if player != null:
 				accelerate_towards_point(player.global_position, delta)
 			else:

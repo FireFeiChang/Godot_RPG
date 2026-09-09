@@ -10,7 +10,7 @@ func create_grass_effect():
 	get_parent().add_child(grassEffectInstance)
 	grassEffectInstance.global_position = global_position
 
-func _on_hurt_box_area_entered(area):
+func _on_hurt_box_area_entered(_area):
 	# 玩家必须仍在草丛侦测范围内且未被释放（玩家死亡等情况）
 	if player == null or not is_instance_valid(player):
 		return
