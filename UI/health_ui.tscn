@@ -8,7 +8,7 @@
 layout_mode = 3
 anchors_preset = 0
 offset_right = 42.0
-offset_bottom = 14.0
+offset_bottom = 26.0
 script = ExtResource("1_gijiy")
 
 [node name="HeartUIEmpty" type="TextureRect" parent="."]
@@ -25,3 +25,17 @@ offset_bottom = 10.5
 texture = ExtResource("3_1w0wu")
 expand_mode = 1
 stretch_mode = 1
+
+; 数值血量显示（调试/测试用）：
+; 心形图标每个 15px 宽，50 滴血要 750px，远超 320px 视口，所以心形只作为参考条，
+; 精确数值看这里的 "当前/上限"。
+[node name="HealthText" type="Label" parent="."]
+layout_mode = 0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 10
+text = "0/0"

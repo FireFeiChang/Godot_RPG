@@ -147,18 +147,32 @@
 
 | 场景 | 说明 |
 | --- | --- |
-| `title_screen.tscn` | 主场景。开始（清档新开）/ 设置（音量）/ 退出 |
-| `world.tscn` | 主玩法地图：地形、玩家、蝙蝠、村长 NPC、草丛/灌木/树、HUD |
+| `UI/main_menu.tscn` | **主场景**。开始（清档新开）/ 继续（读档）/ 设置（音量） |
+| `world.tscn` | 地图 1 · 村口田野：地形、玩家、村长 NPC、草丛/灌木/树、宝箱 |
+| `maps/map_north.tscn` | 地图 2 · 北坡羊道（1536×800） |
+| `maps/map_east.tscn` | 地图 3 · 东原营地（1536×800） |
+| `maps/map_manager.gd` | **`MapManager` autoload**：地图注册表、边缘传送、跨图出生点 |
+| `maps/edge_trigger.gd` | 地图边缘触发器（走进关口即切到相邻地图） |
 | `Player/player.tscn` | 玩家（含动画树、背包 UI） |
-| `Enemies/bat.tscn` | 蝙蝠敌人 |
-| `Enemies/acornback.tscn` | 橡子甲虫敌人 |
-| `Enemies/goblin.tscn` | 哥布林敌人 |
-| `Enemies/mimic.tscn` | 宝箱怪敌人 |
-| `Enemies/slime.tscn` | 史莱姆敌人 |
-| `Enemies/mob.gd` | 三种新敌人共用的通用基类（运行时按 sheet 切帧） |
+| `Enemies/bat.tscn` / `acornback.tscn` / `goblin.tscn` / `mimic.tscn` / `slime.tscn` | 五种敌人 |
+| `Enemies/mob.gd` | 哥布林 / 宝箱怪 / 史莱姆共用的通用基类（运行时按 sheet 切帧） |
 | `NPC/npc.tscn` | 可对话 NPC（村长实例挂载 `kill_bats` 任务） |
+| `UI/hud.tscn` | **`HUD` autoload**：三张地图共享一份 HUD，地图外自动隐藏 |
+| `tools/generate_maps.gd` | 开发工具：程序化生成两张新地图（不参与游戏运行） |
 
-**当前世界内容**：`43` 处草丛、`18` 处灌木、`25` 棵树、`14` 只蝙蝠、`3` 只橡子甲虫、`6` 个宝箱、`3` 只哥布林、`2` 只宝箱怪、`3` 只史莱姆、`2` 处蒸汽口、`1` 位村长。
+**三张地图连通关系**（走进地图边缘的关口即自动切换）：
+
+```
+        north  ←── NorthPass ──┐
+                              │
+                            world
+                              │
+        east   ←── EastPass ──┘
+```
+
+**世界内容**：world `20` 只怪（58 草丛 / 24 灌木 / 31 树 / 6 宝箱）；north `19` 只怪（40 草丛 / 20 灌木 / 28 树 / 3 宝箱）；east `30` 只怪（55 草丛 / 26 灌木 / 34 树 / 4 宝箱）。
+
+> 地图布局规范（素材图集语义、岔路结构、怪群分布、崖壁图块规则）见 `地图布局参考.md`。
 
 ---
 
@@ -177,10 +191,12 @@ Test-ARPG/
 ├── tasks/         任务系统（Task 资源、TaskManager、任务定义）
 ├── save/          存档管理器
 ├── UI/            生命值 / 任务列表 / 物品计数器 / 提示浮条 HUD
-├── World/         地图对象（草丛 / 灌木 / 树 / 草地贴图 / 瓦片集）
-├── addons/        第三方插件（dialogue_manager 等）
-├── world.tscn     主玩法地图
-├── title_screen.tscn / .gd   标题界面
+├── World/         地图对象（草丛 / 灌木 / 树 / 草地贴图 / 瓦片集 .tres）
+├── maps/          多地图系统（MapManager / 边缘触发器 / 两张新地图）
+├── tools/         开发工具（地图生成器，不参与游戏运行）
+├── addons/        第三方插件（dialogue_manager / hasturoperationgd 执行桥）
+├── world.tscn     地图 1 · 村口田野
+├── 地图布局参考.md 地图布局规范（生成新地图时照此执行）
 └── project.godot  项目配置
 ```
 
@@ -190,10 +206,11 @@ Test-ARPG/
 
 1. 安装 **Godot Engine 4.7**（需支持 Forward Plus / Vulkan）。
 2. 在 Godot 项目管理器中**导入**本目录，或直接用 Godot 打开 `project.godot`。
-3. 运行主场景 `title_screen.tscn`（默认主场景）。
-4. 点击"开始"即可进入 `world.tscn` 开始全新一局。
+3. 运行主场景 `UI/main_menu.tscn`（默认主场景）。
+4. 点击"开始"即可进入 `world.tscn` 开始全新一局；走到地图边缘的关口会自动切换到相邻地图。
 
-> 直接运行 `world.tscn` 也可（会跳过标题、同样触发开局重置）。
+> 直接运行任意一张地图（`world.tscn` / `maps/map_north.tscn` / `maps/map_east.tscn`）也可 ——
+> 会跳过主菜单、同样触发开局重置。
 
 ---
 

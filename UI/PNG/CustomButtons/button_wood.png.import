@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hm8iuarju6rv"
-path="res://.godot/imported/weapon_shop.png-516c13319003ade99b018a6f80405380.ctex"
+uid="uid://ctumhsamnf477"
+path="res://.godot/imported/button_wood.png-676473899b7b2d63f0f5300755a35916.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/shop/weapon_shop.png"
-dest_files=["res://.godot/imported/weapon_shop.png-516c13319003ade99b018a6f80405380.ctex"]
+source_file="res://UI/PNG/CustomButtons/button_wood.png"
+dest_files=["res://.godot/imported/button_wood.png-676473899b7b2d63f0f5300755a35916.ctex"]
 
 [params]
 

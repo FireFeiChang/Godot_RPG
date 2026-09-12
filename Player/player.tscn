@@ -861,6 +861,7 @@ gizmo_extents = 8.0
 position = Vector2(15, 0)
 collision_layer = 8
 script = ExtResource("4_btwms")
+knockback_strength = 150.0
 
 [node name="CollisionShape2D" parent="HitBoxPivot/SwordHitBox" index="0"]
 shape = SubResource("CapsuleShape2D_l8hgp")

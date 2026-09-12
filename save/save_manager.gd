@@ -6,12 +6,22 @@ const SAVE_FILE = "save_data.json"
 signal save_completed()
 signal load_completed()
 
+## 取当前地图里的玩家节点。
+## 地图根始终是 Player 的直接父节点，所以直接走 current_scene 即可。
+func _find_player() -> Node2D:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return null
+	return scene.get_node_or_null("Player") as Node2D
+
 func save_game(slot: int = 1):
 	var save_data = {
 		"player_states": {
 			"health": PlayerStates.health,
 			"max_health": PlayerStates.max_health
 		},
+		# 记录所在地图，读档时才知道该回到哪张图
+		"map_id": MapManager.current_map_id,
 		"player_position": {
 			"x": 0,
 			"y": 0
@@ -20,12 +30,12 @@ func save_game(slot: int = 1):
 		"inventory": [],
 		"tasks": []
 	}
-	
-	var player = get_tree().current_scene.get_node_or_null("Player")
+
+	var player := _find_player()
 	if player != null:
 		save_data["player_position"]["x"] = player.global_position.x
 		save_data["player_position"]["y"] = player.global_position.y
-	
+
 	for slot_obj in Inventory.inv.slots:
 		if slot_obj.item != null:
 			save_data["inventory"].append({
@@ -64,12 +74,14 @@ func load_game(slot: int = 1):
 		PlayerStates.health = save_data["player_states"].get("health", 5)
 		PlayerStates.max_health = save_data["player_states"].get("max_health", 5)
 	
+	# 位置还原：只有玩家确实在当前场景里时才写。
+	# MapManager.install() 保证调用本函数时current_scene 已经是目标地图。
 	if save_data.has("player_position"):
-		var player = get_tree().current_scene.get_node_or_null("Player")
+		var player := _find_player()
 		if player != null:
 			player.global_position = Vector2(
-				save_data["player_position"].get("x", 344),
-				save_data["player_position"].get("y", 196)
+				save_data["player_position"].get("x", 184),
+				save_data["player_position"].get("y", 500)
 			)
 
 	if save_data.has("gold"):
@@ -97,6 +109,21 @@ func load_game(slot: int = 1):
 	
 	load_completed.emit()
 	return true
+
+## 只读取存档里记录的地图 id（不应用任何状态）。
+## 供 MapManager 决定"继续游戏"该切到哪张地图；存档不存在或无记录时返回 ""。
+func peek_map_id(slot: int = 1) -> String:
+	var path := SAVE_DIR + str(slot) + "_" + SAVE_FILE
+	if not FileAccess.file_exists(path):
+		return ""
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return ""
+	var save_data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if save_data is Dictionary and save_data.has("map_id"):
+		return str(save_data["map_id"])
+	return ""
 
 func has_save(slot: int = 1) -> bool:
 	return FileAccess.file_exists(SAVE_DIR + str(slot) + "_" + SAVE_FILE)

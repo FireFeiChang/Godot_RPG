@@ -32,10 +32,21 @@ func _ready():
 	state.connect("no_health", queue_free)
 	animationTree.active = true
 	TaskManager.ensure_default_tasks()
-	# 每次进入世界都是一次全新开局：重置血/背包/任务，不继承上一局
-	_reset_new_game()
+	# 只有"本局第一次进入地图"才重置。
+	# 地图之间来回切换时必须保留血/背包/金币/任务，否则换图等于清档。
+	if MapManager.consume_fresh_start():
+		_reset_new_game()
 
-## 新开局重置（覆盖标题开始与编辑器直接运行两种路径）。
+## 换图后由 MapManager 调用：清速度、回到 MOVE 态、收刀，
+## 避免上一张地图残留的硬直/攻击状态带过来。
+func reset_for_teleport():
+	velocity = Vector2.ZERO
+	moving_state = MOVE
+	_sword_armed = false
+	if is_instance_valid(swordHitBox):
+		_sword_shape().disabled = true
+
+## 新开局重置（覆盖主菜单开始与编辑器直接运行两种路径）。
 func _reset_new_game():
 	state.health = state.max_health
 	for slot in Inventory.inv.slots:

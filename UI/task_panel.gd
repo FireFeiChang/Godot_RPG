@@ -18,6 +18,12 @@ func _ready():
 	close()
 
 func _process(_delta):
+	# HUD 现在常驻（autoload），主菜单里也存在。不加这道判断的话，
+	# 在主菜单按 Q 会穿透到标题画面上把任务面板打开。
+	# 用 is_visible_in_tree() 而不是 HUD.visible：父级（HUD 那个 CanvasLayer）
+	# 一旦隐藏，这里就自动为 false，且不依赖 autoload 全局标识符。
+	if not is_visible_in_tree():
+		return
 	if Input.is_action_just_pressed("openTask"):
 		if is_open:
 			close()
@@ -52,26 +58,26 @@ func update_task_list():
 		var task_item = Label.new()
 		task_item.text = task.name
 		task_item.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		task_item.add_theme_font_size_override("font_size", 14)
+		task_item.add_theme_font_size_override("font_size", 8)
 		task_list.add_child(task_item)
 
 		var obj = task.get_current_objective()
 		if obj:
 			var progress_label = Label.new()
 			progress_label.text = "- " + obj.get("name", "") + ": " + str(obj.get("progress", 0)) + "/" + str(obj.get("target", 1))
-			progress_label.add_theme_font_size_override("font_size", 12)
+			progress_label.add_theme_font_size_override("font_size", 8)
 			task_list.add_child(progress_label)
 
 	for task in completed_tasks:
 		var task_item = Label.new()
 		task_item.text = "[可交付] " + task.name
 		task_item.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		task_item.add_theme_font_size_override("font_size", 14)
+		task_item.add_theme_font_size_override("font_size", 8)
 		task_list.add_child(task_item)
 
 		var hint = Label.new()
 		hint.text = "- 回到村长处交付，领取奖励"
-		hint.add_theme_font_size_override("font_size", 11)
+		hint.add_theme_font_size_override("font_size", 8)
 		hint.add_theme_color_override("font_color", Color(1, 0.85, 0.3))
 		task_list.add_child(hint)
 

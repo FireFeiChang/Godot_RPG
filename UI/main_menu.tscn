@@ -1,20 +1,76 @@
 [gd_scene format=3 uid="uid://oa1t7v4cfeqq"]
 
-[ext_resource type="Script" path="res://UI/main_menu.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://d0mensxc7svdy" path="res://UI/main_menu.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://tvlf4yh7ea7p" path="res://UI/title/background.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://bc2d61mjm3csi" path="res://UI/PNG/Default/panel_brown.png" id="3_panel"]
-[ext_resource type="Texture2D" uid="uid://b74cjjugjrng8" path="res://UI/PNG/Default/button_brown.png" id="4_btn"]
-[ext_resource type="Texture2D" uid="uid://cnnmyimwri6ll" path="res://UI/PNG/Default/button_brown_close.png" id="5_btn_close"]
-[ext_resource type="Texture2D" uid="uid://o1s2jmrwnc28" path="res://UI/声音设置底图.png" id="6_snd_bg"]
+[ext_resource type="Texture2D" uid="uid://ctumhsamnf477" path="res://UI/PNG/CustomButtons/button_wood.png" id="4_wood"]
+[ext_resource type="Texture2D" uid="uid://d1hc2i2yky3rd" path="res://UI/PNG/CustomButtons/button_stone.png" id="5_stone"]
+[ext_resource type="Texture2D" uid="uid://c7ad1r81exypk" path="res://UI/PNG/CustomButtons/button_parchment.png" id="6_parchment"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBox_btn_normal"]
-texture = ExtResource("4_btn")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
+[sub_resource type="AtlasTexture" id="Atlas_wood_normal"]
+atlas = ExtResource("4_wood")
+region = Rect2(39, 91, 297, 147)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_wood_normal"]
+texture = SubResource("Atlas_wood_normal")
+
+[sub_resource type="AtlasTexture" id="Atlas_wood_pressed"]
+atlas = ExtResource("4_wood")
+region = Rect2(688, 91, 299, 147)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_wood_pressed"]
+texture = SubResource("Atlas_wood_pressed")
+
+[sub_resource type="AtlasTexture" id="Atlas_wood_hover"]
+atlas = ExtResource("4_wood")
+region = Rect2(356, 80, 311, 159)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_wood_hover"]
+texture = SubResource("Atlas_wood_hover")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBox_empty"]
+
+[sub_resource type="AtlasTexture" id="Atlas_stone_normal"]
+atlas = ExtResource("5_stone")
+region = Rect2(82, 297, 908, 463)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_stone_normal"]
+texture = SubResource("Atlas_stone_normal")
+
+[sub_resource type="AtlasTexture" id="Atlas_stone_pressed"]
+atlas = ExtResource("5_stone")
+region = Rect2(2089, 297, 903, 463)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_stone_pressed"]
+texture = SubResource("Atlas_stone_pressed")
+
+[sub_resource type="AtlasTexture" id="Atlas_stone_hover"]
+atlas = ExtResource("5_stone")
+region = Rect2(1047, 233, 982, 560)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_stone_hover"]
+texture = SubResource("Atlas_stone_hover")
+
+[sub_resource type="AtlasTexture" id="Atlas_parchment_normal"]
+atlas = ExtResource("6_parchment")
+region = Rect2(170, 212, 818, 597)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_parchment_normal"]
+texture = SubResource("Atlas_parchment_normal")
+
+[sub_resource type="AtlasTexture" id="Atlas_parchment_pressed"]
+atlas = ExtResource("6_parchment")
+region = Rect2(2101, 211, 816, 604)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_parchment_pressed"]
+texture = SubResource("Atlas_parchment_pressed")
+
+[sub_resource type="AtlasTexture" id="Atlas_parchment_hover"]
+atlas = ExtResource("6_parchment")
+region = Rect2(1085, 145, 932, 710)
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_parchment_hover"]
+texture = SubResource("Atlas_parchment_hover")
 
 [sub_resource type="StyleBoxTexture" id="StyleBox_panel"]
 texture = ExtResource("3_panel")
@@ -25,7 +81,39 @@ texture_margin_bottom = 16.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="MainMenu" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBox_back_normal"]
+content_margin_left = 8.0
+content_margin_top = 3.0
+content_margin_right = 8.0
+content_margin_bottom = 3.0
+bg_color = Color(0.31, 0.19, 0.1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.35, 0.18, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_back_hover"]
+content_margin_left = 8.0
+content_margin_top = 3.0
+content_margin_right = 8.0
+content_margin_bottom = 3.0
+bg_color = Color(0.46, 0.29, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.53, 0.26, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MainMenu" type="Control" unique_id=2005308262]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,7 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1616558372]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,51 +130,58 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_bg")
-stretch_mode = 4
 expand_mode = 1
+stretch_mode = 4
 
-[node name="ButtonContainer" type="VBoxContainer" parent="."]
-anchors_preset = 3
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -60.0
-offset_top = -120.0
-offset_right = 60.0
-offset_bottom = -40.0
+[node name="ButtonContainer" type="VBoxContainer" parent="." unique_id=428602792]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75200003
+anchor_top = 0.65900004
+anchor_right = 0.75200003
+anchor_bottom = 0.65900004
+offset_left = -36.640015
+offset_top = -61.62001
+offset_right = 36.359985
+offset_bottom = 58.37999
 grow_horizontal = 2
-theme_override_constants/separation = 8
+grow_vertical = 2
+theme_override_constants/separation = 6
+alignment = 1
 
-[node name="StartButton" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(100, 28)
+[node name="StartButton" type="Button" parent="ButtonContainer" unique_id=526963867]
+custom_minimum_size = Vector2(73, 36)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_btn_normal")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
-theme_override_font_sizes/font_size = 11
-text = "开始游戏"
+size_flags_horizontal = 4
+tooltip_text = "开始游戏"
+theme_override_styles/normal = SubResource("StyleBox_wood_normal")
+theme_override_styles/pressed = SubResource("StyleBox_wood_pressed")
+theme_override_styles/hover = SubResource("StyleBox_wood_hover")
+theme_override_styles/focus = SubResource("StyleBox_empty")
 
-[node name="SettingsButton" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(100, 28)
+[node name="ContinueButton" type="Button" parent="ButtonContainer" unique_id=749351749]
+custom_minimum_size = Vector2(71, 36)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_btn_normal")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
-theme_override_font_sizes/font_size = 11
-text = "设置"
+size_flags_horizontal = 4
+tooltip_text = "继续游戏"
+theme_override_styles/normal = SubResource("StyleBox_stone_normal")
+theme_override_styles/pressed = SubResource("StyleBox_stone_pressed")
+theme_override_styles/hover = SubResource("StyleBox_stone_hover")
+theme_override_styles/focus = SubResource("StyleBox_empty")
 
-[node name="QuitButton" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(100, 28)
+[node name="SettingsButton" type="Button" parent="ButtonContainer" unique_id=191771092]
+custom_minimum_size = Vector2(49, 36)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_btn_normal")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
-theme_override_font_sizes/font_size = 11
-text = "退出游戏"
+size_flags_horizontal = 4
+tooltip_text = "设置"
+theme_override_styles/normal = SubResource("StyleBox_parchment_normal")
+theme_override_styles/pressed = SubResource("StyleBox_parchment_pressed")
+theme_override_styles/hover = SubResource("StyleBox_parchment_hover")
+theme_override_styles/focus = SubResource("StyleBox_empty")
 
-[node name="SettingsPanel" type="Panel" parent="."]
+[node name="SettingsPanel" type="Panel" parent="." unique_id=78890080]
 visible = false
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -100,7 +195,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBox_panel")
 
-[node name="SettingsTitle" type="Label" parent="SettingsPanel"]
+[node name="SettingsTitle" type="Label" parent="SettingsPanel" unique_id=1068544396]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -113,7 +208,7 @@ text = "设 置"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VolumeLabel" type="Label" parent="SettingsPanel"]
+[node name="VolumeLabel" type="Label" parent="SettingsPanel" unique_id=1662964193]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -128,7 +223,7 @@ text = "音量"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="SettingsPanel"]
+[node name="VolumeSlider" type="HSlider" parent="SettingsPanel" unique_id=929767987]
 layout_mode = 1
 offset_left = 12.0
 offset_top = 58.0
@@ -137,23 +232,30 @@ offset_bottom = 78.0
 max_value = 1.0
 value = 1.0
 
-[node name="BackButton" type="Button" parent="SettingsPanel"]
+[node name="BackButton" type="Button" parent="SettingsPanel" unique_id=1314873856]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
+anchor_bottom = 1.0
 offset_left = -30.0
-offset_top = 100.0
+offset_top = -40.0
 offset_right = 30.0
-offset_bottom = 128.0
+offset_bottom = -12.0
 grow_horizontal = 2
-theme_override_styles/normal = SubResource("StyleBox_btn_normal")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.95, 0.85, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.8, 1)
 theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBox_back_normal")
+theme_override_styles/pressed = SubResource("StyleBox_back_hover")
+theme_override_styles/hover = SubResource("StyleBox_back_hover")
+theme_override_styles/focus = SubResource("StyleBox_empty")
 text = "返回"
 
 [connection signal="pressed" from="ButtonContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="ButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="ButtonContainer/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="SettingsPanel/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="value_changed" from="SettingsPanel/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="pressed" from="SettingsPanel/BackButton" to="." method="_on_back_button_pressed"]

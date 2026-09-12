@@ -1,8 +1,8 @@
-[gd_scene load_steps=32 format=3 uid="uid://bimksq018q4my"]
+[gd_scene format=3 uid="uid://bimksq018q4my"]
 
-[ext_resource type="Script" path="res://Enemies/bat.gd" id="1_eou2k"]
+[ext_resource type="Script" uid="uid://eicmto3clrc" path="res://Enemies/bat.gd" id="1_eou2k"]
 [ext_resource type="Texture2D" uid="uid://bgxtvinjpnq1e" path="res://Enemies/Bat.png" id="1_u43s2"]
-[ext_resource type="Shader" path="res://white_color.gdshader" id="2_buma7"]
+[ext_resource type="Shader" uid="uid://cmyxragmcnn1m" path="res://white_color.gdshader" id="2_buma7"]
 [ext_resource type="Resource" uid="uid://cqxvjyvdjxg4w" path="res://inventory/item/bat.tres" id="2_mjwco"]
 [ext_resource type="Texture2D" uid="uid://17cvu2tnjqdf" path="res://Shadows/SmallShadow.png" id="2_sddgl"]
 [ext_resource type="PackedScene" uid="uid://cnp2m06ynxldu" path="res://Boxes/hurt_box.tscn" id="4_8jkd5"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dy3o6qiwvw647" path="res://Boxes/hit_box.tscn" id="7_wt1b0"]
 [ext_resource type="PackedScene" uid="uid://oa4waysdaxr5" path="res://Boxes/soft_collison.tscn" id="8_y78ct"]
 [ext_resource type="PackedScene" uid="uid://cil5a2a6nvc6g" path="res://Enemies/wander_controller.tscn" id="9_l2yix"]
-[ext_resource type="Texture2D"  path="res://Effects/white.png" id="11_8j2ef"]
+[ext_resource type="Texture2D" uid="uid://csfku5y2og1h6" path="res://Effects/white.png" id="11_8j2ef"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u0ryp"]
 resource_local_to_scene = true
@@ -56,7 +56,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_saiv4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Bat",
 "speed": 10.0
 }]
@@ -116,9 +116,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ltrln"]
 _data = {
-"RESET": SubResource("Animation_qk8e8"),
-"start": SubResource("Animation_siy1p"),
-"stop": SubResource("Animation_s3ifq")
+&"RESET": SubResource("Animation_qk8e8"),
+&"start": SubResource("Animation_siy1p"),
+&"stop": SubResource("Animation_s3ifq")
 }
 
 [sub_resource type="Gradient" id="Gradient_cjgb1"]
@@ -138,47 +138,48 @@ scale_min = 0.01
 scale_max = 0.1
 color_ramp = SubResource("GradientTexture1D_w8s78")
 
-[node name="Bat" type="CharacterBody2D"]
+[node name="Bat" type="CharacterBody2D" unique_id=2026243179]
 collision_layer = 16
 script = ExtResource("1_eou2k")
+item = ExtResource("2_mjwco")
 FRICTION = 100
 MAX_SPEED = 70
-item = ExtResource("2_mjwco")
 
-[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_u0ryp")
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=154848862]
 z_index = 1
+material = SubResource("ShaderMaterial_u0ryp")
 sprite_frames = SubResource("SpriteFrames_2n6ir")
 animation = &"Bat"
 autoplay = "Bat"
 offset = Vector2(0, -12)
 
-[node name="Shadow" type="Sprite2D" parent="."]
+[node name="Shadow" type="Sprite2D" parent="." unique_id=652435021]
 position = Vector2(-2.38419e-07, 0)
 scale = Vector2(0.9, 0.779)
 texture = ExtResource("2_sddgl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2072197432]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_lxf3n")
 
-[node name="HurtBox" parent="." instance=ExtResource("4_8jkd5")]
+[node name="HurtBox" parent="." unique_id=1666801661 instance=ExtResource("4_8jkd5")]
 collision_mask = 8
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, -12)
 shape = SubResource("CapsuleShape2D_fkobv")
 
-[node name="States" parent="." instance=ExtResource("5_exhjp")]
+[node name="States" parent="." unique_id=801237841 instance=ExtResource("5_exhjp")]
 max_health = 2
 
-[node name="PlayerDetection" parent="." instance=ExtResource("6_8hi37")]
+[node name="PlayerDetection" parent="." unique_id=768574120 instance=ExtResource("6_8hi37")]
 
-[node name="CollisionShape2D" parent="PlayerDetection" index="0"]
+[node name="CollisionShape2D" parent="PlayerDetection" index="0" unique_id=686386146]
+visible = false
 modulate = Color(1, 1, 1, 0.192157)
 shape = SubResource("CircleShape2D_21hhl")
 
-[node name="HitBox" parent="." instance=ExtResource("7_wt1b0")]
+[node name="HitBox" parent="." unique_id=460039476 instance=ExtResource("7_wt1b0")]
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
@@ -186,27 +187,25 @@ position = Vector2(0, -15)
 shape = SubResource("CircleShape2D_rbftp")
 debug_color = Color(0.870588, 0.305882, 0.443137, 0.419608)
 
-[node name="SoftCollison" parent="." instance=ExtResource("8_y78ct")]
+[node name="SoftCollison" parent="." unique_id=169679372 instance=ExtResource("8_y78ct")]
 
 [node name="CollisionShape2D" parent="SoftCollison" index="0"]
 shape = SubResource("CircleShape2D_l8wmy")
 debug_color = Color(0.192157, 0.627451, 0.392157, 0.419608)
 
-[node name="WanderController" parent="." instance=ExtResource("9_l2yix")]
+[node name="WanderController" parent="." unique_id=202213026 instance=ExtResource("9_l2yix")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_ltrln")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=273047882]
+libraries/ = SubResource("AnimationLibrary_ltrln")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=608464960]
 position = Vector2(0, -15)
 emitting = false
 amount = 200
-process_material = SubResource("ParticleProcessMaterial_pr0i2")
 texture = ExtResource("11_8j2ef")
 lifetime = 0.5
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_pr0i2")
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="invincible_ended" from="HurtBox" to="." method="_on_hurt_box_invincible_ended"]

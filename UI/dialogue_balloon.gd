@@ -86,6 +86,11 @@ func apply_dialogue_line():
 			btn.pressed.connect(_on_response_pressed.bind(response))
 			responses_vbox.add_child(btn)
 		responses_vbox.show()
+		# 给第一个选项焦点：这样 Enter / E（ui_accept）能直接确认，
+		# 上下方向键也能在选项间移动。没有焦点时键盘完全无法操作选项。
+		var first_btn := responses_vbox.get_child(0) as Button
+		if first_btn != null:
+			first_btn.grab_focus()
 	else:
 		is_waiting_for_input = true
 

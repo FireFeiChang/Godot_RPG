@@ -6,9 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A 2D pixel-art action RPG built in **Godot 4.7 (Forward Plus renderer)**, adapted from Heartbeast's "Action RPG" tutorial and extended with dialogue, gathering/inventory, tasks, enemies, effects, save, and title-screen systems. The viewport is 320×180 (canvas_items stretch) upscaled to a 1280×720 window.
 
-There is **no test suite, linter, or CLI build** — this is an editor-driven Godot project. Run/verify by opening the project in the Godot 4.7 editor (main scene `res://title_screen.tscn`; the playable map is `res://world.tscn`). A live Godot editor with the `godot_mcp` addon is expected to be running in this environment, so scenes can be launched via the MCP scene tools (e.g. `scene_run.play_main` / `play_custom`) instead of a shell command.
+There is **no test suite, linter, or CLI build** — this is an editor-driven Godot project. Run/verify by opening the project in the Godot 4.7 editor (main scene `res://UI/main_menu.tscn`; the three playable maps are `res://world.tscn`, `res://maps/map_north.tscn`, `res://maps/map_east.tscn`). A live Godot editor with the `hasturoperationgd` bridge addon is expected to be running, so the project can be scripted through its HTTP API instead of a shell command.
 
-Detailed feature specs and asset manifests live in `PROJECT_INIT.md` (Chinese). UI strings and most code comments are in Chinese.
+> The editor process has **no autoloads** (`MapManager`, `HUD`, `PlayerStates`, … exist only at runtime), so editor-bridge checks must not reference them. Also note `ResourceLoader.load()` does **not** surface every compile error — verify scripts individually rather than trusting a load to succeed.
+
+Detailed feature specs and asset manifests live in `PROJECT_INIT.md` (Chinese). Map layout conventions are in `地图布局参考.md` (Chinese). UI strings and most code comments are in Chinese.
 
 ## Codebase language note
 
@@ -16,9 +18,11 @@ Files, docs, and UI strings are primarily written in Chinese (e.g. `消灭蝙蝠
 
 ## Flow / entry points
 
-- `title_screen.tscn` (main scene) → Start button **deletes any save then** swaps to `world.tscn` via `change_scene_to_file` (every run is a fresh start; `world.gd`/`Player._reset_new_game` also resets autoloads — health/gold/inventory/tasks).
-- `world.tscn` is one large `y_sort_enabled` map: TileMap ground (Dirt/Cliff), a `Camera2D` (position-smoothed, hard-coded limits), the player, plus grouped instances of Grass (43) / Bush (18) / Tree (25), 14 Bat, 3 Acornback, 6 Chest, NPC, 2 SteamVent, and a `CanvasLayer` hosting the HUD (`HealthUI`, `Task_UI`, `ItemCounter`, `gold_counter`). The player node carries a `RemoteTransform2D` that drives the camera.
-- `Player` is instanced from the world scene (not autoloaded). Its gameplay "singletons" are autoloads referenced by name in `_ready` (`var state = PlayerStates` etc.), not node children.
+- `UI/main_menu.tscn` (main scene, `project.godot` `run/main_scene`) → Start deletes any save and calls `MapManager.begin_new_game(0)`, Continue calls `begin_new_game(1)`; both then `change_scene_to_file(MapManager.MAPS[MapManager.intended_map()])`. (`title_screen.tscn`/`.gd` are **dead code** — nothing references them.)
+- **Three maps**, all registered in `maps/map_manager.gd` `MAPS`: `world` (`res://world.tscn`, village/fields), `north` (`res://maps/map_north.tscn`, mountain pass), `east` (`res://maps/map_east.tscn`, open plain camp). Each is one large `y_sort_enabled` map: tiled ground (Dirt/Cliff TileMaps), a sibling `Camera2D` (position-smoothed, per-map limits), the player, grouped Grass/Bush/Tree/Chests, enemies, and `Spawns`/`EdgeTriggers` nodes.
+- **`Player` is instanced inside each map scene** (not autoloaded), and **must stay a direct child of the map root** — `save_manager._find_player()` and the `RemoteTransform2D` → `../../Camera2D` path both depend on it. Its gameplay "singletons" are autoloads referenced by name in `_ready` (`var state = PlayerStates` etc.).
+- **Walking to a map edge transitions maps.** An `EdgeTrigger` (`maps/edge_trigger.gd`, `Area2D` with `collision_mask = 2`) calls `MapManager.goto_map()`. Named borders: `world` has `NorthPass`→north and `EastPass`→east; each new map has one border back to `world`. **Border names must match on both sides** (trigger `NorthPass` in one map ↔ `Spawns/NorthPass` marker in the other).
+- **`Player._ready()` resets progress only on the first map entry of a session** (`MapManager.consume_fresh_start()`). Without this gate every map transition would wipe health/inventory/gold/tasks. `MapManager.install()` (called from `maps/world_map.gd` on each map root) repositions the player, snaps the camera, and applies any pending `load_game()`.
 - Chests/coin pickups are added to `get_tree().current_scene` by their spawners — deliberately not parented to a dying node.
 
 ## Autoloads (`project.godot`)
@@ -32,6 +36,8 @@ Files, docs, and UI strings are primarily written in Chinese (e.g. `消灭蝙蝠
 | `Wallet` | `res://coins/wallet.gd` | Global coin balance (`gold`, `signal gold_changed`); `spawn_coin_drop(pos, amount)` for world pickups. |
 | `DialogueManager` | Dialogue Manager addon | Third-party dialogue plugin. |
 | `Dialog` | `res://Player/dialog.gd` | Bare `Node` flag holder (`del_player` deletes the player, set by dialogue lines). |
+| `HUD` | `res://UI/hud.tscn` (+ `UI/hud.gd`) | **Shared HUD, one instance for all maps.** A `CanvasLayer` holding `Root/` → `HealthUI`, `Task_UI`, `ItemCounter`, `Toast_UI`, `inv_UI`, `GoldCounter`. `show_hud()`/`hide_hud()`; hidden outside maps (main menu). Map scenes must **not** contain their own HUD copy. |
+| `MapManager` | `res://maps/map_manager.gd` | Multi-map registry + transitions. `MAPS` (id→path) / `DEFAULT_MAP` / `current_map_id`; `goto_map()` (called by `EdgeTrigger`), `install()` (called by each map root's `_ready` via `maps/world_map.gd`), `begin_new_game(slot)` / `consume_fresh_start()` / `intended_map()`. Owns the "first map entry of a session" flag that gates `Player._reset_new_game()`. |
 
 ### Notable coupling patterns
 
@@ -76,7 +82,28 @@ Other conventions worth keeping:
 
 - `tasks/task.gd` (`class_name Task`): status enum `NOT_STARTED`→`IN_PROGRESS`→`COMPLETED`→`REWARDED`; `objectives: Array[Dictionary]`, each dict having `name`/`progress`/`target`; `rewards: Array[InvItem]` + parallel `reward_amounts`. `get_current_objective()` returns the first non-complete objective.
 - `task_ui.gd` (弹层 UI, `UI/task_ui.gd`) rebuilds its whole list from `TaskManager` signals; completed tasks show a "回村长处交付" hint (rewards are granted by the chief NPC's dialogue, **not** claimed in the UI). It never touches inventory directly.
-- `save_manager.gd` writes `player_states`, `player_position`, `gold`, `inventory` (by `item_id` + amount), and `tasks` (id, status, objectives) as JSON to `user://saves/1_save_data.json`.
+- `save_manager.gd` writes `player_states`, `map_id`, `player_position`, `gold`, `inventory` (by `item_id` + amount), and `tasks` (id, status, objectives) as JSON to `user://saves/1_save_data.json`. `peek_map_id(slot)` reads only the map id (used by `MapManager.begin_new_game(1)` to pick the Continue destination); `_find_player()` resolves the player via `current_scene`.
+- **`load_game()` must be called from `MapManager.install()`**, not from the main menu — at menu time `current_scene` is the menu, so `_find_player()` returns `null` and the position restore silently no-ops. `install()` calls it after the destination map is current.
+
+## Adding a new map
+
+1. Register the id in `MapManager.MAPS`.
+2. Generate the scene with `tools/generate_maps.gd` (a dev tool driven through the editor bridge). It builds the skeleton, tiles the ground with `set_cells_terrain_connect()`, and packs the scene.
+   - **Nodes you create need `owner = root`** before `PackedScene.pack()`, or `pack()` returns `OK` yet saves an **empty scene**. The generator registers them via `_new_node()` and assigns owners from that list.
+   - **Never recurse into an instanced sub-scene's internals to set `owner`.** Sub-scene children already connect their own signals; stamping them into the parent copies those `[connection]` lines in, and loading then spams `Signal ... is already connected` (ERR_INVALID_PARAMETER) — the map transition "works" but errors on every switch. Instances themselves (`Player`, `Bat0`, …) DO need `owner = root`; their children must not be touched.
+   - **A node added into an instanced node at build time cannot be saved by `pack()`** — verified: neither `owner = root` nor `owner = <instance>` persists it. That is why the camera's `RemoteTransform2D` is attached at runtime by `maps/world_map.gd::_ensure_camera_follow()` instead of being baked into generated scenes. (`world.tscn` is hand-edited and does have it inline; the function early-returns when it already exists.)
+   - Use `set_cells_terrain_connect()`, never per-cell `set_cell()` — it picks the correct corner/edge tiles automatically. A gate is just omitting those cells from the list.
+   - The cliff ring is **2 cells thick**; a gate must clear **both** rows/columns or a wall remains.
+3. Keep the invariants: root is `Node2D` + `y_sort_enabled` + `maps/world_map.gd`; `Camera2D` a sibling of `Player`; camera follow via `Player/RemoteTransform2D` (runtime-attached by `world_map.gd`, path resolved with `rt.get_path_to(cam)` — **from the RT, not from the Player**); `Camera2D` limits must contain `Rect2i(0,0,320,180)`.
+   - **Camera smoothing is deliberately OFF** (`position_smoothing_enabled = false` on every map's `Camera2D`; `world_map.gd::_ready` re-asserts it). `position_smoothing_speed` is in *pixels per second*, and Godot's default of `5.0` cannot track a 100 px/s player — the camera falls further behind the longer you walk. Hard-following is predictable and was the chosen fix. If you ever re-enable smoothing, set the speed well above 100 (e.g. 300).
+   - Do **not** compute camera math from `Camera2D.get_viewport_rect()` — it returns the *current environment's* viewport (1920×1001 in the editor, not the game's 320×180). A wrong size inverts limit-clamp bounds and makes `clampf` return garbage.
+   - **Set limits to `playable area ∓ half viewport`, not to the map size or the cliff-band centre.** The camera centre is clamped to `[limit_left + 160, limit_right − 160]`, so limits must be *wider* than the walkable area or the camera stops early while the player keeps walking — the "camera stops following after a while" bug. world: `-321, -90, 959, 698` for a walkable area of `x -161..799 y 0..608`. The generator computes this from `RING` and `HALF_VP`.
+   - **`Sprite2D.region_rect.position` is a *texture* offset, not a world position.** The sprite always draws starting at the node's own `position`; `region_rect` only selects which part of the texture is sampled and how large the drawn area is. So to place the background, set the node's `position` and keep `region_rect.position` at `(0, 0)`. Writing world coordinates into `region_rect.position` silently draws only the region from the origin outward (world previously rendered only its bottom-right quadrant this way).
+   - The background's drawn area must cover the **full camera range**. World: node `position = (-384, -128)`, `region_rect = Rect2(0, 0, 1344, 832)` → covers `x -384..960 y -128..704` ⊇ limits `x -321..959 y -90..698`. Keep `scale` at `(1, 1)` — a non-integer scale blurs the pixel art. Verify with `bg.get_rect()` (returns the *actual* drawn rect), not by reading `region_rect` alone.
+   - **Keep the map root at `position = (0, 0)`** and give children coordinates relative to it. Moving the root shifts everything while the camera limits stay put, so the two silently drift apart: the camera stops covering the player on one side and the background stops covering the viewport. Verify with: `limit_left + 160 <= walkable.min` and `limit_right − 160 >= walkable.max` (same for Y), plus `background rect ⊇ camera limits`.
+4. Add a `Spawns` marker and an `EdgeTriggers` area per border, **using the same name on both sides** (`NorthPass` etc. — don't name triggers after the origin map, or a map with two exits gets a name collision that silently renames the node to `@Name@2`).
+5. Keep bats/acornbacks as **direct children of the map root** — `bat.gd`/`acornback.gd` add their death effect via `get_parent().add_child()`. Tidy them into a container and the effect dies with the enemy.
+6. Do **not** add a HUD `CanvasLayer` to a map — `HUD` is an autoload and a per-map copy would render twice.
 
 ## Gotchas
 

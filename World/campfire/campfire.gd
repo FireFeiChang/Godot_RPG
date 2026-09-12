@@ -1,8 +1,7 @@
 extends StaticBody2D
 ## 篝火：可攻击切换状态的交互物，结构完全镜像敌人（bat）。
 ## 玩家挥剑攻击切换燃烧/熄灭状态。
-
-const CampfireEffectScene = preload("res://Effects/grass_effect.tscn")
+## 受击不播放任何特效（不沿用草丛的碎裂效果），只做状态切换。
 
 @export var hits_to_extinguish := 3
 @export var hits_to_ignite := 3
@@ -32,7 +31,6 @@ func _on_hurt_box_area_entered(area):
 		return
 
 	hit_count += 1
-	_spawn_effect()
 
 	if state_machine == BURNING and hit_count >= hits_to_extinguish:
 		state_machine = EXTINGUISHED
@@ -44,11 +42,6 @@ func _on_hurt_box_area_entered(area):
 		hit_count = 0
 		light.enabled = true
 		animatedSprite.play("Burning")
-
-func _spawn_effect():
-	var fx = CampfireEffectScene.instantiate()
-	get_parent().add_child(fx)
-	fx.global_position = global_position
 
 func _on_player_detection_body_entered(body):
 	if body.has_method("player"):

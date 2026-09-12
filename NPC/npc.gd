@@ -1,6 +1,6 @@
 extends CharacterBody2D
 ## 可对话 NPC（可扩展基类）。
-## 站在 SpeakBox 范围内按 [Enter]（ui_accept）即可对话，头顶显示交互提示。
+## 站在 SpeakBox 范围内按 [Enter] 或 [E]（ui_accept / interact）即可对话，头顶显示交互提示。
 ## 对话期间通过 Dialog.freeze_player 锁定玩家移动，结束/离开后自动解除。
 ##
 ## 两种模式：
@@ -46,8 +46,13 @@ func _process(delta):
 	prompt.visible = player_near and can_start and balloon == null
 
 	if player_near and can_start and balloon == null and cooldown <= 0.0 \
-			and Input.is_action_just_pressed("ui_accept"):
+			and _interact_pressed():
 		start_dialogue()
+
+## 交互键：Enter（ui_accept）或 E（interact）都可发起对话。
+func _interact_pressed() -> bool:
+	return Input.is_action_just_pressed("ui_accept") \
+			or Input.is_action_just_pressed("interact")
 
 ## 本轮对话要用的起始标题。
 func current_title() -> String:

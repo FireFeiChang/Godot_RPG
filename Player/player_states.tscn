@@ -3,4 +3,4 @@
 [ext_resource type="PackedScene" uid="uid://nvt04yktcp6l" path="res://states.tscn" id="1_p61xl"]
 
 [node name="PlayerStates" unique_id=2063030018 instance=ExtResource("1_p61xl")]
-max_health = 5
+max_health = 50

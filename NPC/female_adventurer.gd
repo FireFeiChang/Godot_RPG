@@ -48,8 +48,13 @@ func _process(delta):
 	var player_near := speak_box.get_overlapping_bodies().size() > 0
 	prompt.visible = player_near and can_start and balloon == null
 	if player_near and can_start and balloon == null and cooldown <= 0.0 \
-			and Input.is_action_just_pressed("ui_accept"):
+			and _interact_pressed():
 		start_dialogue()
+
+## 交互键：Enter（ui_accept）或 E（interact）都可发起对话。
+func _interact_pressed() -> bool:
+	return Input.is_action_just_pressed("ui_accept") \
+			or Input.is_action_just_pressed("interact")
 
 func _physics_process(delta):
 	if balloon != null:
