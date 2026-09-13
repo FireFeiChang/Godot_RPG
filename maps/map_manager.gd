@@ -17,6 +17,14 @@ const MAPS := {
 
 const DEFAULT_MAP := "world"
 
+## 地图的中文显示名（小地图底部的名字条）。
+## 与 MAPS 分开：MAPS 是"id → 场景路径"的程序映射，这里是给玩家看的文案。
+const MAP_NAMES := {
+	"world": "村口田野",
+	"north": "北坡羊道",
+	"east": "东原营地",
+}
+
 ## 当前所在地图 id；空字符串表示"当前场景不是地图"（如主菜单）。
 var current_map_id := ""
 
@@ -135,6 +143,7 @@ func install(map_root: Node) -> void:
 
 	# 2) HUD 与对话解锁
 	_set_hud_visible(true)
+	_set_minimap(map_root, MAP_NAMES.get(id, id))
 	Dialog.freeze_player = false
 
 	# 3) 摆玩家 + 复位相机
@@ -207,6 +216,15 @@ func _set_hud_visible(v: bool) -> void:
 	var fn := "show_hud" if v else "hide_hud"
 	if hud.has_method(fn):
 		hud.call(fn)
+
+## 把当前地图交给 HUD 里的小地图绘制。
+## 与 _set_hud_visible 同样用动态调用，避免硬引用（HUD 可能还没注册）。
+func _set_minimap(map_root: Node, map_name: String) -> void:
+	var hud := get_node_or_null("/root/HUD")
+	if hud == null:
+		return
+	if hud.has_method("set_map"):
+		hud.call("set_map", map_root, map_name)
 
 func _id_of_path(path: String) -> String:
 	for key in MAPS:

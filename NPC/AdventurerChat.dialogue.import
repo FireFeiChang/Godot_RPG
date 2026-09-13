@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b0cyud25ccu7x"
+path="res://.godot/imported/AdventurerChat.dialogue-ad76fef4c960458727f20c5c265df850.tres"
+
+[deps]
+
+source_file="res://NPC/AdventurerChat.dialogue"
+dest_files=["res://.godot/imported/AdventurerChat.dialogue-ad76fef4c960458727f20c5c265df850.tres"]
+
+[params]
+
+defaults=true

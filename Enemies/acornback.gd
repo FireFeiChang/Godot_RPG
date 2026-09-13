@@ -146,6 +146,7 @@ func _die():
 	if item != null and randf() < drop_chance:
 		TaskManager.call_deferred("spawn_drop_item", global_position, item)
 	Wallet.call_deferred("spawn_coin_drop", global_position, randi_range(2, 5))
+	TaskManager.notify_enemy_killed(TaskManager.ENEMY_ACORNBACK)
 	queue_free()
 
 func create_enemy_death_effect():

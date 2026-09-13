@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Task" format=3 uid="uid://eastslimes"]
+
+[ext_resource type="Script" uid="uid://cnc2wjknvpc42" path="res://tasks/task.gd" id="1"]
+[ext_resource type="Script" uid="uid://4yqkfmal3qpv" path="res://inventory/inventory_item.gd" id="1_l7qd4"]
+[ext_resource type="Resource" uid="uid://itmcompass" path="res://inventory/item/compass.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "east_slimes"
+name = "黏滑的麻烦"
+description = "消灭 3 只史莱姆"
+objectives = Array[Dictionary]([{
+"name": "消灭史莱姆",
+"progress": 0,
+"source": "kill:slime",
+"target": 3
+}])
+rewards = Array[ExtResource("1_l7qd4")]([ExtResource("2")])
+reward_amounts = Array[int]([1])

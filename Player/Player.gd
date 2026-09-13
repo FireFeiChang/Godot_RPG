@@ -174,3 +174,7 @@ func player():
 	
 func collect(item):
 	Inventory.inv.insert(item)
+	# 广播采集事件，供任务系统累计（如"采集止血草 x10"）。
+	# 用 item.id 而不是物品引用：任务只关心"采的是哪种"。
+	if item != null:
+		TaskManager.notify_progress("collect:" + String(item.id))

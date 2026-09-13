@@ -12,6 +12,16 @@ func _ready():
 func show_hud() -> void:
 	visible = true
 
+## 由 MapManager.install() 调用：把当前地图交给小地图去绘制。
+##
+## 小地图自己不认识 MapManager（HUD 在 autoload 列表里排在 MapManager 之前，
+## HUD._ready() 执行时 MapManager 还不存在），所以地图根与显示名都由调用方传进来，
+## 小地图不反向引用任何 autoload。
+func set_map(map_root: Node, map_name: String) -> void:
+	var mm := get_node_or_null("Root/Minimap")
+	if mm != null and mm.has_method("set_map"):
+		mm.call("set_map", map_root, map_name)
+
 func hide_hud() -> void:
 	visible = false
 	for path in ["Root/inv_UI", "Root/Task_UI"]:

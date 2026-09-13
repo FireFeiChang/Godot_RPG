@@ -81,6 +81,9 @@ func _open():
 	_opening = true
 	hurt_box.set_deferred("monitoring", false)  # 开启过程不再响应
 	animated.play("Open")
+	# 广播开箱事件（在"开箱动作开始"这一刻记，而不是 loot 生成之后）。
+	# 宝箱开完就 queue_free，所以这里不会被重复触发。
+	TaskManager.notify_progress("open:chest")
 
 func _on_open_finished():
 	_spawn_loot()             # 掉落物在 current_scene 下生成，随宝箱销毁仍保留

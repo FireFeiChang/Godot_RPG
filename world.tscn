@@ -423,7 +423,7 @@ position = Vector2(747, 25)
 
 [node name="NPC" parent="." unique_id=111867162 instance=ExtResource("10_t7hy5")]
 position = Vector2(240, 545)
-task_id = "kill_bats"
+task_ids = PackedStringArray("kill_bats", "village_herbs", "village_beasts")
 
 [node name="SteamVent" parent="." unique_id=281223200 instance=ExtResource("11_c45sw")]
 y_sort_enabled = true
@@ -514,8 +514,9 @@ position = Vector2(256, 263)
 position = Vector2(-11, 405)
 
 [node name="FemaleAdventurer" parent="." unique_id=1640147019 instance=ExtResource("24_femaleadv")]
-position = Vector2(230, 394)
-task_id = "kill_bats"
+position = Vector2(245, 396)
+dialogue_path = "res://NPC/AdventurerChat.dialogue"
+task_ids = PackedStringArray()
 
 [node name="Campfire" parent="." unique_id=400000006 instance=ExtResource("34_campfire")]
 position = Vector2(155, 450)

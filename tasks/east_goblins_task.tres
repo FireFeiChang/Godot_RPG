@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Task" format=3 uid="uid://eastgoblins"]
+
+[ext_resource type="Script" uid="uid://cnc2wjknvpc42" path="res://tasks/task.gd" id="1"]
+[ext_resource type="Script" uid="uid://4yqkfmal3qpv" path="res://inventory/inventory_item.gd" id="1_uwde7"]
+[ext_resource type="Resource" uid="uid://itmgemstone" path="res://inventory/item/gemstone.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "east_goblins"
+name = "哥布林营地"
+description = "消灭 3 只哥布林"
+objectives = Array[Dictionary]([{
+"name": "消灭哥布林",
+"progress": 0,
+"source": "kill:goblin",
+"target": 3
+}])
+rewards = Array[ExtResource("1_uwde7")]([ExtResource("2")])
+reward_amounts = Array[int]([1])

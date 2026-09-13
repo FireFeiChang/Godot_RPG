@@ -104,11 +104,38 @@ func load_game(slot: int = 1):
 		for task_data in save_data["tasks"]:
 			var task = TaskManager.get_task(task_data["id"])
 			if task != null:
-				task.status = task_data["status"]
-				task.objectives = task_data["objectives"]
-	
+				task.status = int(task_data["status"])
+				task.objectives = _normalize_objectives(task_data.get("objectives", []))
+
+	# 账本是运行期状态，没有进存档；不按进度补回来的话，
+	# 读档后第一次击杀会把进度"设为账本值"，使进度**倒退**（详见 reseed_ledger_from_tasks）。
+	TaskManager.reseed_ledger_from_tasks()
+
 	load_completed.emit()
 	return true
+
+## 把存档里的 objectives 转回目标要求的类型。
+##
+## 必须做：JSON 的数字都是 double，`JSON.parse_string` 读回来是 **float**，
+## 于是 `progress`/`target` 会变成 3.0 / 5.0 —— 任务面板用 `str()` 直接显示，
+## 会变成 "3.0/5.0"。这里统一转回 int 并丢弃未知键。
+func _normalize_objectives(raw) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if raw is not Array:
+		return result
+	for entry in raw:
+		if not (entry is Dictionary):
+			continue
+		var obj := {
+			"name": String(entry.get("name", "")),
+			"progress": int(entry.get("progress", 0)),
+			"target": int(entry.get("target", 1)),
+		}
+		# source 决定该目标由哪种事件推进；缺失的目标不会自动推进（安全默认）
+		if entry.has("source"):
+			obj["source"] = String(entry["source"])
+		result.append(obj)
+	return result
 
 ## 只读取存档里记录的地图 id（不应用任何状态）。
 ## 供 MapManager 决定"继续游戏"该切到哪张地图；存档不存在或无记录时返回 ""。

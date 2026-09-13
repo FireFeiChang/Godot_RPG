@@ -5,6 +5,17 @@
 => END
 
 
+~ all_done
+
+村长: 村里的活计都让你跑遍了，我这张老脸都不好意思再开口。
+村长: 往后你出村闯荡，记着村口这盏灯还亮着就行。
+=> END
+
+
+# —— 村庄保卫线 ——
+# 串行链：kill_bats -> village_herbs -> village_beasts
+# 标题必须是 <任务id>_offer / _in_progress / _turnin / _rewarded，NPC 按状态自动选取。
+
 ~ kill_bats_offer
 
 村长: 你来得正好。我正愁没人替村里跑一趟。
@@ -21,6 +32,7 @@
 ~ kill_bats_in_progress
 
 村长: 还差些火候，林子里那窝蝙蝠可不好惹。
+村长: 挨了咬就去揪两把止血草，别硬撑。
 => END
 
 
@@ -34,5 +46,74 @@ set Dialog.task_turnin_request = "kill_bats"
 
 ~ kill_bats_rewarded
 
-村长: 蝙蝠干拿去晾好，路上能顶一阵。往后有事再来找我。
+村长: 蝙蝠干拿去晾好，路上能顶一阵。
+村长: 对了，还有件事想托你 —— 你再与我说话便是。
+=> END
+
+
+~ village_herbs_offer
+
+村长: 蝙蝠是打退了些，可村里的伤药见了底。
+村长: 田埂上那一丛丛止血草，你顺手替我采 10 丛回来。谁家孩子磕了碰了，全指望它。
+- 包在我身上
+	村长: 记得连根带叶，那草娇气，掐断了就不管用了。
+	set Dialog.task_accept_request = "village_herbs"
+	=> END
+- 等我腾出手再说
+	村长: 不急，草又不会跑。
+	=> END
+
+
+~ village_herbs_in_progress
+
+村长: 采够 10 丛没有？田埂、林边都有，低头就能看见。
+=> END
+
+
+~ village_herbs_turnin
+
+村长: 哟，这么些！够村里用上一阵子了。
+村长: 拿着，这是给你的谢礼 —— 你自己路上也备几丛。
+set Dialog.task_turnin_request = "village_herbs"
+=> END
+
+
+~ village_herbs_rewarded
+
+村长: 药备下了，心里就踏实了。
+村长: 还有最后一桩，你再来找我。
+=> END
+
+
+~ village_beasts_offer
+
+村长: 最后一桩，也是最难的一桩。
+村长: 林子里有种卷成球撞人的甲虫，壳硬得很，寻常人挨一下就得躺上半个月。你替村里清掉 3 只。
+- 交给我
+	村长: 那东西冲起来直来直去，别迎头去挡，绕到侧面打。
+	set Dialog.task_accept_request = "village_beasts"
+	=> END
+- 容我准备准备
+	村长: 应当的，那东西不好对付。
+	=> END
+
+
+~ village_beasts_in_progress
+
+村长: 甲虫清掉几只了？记住，别迎头去挡。
+=> END
+
+
+~ village_beasts_turnin
+
+村长: 都清干净了？往后下地总算不用提心吊胆了。
+村长: 这是村里凑的一点心意，你收下。
+set Dialog.task_turnin_request = "village_beasts"
+=> END
+
+
+~ village_beasts_rewarded
+
+村长: 村里的活计都让你跑遍了，我这张老脸都不好意思再开口。
+村长: 往后你出村闯荡，记着村口这盏灯还亮着就行。
 => END

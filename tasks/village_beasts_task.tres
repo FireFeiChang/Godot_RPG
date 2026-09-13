@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Task" format=3 uid="uid://b6j8b5r1kaf1y"]
+
+[ext_resource type="Script" uid="uid://cnc2wjknvpc42" path="res://tasks/task.gd" id="1"]
+[ext_resource type="Script" uid="uid://4yqkfmal3qpv" path="res://inventory/inventory_item.gd" id="1_pomim"]
+[ext_resource type="Resource" path="res://inventory/item/coin_pouch.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "village_beasts"
+name = "清剿野兽"
+description = "消灭 3 只橡子甲虫"
+objectives = Array[Dictionary]([{
+"name": "消灭橡子甲虫",
+"progress": 0,
+"source": "kill:acornback",
+"target": 3
+}])
+rewards = Array[ExtResource("1_pomim")]([ExtResource("2")])
+reward_amounts = Array[int]([1])

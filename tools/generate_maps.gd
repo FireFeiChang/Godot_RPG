@@ -176,8 +176,16 @@ func _build_east() -> String:
 			{"pos": Vector2(760, 600), "variant": 1},      # 平原中
 			{"pos": Vector2(330, 690), "variant": 0},      # 南侧
 		],
-		# 只有闲聊对话，不挂 task_id（否则和第二个人共用 kill_bats 标题，村长的交付就废了）
-		"npc": [{"pos": Vector2(1180, 300), "task_id": ""}],
+		# 东原冒险者 =「东原探险线」发布者。
+		# 键名必须与 female_adventurer.gd 的 @export 一致（是 task_ids 复数，
+		# 且是 PackedStringArray）。这里的配置要与 map_east.tscn 里的手工值保持一致，
+		# 否则重跑生成器会把场景覆盖回去、任务链丢失。
+		"npc": [{
+			"pos": Vector2(1180, 300),
+			"dialogue_path": "res://NPC/TestAdventurer.dialogue",
+			"task_ids": PackedStringArray(["east_slimes", "east_goblins", "east_chests"]),
+			"all_done_title": "all_done",
+		}],
 	}
 	_apply_foes(spec, foes)
 	return _generate(spec)
@@ -407,7 +415,12 @@ func _generate(spec: Dictionary) -> String:
 		var inst: Node2D = load(S_ADVENTURER).instantiate()
 		inst.name = "Adventurer%d" % ni
 		inst.position = n["pos"]
-		inst.set("task_id", n["task_id"])
+		# spec 里除 pos 之外的键全部按 @export 属性名写入。
+		# 用循环而不是逐个 set()：属性名拼错、或脚本改了导出名（task_id -> task_ids）
+		# 时不会静默失效 —— set() 对不存在的属性会直接报错，比"看起来生成了但没接上"好查。
+		for key in n:
+			if key != "pos":
+				inst.set(key, n[key])
 		root.add_child(inst)
 		inst.owner = root
 		ni += 1

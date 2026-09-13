@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://v7bynunm2rsk"
+path="res://.godot/imported/TestAdventurer.dialogue-0327f76f64bb478c8e732b4775b3a329.tres"
+
+[deps]
+
+source_file="res://NPC/TestAdventurer.dialogue"
+dest_files=["res://.godot/imported/TestAdventurer.dialogue-0327f76f64bb478c8e732b4775b3a329.tres"]
+
+[params]
+
+defaults=true

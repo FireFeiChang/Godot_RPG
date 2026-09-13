@@ -98,7 +98,7 @@ func _on_states_no_health():
 	if item != null and randf() < drop_chance:
 		TaskManager.call_deferred("spawn_drop_item", global_position, item)
 	Wallet.call_deferred("spawn_coin_drop", global_position, randi_range(1, 3))
-	TaskManager.notify_enemy_killed(TaskManager.TASK_KILL_BATS)
+	TaskManager.notify_enemy_killed(TaskManager.ENEMY_BAT)
 	queue_free()
 
 func _on_hurt_box_invincible_started():

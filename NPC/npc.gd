@@ -4,17 +4,24 @@ extends CharacterBody2D
 ## 对话期间通过 Dialog.freeze_player 锁定玩家移动，结束/离开后自动解除。
 ##
 ## 两种模式：
-## - 普通闲聊 NPC：留空 task_id，用 start_title 起始对话。
-## - 任务 NPC：给 task_id 赋任务 id（如 "kill_bats"），NPC 会根据该任务实时状态
-##   自动选择对话标题：`<task_id>_offer`（未接，可接）、`<task_id>_in_progress`（进行中）、
-##   `<task_id>_turnin`（已完成可交付）、`<task_id>_rewarded`（已领奖闲聊）。
+## - 普通闲聊 NPC：task_ids 留空，用 start_title 起始对话。
+## - 任务 NPC：给 task_ids 按顺序填一串任务 id（**串行链**，一次只给一条，
+##   交付领奖后才解锁下一条）。NPC 按链上"第一条还没领奖"的任务实时状态选标题：
+##   `<id>_offer`（未接，可接）、`<id>_in_progress`（进行中）、
+##   `<id>_turnin`（已完成可交付）、`<id>_rewarded`（已领奖，但还有后续）。
+##   全部领完用 all_done_title。
 ##   玩家在对话中选择接取/交付时，.dialogue 内用 `set Dialog.task_accept_request` /
 ##   `set Dialog.task_turnin_request` 填入任务 id，本脚本每帧消费并执行真正的任务操作。
-## 新增 NPC：复制 npc.tscn，改 dialogue_path（与/或 start_title / task_id）即可。
+## 新增 NPC：复制 npc.tscn，改 dialogue_path（与/或 start_title / task_ids）即可。
 
 @export var dialogue_path: String = "res://NPC/Test.dialogue"
 @export var start_title: String = "hello"
-@export var task_id: String = ""
+
+## 任务链（串行）。留空 = 纯闲聊 NPC。
+@export var task_ids: PackedStringArray = PackedStringArray()
+
+## 链上所有任务都领完奖后用的对话标题；找不到该标题则退回 start_title。
+@export var all_done_title: String = "all_done"
 
 ## 对话结束后再次允许开启的冷却，避免连按 Enter 立刻重开。
 const RETRY_COOLDOWN := 0.5
@@ -54,27 +61,16 @@ func _interact_pressed() -> bool:
 	return Input.is_action_just_pressed("ui_accept") \
 			or Input.is_action_just_pressed("interact")
 
-## 本轮对话要用的起始标题。
+## 本轮对话要用的起始标题。链逻辑在 TaskManager 里（和 female_adventurer 共用一份）。
 func current_title() -> String:
-	if task_id == "":
-		return start_title
-	match TaskManager.get_task_state(task_id):
-		Task.NOT_STARTED:
-			return "%s_offer" % task_id
-		Task.IN_PROGRESS:
-			return "%s_in_progress" % task_id
-		Task.COMPLETED:
-			return "%s_turnin" % task_id
-		Task.REWARDED:
-			return "%s_rewarded" % task_id
-	return "%s_offer" % task_id
+	return TaskManager.chain_title(task_ids, start_title, all_done_title)
 
 func start_dialogue():
 	if dialogue_resource == null or balloon != null:
 		return
 	var title := current_title()
 	# 若任务 NPC 所需的标题不存在则退回闲聊标题，避免空白对话
-	if task_id != "" and not _has_title(title):
+	if not _has_title(title):
 		title = start_title
 	can_start = false
 	freeze_owned = true
@@ -85,16 +81,9 @@ func start_dialogue():
 func _has_title(title: String) -> bool:
 	return dialogue_resource != null and dialogue_resource.titles.has(title)
 
-## 消费 Dialog 上的任务握手请求（对应本 NPC 的任务 id 才处理）。
+## 消费 Dialog 上的任务握手请求（只认自己链上当前那条）。
 func _consume_task_requests():
-	if task_id == "":
-		return
-	if Dialog.task_accept_request == task_id:
-		Dialog.task_accept_request = ""
-		TaskManager.accept_task(task_id)
-	if Dialog.task_turnin_request == task_id:
-		Dialog.task_turnin_request = ""
-		TaskManager.turn_in_task(task_id)
+	TaskManager.consume_chain_requests(task_ids)
 
 func _on_balloon_closed():
 	balloon = null

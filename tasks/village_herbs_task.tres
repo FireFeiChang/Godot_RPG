@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Task" format=3 uid="uid://villageherbs"]
+
+[ext_resource type="Script" uid="uid://cnc2wjknvpc42" path="res://tasks/task.gd" id="1"]
+[ext_resource type="Script" uid="uid://4yqkfmal3qpv" path="res://inventory/inventory_item.gd" id="1_lqhsh"]
+[ext_resource type="Resource" uid="uid://dyi5euhhf8bne" path="res://inventory/item/grass.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "village_herbs"
+name = "草药备荒"
+description = "采集 10 丛止血草"
+objectives = Array[Dictionary]([{
+"name": "采集止血草",
+"progress": 0,
+"source": "collect:grass",
+"target": 10
+}])
+rewards = Array[ExtResource("1_lqhsh")]([ExtResource("2")])
+reward_amounts = Array[int]([5])

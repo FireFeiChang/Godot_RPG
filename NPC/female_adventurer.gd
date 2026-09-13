@@ -5,7 +5,11 @@ extends KinematicActor
 
 @export var dialogue_path: String = "res://NPC/Test.dialogue"
 @export var start_title: String = "hello"
-@export var task_id: String = ""
+
+## 任务链（串行），语义与 npc.gd 完全一致 —— 链逻辑都在 TaskManager 里，
+## 两个 NPC 基类不同（CharacterBody2D / KinematicActor），共用一份避免走样。
+@export var task_ids: PackedStringArray = PackedStringArray()
+@export var all_done_title: String = "all_done"
 
 const RETRY_COOLDOWN := 0.5
 const WANDER_TARGET_RANGE = 6
@@ -126,24 +130,13 @@ func _on_wander_timer_timeout() -> void:
 	_update_wander()
 
 func current_title() -> String:
-	if task_id == "":
-		return start_title
-	match TaskManager.get_task_state(task_id):
-		Task.NOT_STARTED:
-			return "%s_offer" % task_id
-		Task.IN_PROGRESS:
-			return "%s_in_progress" % task_id
-		Task.COMPLETED:
-			return "%s_turnin" % task_id
-		Task.REWARDED:
-			return "%s_rewarded" % task_id
-	return "%s_offer" % task_id
+	return TaskManager.chain_title(task_ids, start_title, all_done_title)
 
 func start_dialogue():
 	if dialogue_resource == null or balloon != null:
 		return
 	var title := current_title()
-	if task_id != "" and not _has_title(title):
+	if not _has_title(title):
 		title = start_title
 	can_start = false
 	freeze_owned = true
@@ -155,16 +148,7 @@ func _has_title(title: String) -> bool:
 	return dialogue_resource != null and dialogue_resource.titles.has(title)
 
 func _consume_task_requests():
-	if task_id == "":
-		return
-	if Dialog.task_accept_request == task_id:
-		print("NPC: accepting task ", task_id)
-		Dialog.task_accept_request = ""
-		TaskManager.accept_task(task_id)
-	if Dialog.task_turnin_request == task_id:
-		print("NPC: turning in task ", task_id)
-		Dialog.task_turnin_request = ""
-		TaskManager.turn_in_task(task_id)
+	TaskManager.consume_chain_requests(task_ids)
 
 func _on_balloon_closed():
 	balloon = null

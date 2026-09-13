@@ -1,0 +1,118 @@
+~ hello
+
+冒险者: 你也是从村里过来的？我是往东边来的，这一带比地图上画的凶险得多。
+冒险者: 要是有闲工夫，替我搭把手 —— 我手上压着几桩事，一个人实在忙不过来。
+=> END
+
+
+~ all_done
+
+冒险者: 这营地有你在，我总算敢合眼了。
+冒险者: 等我把补给重新点一遍，就跟你一同往更东边探。在那之前，你先歇着。
+=> END
+
+
+# —— 东原探险线 ——
+# 串行链：east_slimes -> east_goblins -> east_chests
+# 标题必须是 <任务id>_offer / _in_progress / _turnin / _rewarded，NPC 按状态自动选取。
+
+~ east_slimes_offer
+
+冒险者: 先说最烦人的 —— 这原上到处都是黏糊糊的史莱姆。
+冒险者: 它们倒不致命，可成群趴在补给箱上，一箱子干粮全给糟蹋了。替我打 3 只。
+- 这就去
+	冒险者: 多谢！史莱姆慢得很，你侧身绕开它的扑击就好，别站着硬挨。
+	set Dialog.task_accept_request = "east_slimes"
+	=> END
+- 我再看看情况
+	冒险者: 行，反正它们也跑不了。
+	=> END
+
+
+~ east_slimes_in_progress
+
+冒险者: 打掉几只了？它们跳起来那一下最要命，留意脚下。
+=> END
+
+
+~ east_slimes_turnin
+
+冒险者: 干净利落。这几只够它们消停一阵了。
+冒险者: 拿着，罗盘 —— 我多带了一个。这地方没它真容易走丢。
+set Dialog.task_turnin_request = "east_slimes"
+=> END
+
+
+~ east_slimes_rewarded
+
+冒险者: 罗盘收好。再往东去，就得靠它认路了。
+冒险者: 不过还有件更棘手的，你再来找我。
+=> END
+
+
+~ east_goblins_offer
+
+冒险者: 史莱姆是小麻烦，哥布林才是正经的麻烦。
+冒险者: 前头那几顶破帐篷就是它们的营地，一共 3 只守在那。我一个人不敢硬闯。
+- 一起去，我打头阵
+	冒险者: 好胆量。哥布林挥起家伙来有前摇，看它抬手就往侧后翻。
+	set Dialog.task_accept_request = "east_goblins"
+	=> END
+- 先别冒险
+	冒险者: 也对，我这条小命还想要。
+	=> END
+
+
+~ east_goblins_in_progress
+
+冒险者: 营地那边怎么样了？它们可是会围上来的。
+=> END
+
+
+~ east_goblins_turnin
+
+冒险者: 营地里没动静了……你真把它端了？
+冒险者: 这块原石是从它们窝里翻出来的，我不懂这个，给你正好。
+set Dialog.task_turnin_request = "east_goblins"
+=> END
+
+
+~ east_goblins_rewarded
+
+冒险者: 营地一空，这半张地图总算能安心走动了。
+冒险者: 最后一件事 —— 这件事是替我自己求的。
+=> END
+
+
+~ east_chests_offer
+
+冒险者: 我有个同伴，上个月独自往东探路，再没回来。
+冒险者: 他沿路埋了几个补给箱。我不认路，走到箱子跟前也对不上号。你替我开 3 个，看看有没有他的踪迹。
+- 我去找
+	冒险者: 多谢。箱子上有他刻的记号，你一看就知道。
+	set Dialog.task_accept_request = "east_chests"
+	=> END
+- 这事我得想想
+	冒险者: ……我明白。找到什么，你告诉我一声就好。
+	=> END
+
+
+~ east_chests_in_progress
+
+冒险者: 开几个了？这原上箱子不少，但要挑刻着记号的。
+=> END
+
+
+~ east_chests_turnin
+
+冒险者: 三只都开了……里面没有他的东西。
+冒险者: 也罢。至少这条路我以后自己走得下去了。望远镜给你，我留着也是积灰。
+set Dialog.task_turnin_request = "east_chests"
+=> END
+
+
+~ east_chests_rewarded
+
+冒险者: 这营地有你在，我总算敢合眼了。
+冒险者: 等我把补给重新点一遍，就跟你一同往更东边探。在那之前，你先歇着。
+=> END

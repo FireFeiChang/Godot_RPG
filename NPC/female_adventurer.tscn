@@ -659,6 +659,9 @@ animations = [{
 radius = 8.0
 height = 20.0
 
+[sub_resource type="CircleShape2D" id="Circle_speak"]
+radius = 40.0
+
 [node name="FemaleAdventurer" type="CharacterBody2D" unique_id=415139775]
 collision_layer = 64
 collision_mask = 0
@@ -685,6 +688,9 @@ shape = SubResource("Capsule_74")
 [node name="SpeakBox" parent="." unique_id=108418652 instance=ExtResource("3_speak")]
 collision_layer = 0
 collision_mask = 2
+
+[node name="CollisionShape2D" parent="SpeakBox" index="0"]
+shape = SubResource("Circle_speak")
 
 [node name="WanderTimer" type="Timer" parent="." unique_id=188901784]
 

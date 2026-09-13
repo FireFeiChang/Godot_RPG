@@ -755,6 +755,9 @@ position = Vector2(1180, 300)
 collision_layer = 64
 collision_mask = 0
 script = ExtResource("29_ecbuc")
+dialogue_path = "res://NPC/TestAdventurer.dialogue"
+task_ids = PackedStringArray("east_slimes", "east_goblins", "east_chests")
+all_done_title = "all_done"
 
 [node name="EdgeTriggers" type="Node2D" parent="." unique_id=1167278347]
 

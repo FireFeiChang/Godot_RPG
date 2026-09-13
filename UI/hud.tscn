@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://toastui" path="res://UI/toast_ui.tscn" id="15_toastui"]
 [ext_resource type="PackedScene" uid="uid://b6m766qqelvlw" path="res://inventory/inv_ui.tscn" id="16_invui"]
 [ext_resource type="PackedScene" uid="uid://goldcounter" path="res://coins/gold_counter.tscn" id="18_gold"]
+[ext_resource type="PackedScene" path="res://UI/minimap.tscn" id="19_minimap"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 1
@@ -62,6 +63,25 @@ offset_bottom = 60.0
 grow_horizontal = 2
 mouse_filter = 2
 
+[node name="GoldCounter" parent="Root" instance=ExtResource("18_gold")]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -22.0
+offset_right = 64.0
+offset_bottom = -6.0
+grow_horizontal = 1
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Minimap" parent="Root" instance=ExtResource("19_minimap")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 104.0
+offset_bottom = 69.0
+
 [node name="inv_UI" parent="Root" instance=ExtResource("16_invui")]
 layout_mode = 3
 anchors_preset = 15
@@ -69,15 +89,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="GoldCounter" parent="Root" instance=ExtResource("18_gold")]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -64.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = 22.0
-grow_horizontal = 0
-mouse_filter = 2
